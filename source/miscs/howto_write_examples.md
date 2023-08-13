@@ -1,0 +1,40 @@
+# How to Write Examples
+
+- Install Sphinx and extensions for Python in shell
+
+  ```shell
+  pip install sphinx rst2pdf sphinx_rtd_theme myst-parser
+  ```
+
+- Clone the git repository in shell
+
+  ```shell
+  git clone https://github.com/hans-econ/hans-econ.github.io
+  ```
+
+- Create a folder with the name of the example under source/examples/ 
+
+- Copy the hmod file to the example folder
+
+- Create a MATLAB live script under the example folder, following the template {download}`ks_notebook.mlx <../examples/KS_JEDC10/ks_notebook.mlx>`
+
+- Convert the live script into a html file by running in the MATLAB command line
+
+  ```matlab
+  matlab.internal.liveeditor.openAndConvert('example_notebook.mlx','example_notebook.html')
+  ```
+
+  Suppose your live script is named example_notebook.mlx
+
+- Create a .md file and include the model, the hmod file and the html generated from the MATLAB live script. Follow the template {download}`ks.md <../examples/KS_JEDC10/ks.md>`
+
+- In source/examples/index.md, add the .md file under the toctree
+
+- (Optional) Change directory to the repository root folder, run in shell to recompile the website
+
+  ```shell
+  ./make html
+  ```
+
+- Commit and push changes or create a pull request to merge the added example
+

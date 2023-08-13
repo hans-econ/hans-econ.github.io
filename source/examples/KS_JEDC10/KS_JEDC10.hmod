@@ -1,0 +1,91 @@
+% The parameters are from from den Haan, Judd, Juillard, 2010, "Computational Suite of models with heterogeneous agents: 
+% Incomplete markets and aggregate uncertainty" Journal of Economic Dynamics and Control, 34, pp 1 - 3.
+
+parameters beta sigma r w;
+  
+beta = 0.99;    % subjective discount factor
+sigma = 1.0;    % risk aversion
+labor = 1.0/0.9;     % exogenous labor supply when working
+mu_ratio = 0.15;     % unemployment insurance replacement ratio
+r = 0.009;      % asset return
+w = 0.89;       % wage rate
+
+var_shock e;
+shock_trans = [0.600000, 0.400000;
+               0.044445, 0.955555];
+e = [0.00;1.00];
+shock_invariant_dist = [0.1;0.9];
+e_bar = shock_invariant_dist(:).'*e(:); 
+
+L = labor*e_bar;
+unemp_rate = shock_invariant_dist(1);  % unemployment rate 
+tau = mu_ratio*unemp_rate/L; % labor income tax rate: tau_t = mu*u_t/(labor*(1-u_t))
+
+var_state a;
+
+amin = 0.0;
+amax = 200;
+a_shift = 0.25;
+nA = 500;
+a = exp(linspace(log(amin + a_shift), log(amax + a_shift), nA)) - a_shift;
+
+var_pre_vfi coh;
+coh = (1+r)*a + w*((1.0-tau)*e*labor + mu_ratio*(1- e));
+
+var_policy ap;
+initial ap amin;
+
+var_aux c;
+
+vfi;    
+    c = coh - ap;
+    u = log(c);
+    % u = c.^(1.0 - sigma)/(1.0 - sigma);
+    Tv = u + beta*EXPECT(v(ap));
+    ap >= amin;
+    ap <= coh - 1e-10;
+end;
+
+% statements below the vfi block will also be copied to evaluation in the ss block
+
+var_agg K;
+K = 43.0; % Initial Condition
+
+Z = 1.0; % TFP
+alpha = 0.36;   % capital share
+delta = 0.025;  % depreciation
+
+var_agg_shock Z;
+
+model_ss(K);
+    r = Z*alpha*(K^(alpha-1))*(L^(1-alpha)) - delta;
+    w = Z*(1-alpha)*(K^alpha)*(L^(-alpha));
+
+    % equilibrium equations
+    K == ap; % asset demand = asset supply
+
+    % bound constraints for unknowns
+    K >= 38.0;
+    % lower bound on capital stock: r<= 1/beta - 1 implies K>=L*((1/beta - 1 + delta)/(alpha*Z))^(1/(alpha - 1)) + 1e-10
+    %K >= L*((1/beta - 1 + delta)/(alpha*Z))^(1/(alpha - 1)) + 1e-10;    
+
+    % post evaluation
+    Y = Z*(K^alpha)*(L^(1-alpha));
+    I = delta*K;
+    C = Y - I;
+end;
+
+model;
+    % now this just works as dynare; use K(-1) to denote pre-determined variables
+    r = Z*alpha*(K(-1)^(alpha-1))*(L^(1-alpha)) - delta;
+    w = Z*(1-alpha)*(K(-1)^alpha)*(L^(-alpha));
+    
+    % equilibrium equations
+    K == ap; % asset demand = asset supply
+
+    % post evaluation
+    Y = Z*(K(-1)^alpha)*(L^(1-alpha));
+    I = K - (1 - delta)*K(-1);
+    C = Y - I;
+end;
+
