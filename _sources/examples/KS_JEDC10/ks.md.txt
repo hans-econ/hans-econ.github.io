@@ -2,6 +2,8 @@
 
 We use the parameterization from [Den Haan, Judd and Juillard (2010): Computational suite of models with heterogeneous agents: Incomplete markets and aggregate uncertainty](https://www.sciencedirect.com/science/article/pii/S0165188909001286).
 
+We follow the notation in the paper as much as possible.
+
 ## The Model
 
 The decision problem:
