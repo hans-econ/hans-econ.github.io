@@ -11,11 +11,13 @@ for /F "delims=" %%i in ('dir /b') do (
         if not "!item!"==".git" (
             if not "!item!"==".gitignore" (
                 if not "!item!"=="make.bat" (
-                    REM Delete if it's a file
-                    if exist "%%i" del /F /Q "%%i"
+                    if not "!item!"=="CNAME" (
+                        REM Delete if it's a file
+                        if exist "%%i" del /F /Q "%%i"
 
-                    REM Delete if it's a directory
-                    if exist "%%i\" rmdir /S /Q "%%i"
+                        REM Delete if it's a directory
+                        if exist "%%i\" rmdir /S /Q "%%i"
+                    )
                 )
             )
         )
