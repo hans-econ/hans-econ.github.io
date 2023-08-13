@@ -9,7 +9,7 @@ We follow the notation in the paper as much as possible.
 The decision problem:
 
 $$
-v(e,a;Z,\Omega) = \max_{c,a'} \log(c)+ \beta\mathbb{E}[v(e',a';Z',\Omega')|e]
+v(e,a;Z,\Omega) = \max_{c,a'} \log(c)+ \beta\mathbb{E}[v(e',a';Z',\Omega')|e,Z]
 \\
 s.t. \quad c+a' \leq  (1+r(Z,\Omega))a +  [(1-\tau)\overline{l}e + \mu(1-e)]w(Z,\Omega)
 \\

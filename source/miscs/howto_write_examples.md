@@ -30,11 +30,13 @@
 
 - In source/examples/index.md, add the .md file under the toctree
 
-- (Optional) Change directory to the repository root folder, run in shell to recompile the website
+- (Optional, only do this if you are able to push changes to the git repo) Change directory to the repository root folder, run in shell to recompile the website
 
   ```shell
   ./make html
   ```
+
+  Copy all files and folders from build/html/ to the root folder
 
 - Commit and push changes or create a pull request to merge the added example
 
