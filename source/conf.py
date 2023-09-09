@@ -72,8 +72,8 @@ def setup(app: Sphinx):
 # -- Project information -----------------------------------------------------
 
 project = 'HANS'
-copyright = '2023, Jinhui Bai and Wenlan Luo'
-author = 'Jinhui Bai and Wenlan Luo'
+copyright = '2023, Jinhui Bai, Wenlan Luo and Pengfei Wang'
+author = 'Jinhui Bai, Wenlan Luo and Pengfei Wang'
 
 html_title = 'HANS Homepage'
 
