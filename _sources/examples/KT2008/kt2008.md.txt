@@ -1,0 +1,3 @@
+# Handling Non-convex Adjustment Costs: Khan and Thomas (2008)
+
+TBD

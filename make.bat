@@ -8,6 +8,7 @@ for /F "delims=" %%i in ('dir /b') do (
 
     REM Check if the item is not in the exception list
     if not "!item!"=="source" (
+    if not "!item!"=="build" (
         if not "!item!"==".git" (
             if not "!item!"==".gitignore" (
                 if not "!item!"=="make.bat" (
@@ -21,6 +22,7 @@ for /F "delims=" %%i in ('dir /b') do (
                 )
             )
         )
+    )
     )
 )
 

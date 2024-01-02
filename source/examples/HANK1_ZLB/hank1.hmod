@@ -1,0 +1,93 @@
+parameters beta gamma nu chi w r D tau;
+beta = 0.986;
+gamma = 2;
+nu = 0.5;
+chi = 1;
+
+var_shock e taxed;
+shock_trans = [
+    0.9663    0.0334    0.0003
+    0.0167    0.9666    0.0167
+    0.0003    0.0334    0.9663
+    ];
+e = [0.49008,1,2.0405];
+taxed = [0, 0, 1];
+
+var_state b;
+b_min = 0.0;
+b_max = 50.0;
+b_pts = 201;
+b_shift = 0.1;
+b = exp(linspace(log(b_min+b_shift),log(b_max+b_shift),b_pts)) - b_shift;
+
+var_pre_vfi budget_n1;
+budget_n1 = b + w*e - tau*taxed + D;
+
+var_policy c bp n;
+initial c budget_n1;
+initial bp 0;
+initial n 1;
+
+var_aux ne;
+
+vfi;
+    u = c^(1-gamma)/(1-gamma) - chi*n^(1+1/nu)/(1+1/nu);
+    Tv = u + beta*EXPECT(v(bp));
+    c + bp/(1+r) == b + w*e*n - tau*taxed + D;
+    ne = n*e;
+    c >= 1e-8;
+    bp >= b_min;
+    n >= 0;
+end;
+
+var_agg Y pii w S PA PB;
+mu = 1.2;           % markup
+theta = 0.15;       % prob staggered price
+pop_taxed = 0.25;
+ii0 = 0.005;
+G = 0;
+phi = 1.5;
+z = 1.0;            % labor productivity
+
+% bond level affects steady state interest rate
+% see how it is calibrated in model_cali
+B = 5.6;
+
+% initial
+N = 1;
+
+var_agg_shock beta m_shock;
+m_shock = 0.0;
+
+model;
+    N = Y*S / z;
+    D = Y-w*N;
+    ii = max(ii0 + phi*pii + m_shock,0);
+    r = (1+ii) / (1+pii(+1)) - 1;
+    tau = (B+G-B/(1+r)) / pop_taxed;
+    pstar = PA/PB;
+    
+    S == theta*pstar^(mu/(1-mu)) + (1/(1+pii))^(mu/(1-mu))*(1-theta)*S(-1);
+    1+pii == ( (1-theta)/(1-theta*(pstar)^(1/(1-mu))) )^(1-mu);
+    PA == mu*w/z*Y + (1-theta)*beta*(1+pii(+1))^(-mu/(1-mu))*PA(+1);
+    PB == Y + (1-theta)*beta*(1+pii(+1))^(-1/(1-mu))*PB(+1);
+    N == ne;
+    B == bp;
+end;
+
+% a different block for calibration; arguments to overwrite aggregate unknowns (var_agg)
+model_cali(N, B);
+    Y = z*N;
+    w = z/mu;
+    D = Y - w*N;
+    r = ii0;
+    tau = (B+G-B/(1+r)) / pop_taxed;
+
+    N == ne;
+    B == bp;
+    
+    PA = mu*w/z*Y / (1-(1-theta)*beta);
+    PB = Y / (1-(1-theta)*beta);
+    S = 1;
+    pii = 0;
+end;

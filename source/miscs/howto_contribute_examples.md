@@ -1,4 +1,4 @@
-# How to Write Examples
+# How to Contribute Examples
 
 - Install Sphinx and extensions for Python in shell
 
@@ -39,4 +39,12 @@
   Copy all files and folders from build/html/ to the root folder
 
 - Commit and push changes or create a pull request to merge the added example
+
+## Frequently used references:
+
+The .md file needs to be compatible with MySt (Markedly Structured Text) and compiled with Sphinx. References can be found at
+
+-  [Typography (myst-parser.readthedocs.io)](https://myst-parser.readthedocs.io/en/latest/syntax/typography.html)
+
+- Sphinx directives: [Directives — Sphinx documentation (sphinx-doc.org)](https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html)
 

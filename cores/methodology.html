@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Algorithm &mdash; HANS Homepage</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Toolbox API Reference" href="api.html" />
+    <link rel="prev" title="Solving for Non-linear Transitions: Forward Guidance under ZLB (McKay, Nakamura, Steinsson, 2016)" href="../examples/HANK1_ZLB/hank1_zlb.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            HANS: A Heterogeneous-Agent model Nonlinear Solver
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/KS_JEDC10/ks.html">Getting Started: Krusell and Smith (1998)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/HANK1_SSJ/hank1_ssj.html">Handling Non-trivial Market Clearing: One-asset HANK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/HANK2_SSJ/hank2_ssj.html">Handling Portfolio Choices: Two-asset HANK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/KT2008/kt2008.html">Handling Non-convex Adjustment Costs: Khan and Thomas (2008)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/HANK1_ZLB/hank1_zlb.html">Solving for Non-linear Transitions: Forward Guidance under ZLB (McKay, Nakamura, Steinsson, 2016)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The Algorithm</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#general-framework">General Framework</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#example-krusell-and-smith-1998">Example: Krusell and Smith (1998)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#calculating-the-jacobian-with-partial-broyden-updates">Calculating the Jacobian with Partial Broyden Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#other-implementation-details">Other Implementation Details</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Toolbox API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../miscs/howto_contribute_examples.html">How to Contribute Examples</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HANS: A Heterogeneous-Agent model Nonlinear Solver</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">The Algorithm</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="the-algorithm">
+<h1>The Algorithm<a class="headerlink" href="#the-algorithm" title="Permalink to this heading"></a></h1>
+<section id="general-framework">
+<h2>General Framework<a class="headerlink" href="#general-framework" title="Permalink to this heading"></a></h2>
+<p>We write out a general framework that represents the sequential equilibrium of any heterogeneous-agent model by a system of equations for aggregate endogenous variables. Denote <span class="math notranslate nohighlight">\(\mathbb{Z} \subseteq \mathbb{R}^{N_Z}\)</span>, <span class="math notranslate nohighlight">\(\mathbb{Y} \subseteq \mathbb{R}^{N_Y}\)</span>, <span class="math notranslate nohighlight">\(\mathbb{E}\subset  \mathbb{R}^{N_e}\)</span>, <span class="math notranslate nohighlight">\(\mathbb{A}\subset  \mathbb{R}^{N_a}\)</span>, <span class="math notranslate nohighlight">\(\mathbb{X} \subset \mathbb{R}^{N_x}\)</span> the space of exogenous aggregate variables, endogenous aggregate variables, individual exogenous states, individual endogenous states, and individual policy variables, respectively.</p>
+<p>Fixing a large integer period <span class="math notranslate nohighlight">\(T\)</span>. Given <span class="math notranslate nohighlight">\(\Phi_0\)</span> an initial measure that represents the initial distribution of individual states (i.e., a measure on the Boreal set of  <span class="math notranslate nohighlight">\(\mathbb{E}\times \mathbb{A}\)</span>),  and a sequence of exogenous aggregate variables <span class="math notranslate nohighlight">\(\mathcal{Z}\equiv \{Z_t\}_{t=0}^{T} \in \mathbb{Z}^{T+1}\)</span>, an equilibrium is characterized by a system of equations for endogenous aggregate variables <span class="math notranslate nohighlight">\(\mathcal{Y}\equiv\{Y_t\}_{t=0}^{T} \in \mathbb{Y}^{T+1}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{F}_t\left(\{Z_s\}_{s=0}^{t},\{Y_s\}_{s=0}^{t},\bar{x}_t(\mathcal{Z},\mathcal{Y})\right)=0, \forall t=0,1,...,T
+\]</div>
+<div class="math notranslate nohighlight" id="equation-f-general">
+<span class="eqno">(3)<a class="headerlink" href="#equation-f-general" title="Permalink to this equation"></a></span>\[\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathcal{F}_t: \mathbb{Z}^{T+1} \times \mathbb{Y}^{T+1} \times \mathbb{X} \rightarrow \mathbb{R}^{N_Y}\)</span> is a mapping from exogenous aggregate variables, endogenous aggregate variables, and individual policy aggregates to equilibrium condition residuals.</p>
+<p><span class="math notranslate nohighlight">\(\bar{x}_t(\mathcal{Z},\mathcal{Y})\)</span> are the aggregates of individual policy variables integrated over the distribution of individual state at time <span class="math notranslate nohighlight">\(t\)</span>. Specifically,</p>
+<div class="math notranslate nohighlight">
+\[
+\bar{x}_t(\mathcal{Z},\mathcal{Y})) = \int g_{x,t}(e,a;\mathcal{Z},\mathcal{Y}) d\Phi_t(e,a;\mathcal{Z},\mathcal{Y}),
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(g_{x,t}(e,a;\mathcal{Z},\mathcal{Y})\)</span> are policy functions that solve the Bellman equation</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+v_t(e,a;\mathcal{Z},\mathcal{Y}) = \max_{x} u(e,a,x;Z_t,Y_t) + \beta \mathbb{E}[v_{t+1}(e',a';\mathcal{Z},\mathcal{Y})|e,a,x]
+\\
+s.t. \quad \mathcal{C}(e,a,x; Z_t,Y_t) \leq 0
+\\
+a' \sim \mathcal{T}(a';e,a,x; Z_t,Y_t)
+\\
+v_{T+1} \text{ given by steady state value function}
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(u(e,a,x;Z_t,Y_t)\)</span> is the period utility function. <span class="math notranslate nohighlight">\(\mathcal{C}(e,a,x; Z_t,Y_t)\leq 0\)</span> is a set of inequality constraints that the optimization problem is subject to. <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> is a distribution over <span class="math notranslate nohighlight">\(x'\)</span> that represents the (potentially stochastic) transition of individual endogenous state variables.</p>
+<p><span class="math notranslate nohighlight">\(\Phi_t(e,a;\mathcal{Z},\mathcal{Y})\)</span> are the measures that represent the distribution of individual states, which evolve according to policy functions and the exogenous transition of the Markov process <span class="math notranslate nohighlight">\(e\)</span>, denoted by <span class="math notranslate nohighlight">\(P^e\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\Phi_{t+1}(\mathcal{E}',\mathcal{A}';\mathcal{Z},\mathcal{Y})= \int \mathbb{1}((e',a')\in \mathcal{E}'\times \mathcal{A}') P^e(de'|e)\mathcal{T}\Big(da';e,a,g_{x,t}\Big(e,a;\mathcal{Z},\mathcal{Y}\Big);\mathcal{Z},\mathcal{Y}\Big) \Phi_t (d e,d a;\mathcal{Z},\mathcal{Y})
+\]</div>
+<section id="example-krusell-and-smith-1998">
+<h3>Example: Krusell and Smith (1998)<a class="headerlink" href="#example-krusell-and-smith-1998" title="Permalink to this heading"></a></h3>
+<p>The model of Krusell and Smith (1998) mapped to the general framework, with left variable being the notation of the framework  and the right side variable being the variable in the model, reads <span class="math notranslate nohighlight">\(Z_t=Z_t\)</span>, <span class="math notranslate nohighlight">\(Y_t=K_{t+1}\)</span>, <span class="math notranslate nohighlight">\(e=e\)</span>, <span class="math notranslate nohighlight">\(a=a\)</span>, <span class="math notranslate nohighlight">\(x=a'\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{F}_t\left(\{Z_s\}_{s=0}^{T},\{K_s\}_{s=0}^{T},\bar{x}_t(\mathcal{Z},\mathcal{Y})\right)=K_{t+1}-\bar a'_{t}
+\]</div>
+<p>Note that <span class="math notranslate nohighlight">\(K_0=\int a d \Phi_0(de,da)\)</span> is given and is not part of the unknowns.</p>
+<p>Period utility:</p>
+<div class="math notranslate nohighlight">
+\[
+u(e,a,a';Z_t,K_t)=\ln\Big([1+r(Z_t,K_t)]a + w(Z_t,K_t)[(1.0-\tau)e\bar{l} + \mu (1- e)]-a'\Big).
+\]</div>
+<p>Two inequality constraints:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathcal{C}^{(1)}(e,a,a'; Z_t,K_t) = -a'
+\\
+\mathcal{C}^{(2)}(e,a,a'; Z_t,K_t) = a' -[1+r(Z_t,K_t)]a + w(Z_t,K_t)[(1.0-\tau)e\bar{l} + \mu (1- e)].
+\end{split}\]</div>
+<p>The state transition:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{T}(a';e,a,a'; Z_t,K_t)=a' \text{ with probability 1}.
+\]</div>
+</section>
+</section>
+<section id="calculating-the-jacobian-with-partial-broyden-updates">
+<h2>Calculating the Jacobian with Partial Broyden Updates<a class="headerlink" href="#calculating-the-jacobian-with-partial-broyden-updates" title="Permalink to this heading"></a></h2>
+<p>The system of equations <a class="reference internal" href="#equation-f-general">(3)</a>, albeit large, can be solved using a gradient-based equation solver efficiently, once the Jacobian of the system with respect to endogenous aggregate variables <span class="math notranslate nohighlight">\(\{Y_t\}_{t=0}^{T}\)</span>  is efficiently calculated. Calculating the Jacobian can be challenging, as evaluating the system involves solving the Bellman equation for policy functions, and then solving the distributions over individual states. Finite difference methods are inefficient, as policy functions and induced state transitions need to be resolved when aggregate variables are perturbed along each dimension. Automatic differentiation (AD) is not possible as aggregate variables enter as parameters in individual optimization problems.</p>
+<p>The Sequence Space Jacobian (<a class="reference external" href="https://onlinelibrary.wiley.com/doi/full/10.3982/ECTA17434">Auclert et al, 2021</a>) approach develops an efficient method to evaluate the Jacobian at the model’s steady state, and proposes to fix the Jacobian matrix when solving the system. The approach works adequately for model dynamics that are close to the steady state, but does not work for models feature high nonlinearity such as the New Keynesian model with an interest rate zero lower bound as in McKay, Nakamura and Steinsson (2016).</p>
+<p>The key contribution of our method, which enables the robustness and efficiency of the algorithm, is to provide a sparse update of the Jacobian. Denote <span class="math notranslate nohighlight">\(\mathcal{G}_t(\mathcal{Z},\mathcal{Y})=\mathcal{F}_t\left(\{Z_s\}_{s=0}^{t},\{Y_s\}_{s=0}^{t},\bar{x}_t(\mathcal{Z},\mathcal{Y})\right)\)</span>, then the Jacobian entry with respect to  <span class="math notranslate nohighlight">\(\{Y_s\}\)</span> is</p>
+<div class="math notranslate nohighlight">
+\[
+\nabla_{Y_s} \mathcal{G}_t=\nabla_{Y_s} \mathcal{F}_t + \nabla_{\bar{x}_t} \mathcal{F}_t \cdot  \nabla_{Y_s} \bar{x}_t.
+\]</div>
+<p>The key observation is that <span class="math notranslate nohighlight">\(\nabla_{Y_s} \mathcal{F}_t\)</span> and <span class="math notranslate nohighlight">\(\nabla_{\bar{x}_t} \mathcal{F}_t\)</span> can be calculated analytically or via automatic differentiation. Therefore, we just need to provide an update to <span class="math notranslate nohighlight">\(\nabla_{Y_s} \bar{x}_t\)</span>. We further provide a sparse Broyden update to <span class="math notranslate nohighlight">\(\nabla_{Y_s} \bar{x}_t\)</span>, borrowing the insight from Schubert (1970). A sparse update is efficient and necessary, as not all aggregate variables affect individual decisions, and a blind, traditional dense Broyden update will lead to wrong sparsity structures, and in many cases lead to divergence in the solving process or suboptimal performances.</p>
+<p>We utilize the fake news algorithm developed in <a class="reference external" href="https://onlinelibrary.wiley.com/doi/full/10.3982/ECTA17434">Auclert et al. (2021)</a> to construct the initial Jacobian <span class="math notranslate nohighlight">\(\nabla_{Y_s} \bar{x}_t\)</span> at the steady state.</p>
+</section>
+<section id="other-implementation-details">
+<h2>Other Implementation Details<a class="headerlink" href="#other-implementation-details" title="Permalink to this heading"></a></h2>
+<p>To ensure maximum performance, the procedure for solving individual optimization problems is compiled into C++ libraries (MATLAB mex binaries). Functions are approximated with linear interpolations or tensor product of cubic splines, with the option to specify different orders for extrapolation. The optimization problems are solved with a well-respected numerical routines. Analytical gradients are used whenever possible with automatic differentiation as a backup.</p>
+<p>Distributions of individual states and their deterministic transitions are approximated over histograms following Young (2010). The stationary distribution is solved as an eigen vector of the stationary transition. Sparsity of the transition matrix is taken care of at construction to assure performance.</p>
+<p>The aggregate equilibrium system is defined in MATLAB. Multiple algorithms are provided, for both steady states or transition paths, with the Jacobian constructed following the aforementioned procedure.</p>
+<p>Stochastic simulations of individual samples are also provided.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../examples/HANK1_ZLB/hank1_zlb.html" class="btn btn-neutral float-left" title="Solving for Non-linear Transitions: Forward Guidance under ZLB (McKay, Nakamura, Steinsson, 2016)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api.html" class="btn btn-neutral float-right" title="Toolbox API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Jinhui Bai, Wenlan Luo and Pengfei Wang.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

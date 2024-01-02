@@ -71,7 +71,7 @@ def setup(app: Sphinx):
 
 # -- Project information -----------------------------------------------------
 
-project = 'HANS'
+project = 'HANS: A Heterogeneous-Agent model Nonlinear Solver'
 copyright = '2023, Jinhui Bai, Wenlan Luo and Pengfei Wang'
 author = 'Jinhui Bai, Wenlan Luo and Pengfei Wang'
 
@@ -89,7 +89,7 @@ extensions = [
   'sphinx.ext.autosectionlabel',
   'sphinx.ext.githubpages',
 ]
-pdf_documents = [('index', u'rst2pdf', u'HANS User Manual', u'Jinhui Bai and Wenlan Luo'),]
+pdf_documents = [('index', u'rst2pdf', u'HANS: A Heterogeneous-Agent model Nonlinear Solver', u'Jinhui Bai, Wenlan Luo and Pengfei Wang'),]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -115,6 +115,7 @@ myst_enable_extensions = [
     "substitution",
     "tasklist",
 ]
+myst_number_code_blocks = ["HANS"]
 
 # -- Options for HTML output -------------------------------------------------
 

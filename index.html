@@ -19,7 +19,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Examples" href="examples/index.html" /> 
+    <link rel="next" title="Getting Started: Krusell and Smith (1998)" href="examples/KS_JEDC10/ks.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -31,7 +31,7 @@
           
           
           <a href="#" class="icon icon-home">
-            HANS
+            HANS: A Heterogeneous-Agent model Nonlinear Solver
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -44,8 +44,14 @@
               <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Home</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples/index.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="miscs/howto_write_examples.html">How to Write Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/KS_JEDC10/ks.html">Getting Started: Krusell and Smith (1998)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/HANK1_SSJ/hank1_ssj.html">Handling Non-trivial Market Clearing: One-asset HANK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/HANK2_SSJ/hank2_ssj.html">Handling Portfolio Choices: Two-asset HANK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/KT2008/kt2008.html">Handling Non-convex Adjustment Costs: Khan and Thomas (2008)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/HANK1_ZLB/hank1_zlb.html">Solving for Non-linear Transitions: Forward Guidance under ZLB (McKay, Nakamura, Steinsson, 2016)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cores/methodology.html">The Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cores/api.html">Toolbox API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="miscs/howto_contribute_examples.html">How to Contribute Examples</a></li>
 </ul>
 
         </div>
@@ -54,7 +60,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">HANS</a>
+          <a href="#">HANS: A Heterogeneous-Agent model Nonlinear Solver</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -62,7 +68,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">HANS: A Heterogeneous-Agent model Nonlinear Solver</li>
+      <li class="breadcrumb-item active"><strong>HANS</strong>: A <em><strong>H</strong></em>eterogeneous-<em><strong>A</strong></em>gent model <em><strong>N</strong></em>onlinear <em><strong>S</strong></em>olver</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -72,16 +78,106 @@
            <div itemprop="articleBody">
              
   <section class="tex2jax_ignore mathjax_ignore" id="hans-a-heterogeneous-agent-model-nonlinear-solver">
-<h1>HANS: A Heterogeneous-Agent model Nonlinear Solver<a class="headerlink" href="#hans-a-heterogeneous-agent-model-nonlinear-solver" title="Permalink to this heading"></a></h1>
+<h1><strong>HANS</strong>: A <em><strong>H</strong></em>eterogeneous-<em><strong>A</strong></em>gent model <em><strong>N</strong></em>onlinear <em><strong>S</strong></em>olver<a class="headerlink" href="#hans-a-heterogeneous-agent-model-nonlinear-solver" title="Permalink to this heading"></a></h1>
+<p><strong>HANS</strong> is a toolbox that solves heterogeneous-agent (HA) models for non-linear solutions, using the algorithm developed by Bai, Luo and Wang (2023). Other toolboxes solving HA models include:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://econ-ark.org/">Econ-ARK</a></p></li>
+<li><p><a class="reference external" href="https://github.com/gregkaplan/phact">PHACT</a></p></li>
+<li><p><a class="reference external" href="https://github.com/shade-econ/sequence-jacobian">Sequence Space Jacobian</a></p></li>
+</ul>
+<p>What differentiates <strong>HANS</strong> from other toolboxes is that it parses intuitive model script files like Dynare, compiles C++ binaries for high-performance computations, and provides convenient MATLAB interfaces. For example, the model of Krusell and Smith (1998) can be represented with the following toolbox script, and solved on a regular laptop within 5 seconds.</p>
+<div class="highlight-HANS notranslate"><div class="highlight"><pre><span></span><span class="c">% The parameters are from from den Haan, Judd, Juillard, 2010, &quot;Computational Suite of models with heterogeneous agents: </span>
+<span class="c">% Incomplete markets and aggregate uncertainty&quot; Journal of Economic Dynamics and Control, 34, pp 1 - 3.</span>
+<span class="k">parameters</span> beta sigma r w tau mu_ratio labor;
+beta = 0.99;    <span class="c">% subjective discount factor</span>
+sigma = 1.0;    <span class="c">% risk aversion</span>
+labor = 1.0/0.9;     <span class="c">% exogenous labor supply when working</span>
+mu_ratio = 0.15;     <span class="c">% unemployment insurance replacement ratio</span>
+r = 0.009;      <span class="c">% asset return</span>
+w = 0.89;       <span class="c">% wage rate</span>
+
+<span class="k">var_shock</span> e;
+<span class="k">shock_trans</span> = [0.600000, 0.400000;
+               0.044445, 0.955555];
+e = [0.00;1.00];
+shock_invariant_dist = [0.1;0.9];
+e_bar = shock_invariant_dist(:).&#39;*e(:); 
+L = labor*e_bar;
+unemp_rate = shock_invariant_dist(1);  <span class="c">% unemployment rate </span>
+tau = mu_ratio*unemp_rate/L; <span class="c">% labor income tax rate</span>
+
+<span class="k">var_state</span> a;
+a = exp(linspace(log(0.25), log(200 + 0.25), 500)) - 0.25;
+
+<span class="c">% allow multiple choice variables</span>
+<span class="k">var_policy</span> c ap;
+<span class="k">initial</span> c 1.0;
+<span class="k">initial</span> ap 0.0;
+
+<span class="k">vfi;</span>
+    budget = (1+r)*a + w*((1.0-tau)*e*labor + mu_ratio*(1- e));
+    u = log(c);
+    <span class="c">% Decision problem stated with the Belman equation</span>
+    Tv = u + beta*EXPECT(v(ap));
+    <span class="c">% Allow arbitrary equality/inequality constraints</span>
+    c + ap == budget;
+    ap &gt;= 0.0;
+<span class="k">end;</span>
+
+<span class="k">var_agg</span> K;
+K = 43.0; <span class="c">% initial guess</span>
+Z = 1.0; <span class="c">% TFP</span>
+alpha = 0.36;   <span class="c">% capital share</span>
+delta = 0.025;  <span class="c">% depreciation</span>
+
+<span class="k">var_agg_shock</span> Z;
+
+<span class="k">model;</span>
+    <span class="c">% Aggregate conditions stated like Dynare</span>
+    r = Z*alpha*(K(-1)^(alpha-1))*(L^(1-alpha)) - delta;
+    w = Z*(1-alpha)*(K(-1)^alpha)*(L^(-alpha));
+    K == ap; <span class="c">% asset demand = asset supply</span>
+    <span class="c">% Allow box constraints for aggregate variables</span>
+    K &gt;= 38.0;
+<span class="k">end;</span>
+</pre></div>
+</div>
+<p><strong>HANS</strong> solves HA models with an arbitrary number of endogenous states, handles multi-dimension continuous choice variables including portfolio choices, handles discrete choices, and solves for nonlinear transition paths. For more examples demonstrating the capability and usage of the toolbox, see the list below.</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Home</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples/index.html">Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="examples/KS_JEDC10/ks.html">Krusell and Smith (1998)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/KS_JEDC10/ks.html">Getting Started: Krusell and Smith (1998)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/KS_JEDC10/ks.html#the-model">The Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/KS_JEDC10/ks.html#the-toolbox-script-hmod-file">The Toolbox Script (hmod) File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/KS_JEDC10/ks.html#use-the-toolbox">Use the Toolbox</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/KS_JEDC10/ks.html#whats-next">What’s Next?</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="miscs/howto_write_examples.html">How to Write Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/HANK1_SSJ/hank1_ssj.html">Handling Non-trivial Market Clearing: One-asset HANK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/HANK2_SSJ/hank2_ssj.html">Handling Portfolio Choices: Two-asset HANK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/KT2008/kt2008.html">Handling Non-convex Adjustment Costs: Khan and Thomas (2008)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/HANK1_ZLB/hank1_zlb.html">Solving for Non-linear Transitions: Forward Guidance under ZLB (McKay, Nakamura, Steinsson, 2016)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/HANK1_ZLB/hank1_zlb.html#the-model">The Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/HANK1_ZLB/hank1_zlb.html#the-hmod-file">The hmod File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/HANK1_ZLB/hank1_zlb.html#use-the-toolbox">Use the Toolbox</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cores/methodology.html">The Algorithm</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cores/methodology.html#general-framework">General Framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cores/methodology.html#calculating-the-jacobian-with-partial-broyden-updates">Calculating the Jacobian with Partial Broyden Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cores/methodology.html#other-implementation-details">Other Implementation Details</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cores/api.html">Toolbox API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cores/api.html#toolbox-script-hmod-file">Toolbox Script (hmod) File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cores/api.html#matlab-interfaces">MATLAB Interfaces</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="miscs/howto_contribute_examples.html">How to Contribute Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="miscs/howto_contribute_examples.html#frequently-used-references">Frequently used references:</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </section>
@@ -90,7 +186,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="examples/index.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="examples/KS_JEDC10/ks.html" class="btn btn-neutral float-right" title="Getting Started: Krusell and Smith (1998)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

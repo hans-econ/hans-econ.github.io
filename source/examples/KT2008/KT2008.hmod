@@ -1,0 +1,101 @@
+parameters beta sigma chi alpha lambda theta nu delta xi_max z a w;
+% The parameters are taken from Khan and Thomas (2008)
+beta = 0.961; % subjective discount factor 
+sigma = 1.0;  % inverse of EIS
+alpha = 0.0;  % inverse Frisch parameter
+chi = 2.32531; % labor preference weight: calibrated from model_cali below
+theta = 0.256; % capital elasticity of production function
+nu = 0.64;  % labor share
+delta = 0.085; % capital depreciation rate
+xi_max = 0.0083; % upper bound on adjustment cost
+z = 0.0; % log of aggregate TFP
+a = 0.011; % no-adjustment cost region
+w = 0.961428; % wage rate
+lambda = chi/w; % marginal utility of consumption
+
+var_shock e;
+% idiosyncratic productivity log(e') = 0.859*log(e) + N(0,0.022^2): discretized as a 15 State Markov Chain using Rouwenhorst Method 
+setup_shock_process;
+
+var_state k;
+k_min = 1e-3;
+k_max = 4;
+nkgrid = 1000;
+k = exp(linspace(log(k_min), log(k_max + k_min), nkgrid)) - k_min;
+
+var_policy ka kn;
+initial ka k;
+initial kn (1-delta)*k;
+
+var_aux p nd kp y c;
+
+vfi;
+    % labor input choice from accounting profit max: w = nu*exp(z)*exp(e)*(k^theta)*(n^(nu-1))
+    nd_input = (nu*exp(z)*exp(e)*(k^theta)/w)^(1/(1-nu)); % firm labor demand 
+    y = exp(z)*exp(e)*(k^theta)*(nd_input^nu); % firm output
+    Tv_fixed = lambda*(y - w*nd_input) + lambda*(1-delta)*k; % fixed part of Bellman
+
+    Tv_a = -lambda*ka + beta*EXPECT(v(ka)); % Bellman for active firm
+    Tv_n = -lambda*kn + beta*EXPECT(v(kn)); % Bellman for inactive firm
+    objective = Tv_a + Tv_n;
+
+    ka >= 0.0;
+    kn >= (1 - delta - a)*k;
+    kn <= (1 - delta + a)*k;
+
+    xi_tilde = (Tv_a - Tv_n)/(w*lambda); % adjustment threshold before considering domain
+    xi_star = min(max(xi_tilde,0.0),xi_max); % adjustment threshold after adjusting for domain
+    p = xi_star/xi_max; % adjustment probability
+    nd_adjust = xi_star*xi_star/(2*xi_max); % adjustment cost in labor unit
+    Tv = Tv_fixed + p*Tv_a - lambda*w*nd_adjust + (1-p)*Tv_n; % Bellman Equation Value
+    kp = p*ka + (1-p)*kn; % average capital holding for the next period
+    nd = nd_input + nd_adjust; % firm's gross labor demand
+    c = y + (1-delta)*k - kp; % firm's sale to consumers
+        
+    k(+1) = {kp} {1};
+end;
+
+% statements below the vfi block will also be copied to evaluation in the ss block
+var_agg w lambda;
+
+% calibration targets
+n_star = 1/3; % Calibration Target for labor
+
+var_agg_shock z;
+
+model_cali(chi,w);
+    % Use labor market clearing (nd = N) and household intratemporal FOC to get C: chi*N^alpha = w*(C^(-sigma))
+    N = n_star; % labor supply = target
+    C = (chi*(N^alpha)/w)^(-1.0/sigma); % consumption demand
+    % equilibrium equations
+    C + kp - (1-delta)*k == y; % goods demand = goods supply
+    nd == N; % labor demand = labor supply
+
+    % bound constraints for unknowns    
+    chi >= 1e-8;
+    w >= 1e-8;
+
+    % post evaluation
+    lambda = C^(-sigma);
+end;
+
+model_ss(w,lambda);
+    % equilibrium equations
+    % Use labor market clearing (nd = N) and household intratemporal FOC to get C: chi*N^alpha = w*(C^(-sigma)) 
+    (chi*(nd^alpha)/w)^(-1.0/sigma) + kp - (1-delta)*k == y; % goods demand = goods supply
+    lambda == chi*(nd^alpha)/w; % consistency of lambda
+
+    % bound constraints for unknowns    
+    w >= 0.0;
+    lambda >= 1e-8;
+
+    % post evaluation
+end;
+
+% a trivial model block
+var_agg dummy;
+dummy = 1;
+model;
+    dummy==1;
+end;
+

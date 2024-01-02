@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Toolbox API Reference &mdash; HANS Homepage</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="How to Contribute Examples" href="../miscs/howto_contribute_examples.html" />
+    <link rel="prev" title="The Algorithm" href="methodology.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            HANS: A Heterogeneous-Agent model Nonlinear Solver
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/KS_JEDC10/ks.html">Getting Started: Krusell and Smith (1998)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/HANK1_SSJ/hank1_ssj.html">Handling Non-trivial Market Clearing: One-asset HANK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/HANK2_SSJ/hank2_ssj.html">Handling Portfolio Choices: Two-asset HANK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/KT2008/kt2008.html">Handling Non-convex Adjustment Costs: Khan and Thomas (2008)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/HANK1_ZLB/hank1_zlb.html">Solving for Non-linear Transitions: Forward Guidance under ZLB (McKay, Nakamura, Steinsson, 2016)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="methodology.html">The Algorithm</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Toolbox API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#toolbox-script-hmod-file">Toolbox Script (hmod) File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#matlab-interfaces">MATLAB Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#solve_vfi"><code class="docutils literal notranslate"><span class="pre">solve_vfi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#solve_ss"><code class="docutils literal notranslate"><span class="pre">solve_ss()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#solve_trans_linear"><code class="docutils literal notranslate"><span class="pre">solve_trans_linear()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#solve_trans_nonlinear"><code class="docutils literal notranslate"><span class="pre">solve_trans_nonlinear()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#simulate_stochastic"><code class="docutils literal notranslate"><span class="pre">simulate_stochastic()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../miscs/howto_contribute_examples.html">How to Contribute Examples</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HANS: A Heterogeneous-Agent model Nonlinear Solver</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Toolbox API Reference</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="toolbox-api-reference">
+<h1>Toolbox API Reference<a class="headerlink" href="#toolbox-api-reference" title="Permalink to this heading"></a></h1>
+<section id="toolbox-script-hmod-file">
+<h2>Toolbox Script (hmod) File<a class="headerlink" href="#toolbox-script-hmod-file" title="Permalink to this heading"></a></h2>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>All statements need to be closed by a semicolon.</p>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">parameters</span> <span class="pre">var1</span> <span class="pre">var2</span> <span class="pre">...;</span></span></dt>
+<dd><p>Declare parameters that are used in the <strong>vfi</strong> block.</p>
+<p>“parameters” should include those which (1) enter the <strong>vfi</strong> block explicitly; or (2) enter the definition of <em>var_pre_vfi</em> and will change with <em>var_agg</em>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">var_shock</span> <span class="pre">var1</span> <span class="pre">var2</span> <span class="pre">...;</span></span></dt>
+<dd><p>Declare individual exogenous state variables. They need to be Markov chains with discretized values specified.</p>
+<p>Their joint transition matrix needs to be specified in varaible <em>shock_trans</em>.</p>
+<p>Example:</p>
+<div class="highlight-HANS notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">var_shock</span> e z;
+<span class="linenos"> 2</span>e_grid = [1.0, 2.0];
+<span class="linenos"> 3</span>e_trans = [0.4 0.6;0.6 0.4];
+<span class="linenos"> 4</span>z_grid = [2.0,3.0,4.0];
+<span class="linenos"> 5</span>z_trans = [0.6 0.2 0.2;0.2 0.6 0.2; 0.2 0.2 0.6];
+<span class="linenos"> 6</span><span class="c">% form tensor product</span>
+<span class="linenos"> 7</span>[e,z] = ndgrid(e,z);
+<span class="linenos"> 8</span>e = e(:)&#39;;
+<span class="linenos"> 9</span>z = z(:)&#39;;
+<span class="linenos">10</span><span class="k">shock_trans</span> = kron(z_trans, e_trans);
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">var_state</span> <span class="pre">var1</span> <span class="pre">var2</span> <span class="pre">...;</span></span></dt>
+<dd><p>Declare individual endogenous state variables. They need to be continuous varialbes.</p>
+<p>The grid for each endogenous state variable needs to be specified. Value and policy functions will be approximated over these grids with linear interpolation or cubic splines.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">var_pre_vfi</span> <span class="pre">var1</span> <span class="pre">var2</span> <span class="pre">...;</span></span></dt>
+<dd><p>Declare variables that are simple functions of  <em>var_shock</em> and/or <em>var_state</em>, which can be evaluated before the vfi block.</p>
+<p>A <em>var_pre_vfi</em> can be used in defining the initial values of <em>var_policy</em> or direclty used in the vfi block. This avoids unnecessary repetitive evaluations of these varaibles in solving individuals’ decision problems.</p>
+<p>Example:</p>
+<div class="highlight-HANS notranslate"><div class="highlight"><pre><span></span><span class="k">parameters</span> beta r w;
+...
+
+<span class="k">var_shock</span> e;
+...
+
+<span class="k">var_state</span> a;
+...
+
+<span class="k">var_pre_vfi</span> budget;
+budget = (1+r)*a + w*e;
+
+<span class="k">var_policy</span> ap;
+...
+
+<span class="k">vfi;</span>
+	c = budget - ap;
+	Tv = u(c) + beta*EXPECT(v(ap));
+	ap &gt;= 0.0;
+<span class="k">end;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">var_policy</span> <span class="pre">var1</span> <span class="pre">var2</span> <span class="pre">...;</span></span></dt>
+<dd><p>Declare individual policy variables, i.e., variables to be optimized with.
+Their initial values need to be specified, which can be dependent on state values or <em>var_pre_vfi</em>.</p>
+<p>Example:</p>
+<div class="highlight-HANS notranslate"><div class="highlight"><pre><span></span><span class="k">parameters</span> beta r w;
+...
+
+<span class="k">var_shock</span> e;
+...
+
+<span class="k">var_state</span> a;
+...
+
+<span class="k">var_pre_vfi</span> budget;
+budget = (1+r)*a + w*e;
+
+<span class="k">var_policy</span> c ap;
+<span class="k">initial</span> ap 0.0;
+<span class="k">initial</span> c budget;
+
+<span class="k">vfi;</span>
+	Tv = u(c) + beta*EXPECT(v(ap));
+	ap &gt;= 0.0;
+	c + ap == budget;
+<span class="k">end;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">var_aux</span> <span class="pre">var1</span> <span class="pre">var2</span> <span class="pre">...;</span></span></dt>
+<dd><p>Declare auxilliary variables which can be evaluated as simple functions of <em>var_shock</em>, <em>var_state</em>, and/or <em>var_policy</em>.</p>
+<p>They need to be defined in the <strong>vfi</strong> block and will be returned.</p>
+<p>Example:</p>
+<div class="highlight-HANS notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">parameters</span> beta r w;
+<span class="linenos"> 2</span>...
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="k">var_shock</span> e;
+<span class="linenos"> 5</span>...
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="k">var_state</span> a;
+<span class="linenos"> 8</span>...
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="k">var_pre_vfi</span> budget;
+<span class="linenos">11</span>budget = (1+r)*a + w*e;
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="k">var_policy</span> c ap;
+<span class="linenos">14</span><span class="k">initial</span> ap 0.0;
+<span class="linenos">15</span><span class="k">initial</span> c budget;
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="k">var_aux</span> inc;
+<span class="linenos">18</span>
+<span class="linenos">19</span><span class="k">vfi;</span>
+<span class="linenos">20</span>	Tv = u(c) + beta*EXPECT(v(ap));
+<span class="linenos">21</span>	ap &gt;= 0.0;
+<span class="linenos">22</span>	c + ap == budget;
+<span class="linenos">23</span>	inc = a*r + w*e;
+<span class="linenos">24</span><span class="k">end;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">vfi;</span> <span class="pre">...</span> <span class="pre">end;</span></span></dt>
+<dd><p>Define the <strong>vfi</strong> block. The block is executed line by line from top to bottom. In the block,</p>
+<ul class="simple">
+<li><p>The updated value after each iteration needs to be assigned to “Tv”</p></li>
+<li><p>The objective of the optimization needs to be assigned to “objective”. If variable “objective” is not found, “Tv” will be used as the objective.</p></li>
+<li><p>Future value function (i.e., value function from the last iteration) can be evaluated by calling v(var_state_1_future, var_state_2_future,…). If calling is warpped by EXPECT(), then the expected value will be calculated using the transition matrix conditional on current value of exogenous states.</p></li>
+<li><p>Equality or inequality constraints can be specified with “==”, and “&lt;=” or “&gt;=”.</p></li>
+<li><p>All <em>var_aux</em>s need to be defined.</p></li>
+<li><p>The state transition is inferred from the arguments when evaluating future value functions. One can also specify the state transition explicity by the line: <em>var_state</em>(+1) = {state_value_1, state_value_2, …} {prob_1, prob_2, }, where state_value_1, state_value_2, … are values of states, and prob_1, prob_2 are the associated probabilities (for stochastic transitions).</p></li>
+</ul>
+<p>Example:</p>
+<div class="highlight-HANS notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">parameters</span> beta r w;
+<span class="linenos"> 2</span>...
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="k">var_shock</span> e;
+<span class="linenos"> 5</span>...
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="k">var_state</span> a;
+<span class="linenos"> 8</span>...
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="k">var_pre_vfi</span> budget;
+<span class="linenos">11</span>budget = (1+r)*a + w*e;
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="k">var_policy</span> c ap;
+<span class="linenos">14</span><span class="k">initial</span> ap 0.0;
+<span class="linenos">15</span><span class="k">initial</span> c budget;
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="k">var_aux</span> inc;
+<span class="linenos">18</span>
+<span class="linenos">19</span><span class="k">vfi;</span>
+<span class="linenos">20</span>	<span class="c">% assign updated value to Tv</span>
+<span class="linenos">21</span>	<span class="c">% Tv will also be the objective</span>
+<span class="linenos">22</span>	<span class="c">% state transition is inferred to be &quot;ap&quot;</span>
+<span class="linenos">23</span>	Tv = u(c) + beta*EXPECT(v(ap));
+<span class="linenos">24</span>	
+<span class="linenos">25</span>	<span class="c">% can also specify the state transition explicitly</span>
+<span class="linenos">26</span>	a(+1) = {ap} {1};
+<span class="linenos">27</span>	
+<span class="linenos">28</span>	<span class="c">% equality and inequality constraints</span>
+<span class="linenos">29</span>	ap &gt;= 0.0;
+<span class="linenos">30</span>	c + ap == budget;
+<span class="linenos">31</span>	
+<span class="linenos">32</span>	<span class="c">% var_aux needs to be assigned</span>
+<span class="linenos">33</span>	inc = a*r + w*e;
+<span class="linenos">34</span><span class="k">end;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Defining the following equilibrium model and required information is optional. The parser can generate standalone codes for solving the value function iteration.</p>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">var_agg</span> <span class="pre">var1</span> <span class="pre">var2</span> <span class="pre">...;</span></span></dt>
+<dd><p>Declare unknowns in aggregate equilibirium conditions.</p>
+<p>Their initial values need to be specified.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">var_agg_shock</span> <span class="pre">var1</span> <span class="pre">var2</span> <span class="pre">...;</span></span></dt>
+<dd><p>Declare exogenous time-varying aggregate variables.</p>
+<p>Their steady state values need to be specified.</p>
+<p>For <em>var_agg_shock</em> named “var1”, its time sequence value can be overwritten by supplying a field named “var1_t” in the options passed to the model solving script.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">model;</span> <span class="pre">...</span> <span class="pre">end;</span></span></dt>
+<dd><p>Define the system of equations that represents the aggregate equilibrium system. In the block,</p>
+<ul class="simple">
+<li><p>Each equation is defined with a line that contains “==”.</p></li>
+<li><p>Statements are evaluated from top to bottom, which assign values to intermediate variables.</p></li>
+<li><p>All individual parameters that change with <em>var_agg</em> (i.e., wage and interest rates that depend on capital stock) need to be updated before defining the system of equations.</p></li>
+<li><p><em>var_policy</em> can be used in defining the equation, which represents the aggregates of individual policy functions integrated over the distribution of states.</p></li>
+<li><p>Lags and leads of variables are represented by varname(-l) or varname(+l), where l is the number of lag or lead periods. Only variables declared as <em>var_agg</em> can have lags and leads (i.e., intermediate values assigned cannot be indexed with lags or leads).</p></li>
+<li><p>Pre-determined variables should enter the system as lagged variables.</p></li>
+<li><p>All left hand side assigned variables will be returned after the equations are solved. This facilitates calculating extra equilibrium variables of interests.</p></li>
+</ul>
+<p>Example:</p>
+<div class="highlight-HANS notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">parameters</span> beta r w;
+<span class="linenos"> 2</span>...
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="k">var_state</span> a;
+<span class="linenos"> 6</span>...
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="k">var_policy</span> ap;
+<span class="linenos"> 9</span>...
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="k">vfi;</span>
+<span class="linenos">12</span>	...
+<span class="linenos">13</span><span class="k">end;</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span><span class="k">var_agg</span> K;
+<span class="linenos">16</span>K = 30.0;	<span class="c">% initial value for solving the stead state</span>
+<span class="linenos">17</span><span class="k">var_agg_shock</span> Z;
+<span class="linenos">18</span>Z = 1.0;	<span class="c">% steady state value</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span><span class="k">model;</span>
+<span class="linenos">21</span>	<span class="c">% update parameters that enter vfi</span>
+<span class="linenos">22</span>	<span class="c">% capital is pre-determined, use the lagged value K(-1)</span>
+<span class="linenos">23</span>    r = alpha * Z * K(-1)^(alpha-1) * L^(1-alpha) - delta;
+<span class="linenos">24</span>    w = (1-alpha) * Z * K(-1)^alpha * L^(-alpha);
+<span class="linenos">25</span>    
+<span class="linenos">26</span>    <span class="c">% use &quot;==&quot; to define equations</span>
+<span class="linenos">27</span>    <span class="c">% ap used below is the aggregate of policy ap</span>
+<span class="linenos">28</span>    K == ap; <span class="c">% asset demand = asset supply</span>
+<span class="linenos">29</span>    
+<span class="linenos">30</span>    <span class="c">% post evaluation; all assignments will be returned</span>
+<span class="linenos">31</span>    Y = Z*(K(-1)^alpha)*(L^(1-alpha));
+<span class="linenos">32</span>    I = K - (1 - delta)*K(-1);
+<span class="linenos">33</span>    C = Y - I;
+<span class="linenos">34</span><span class="k">end;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">model_modname(var_agg_1,</span> <span class="pre">var_agg_2);</span> <span class="pre">...</span> <span class="pre">end;</span></span></dt>
+<dd><p>Define an alternative equilibrium system with unknowns overwritten by (var_agg_1, var_agg_2, …).</p>
+<p>The parser will generate a “solve_modname.m” script file for each alterantive model_modname block.</p>
+<p>This allows multiple different models to share the same <strong>vfi</strong> block (e.g., the system for calibration is different from the system of solving the equilibrium).</p>
+<p>Example:</p>
+<div class="highlight-HANS notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span>...
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="k">var_agg</span> K;
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="k">model;</span>
+<span class="linenos"> 6</span>	<span class="c">% this block is used for solving the equilibrium</span>
+<span class="linenos"> 7</span>    r = alpha * Z * K(-1)^(alpha-1) * L^(1-alpha) - delta;
+<span class="linenos"> 8</span>    w = (1-alpha) * Z * K(-1)^alpha * L^(-alpha);
+<span class="linenos"> 9</span>    K == ap; <span class="c">% asset demand = asset supply</span>
+<span class="linenos">10</span><span class="k">end;</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span>model_cali(K,beta);
+<span class="linenos">13</span>	<span class="c">% this block is used for calibration </span>
+<span class="linenos">14</span>    r = alpha * Z * K(-1)^(alpha-1) * L^(1-alpha) - delta;
+<span class="linenos">15</span>    w = (1-alpha) * Z * K(-1)^alpha * L^(-alpha);
+<span class="linenos">16</span>    Y = Z*(K(-1)^alpha)*(L^(1-alpha));
+<span class="linenos">17</span>    K == ap; <span class="c">% asset demand = asset supply</span>
+<span class="linenos">18</span>    K/Y == KY_ratio_target;	<span class="c">% for calibration</span>
+<span class="linenos">19</span><span class="k">end;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="matlab-interfaces">
+<h2>MATLAB Interfaces<a class="headerlink" href="#matlab-interfaces" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="solve_vfi">
+<span class="sig-name descname"><span class="pre">solve_vfi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#solve_vfi" title="Permalink to this definition"></a></dt>
+<dd><p>Solve the value function iteration.</p>
+<dl class="myst field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>options</strong> – <p>a structure that can contain fields below</p>
+<ul>
+<li><p>interp_order: the order of interpolation and extrapolation in value function approximations. Default: ‘4+3’</p>
+<ul>
+<li><p>‘4’: cubic</p></li>
+<li><p>‘2’: linear</p></li>
+<li><p>‘4+2’: cubic interpolation + linear extraplation</p></li>
+<li><p>‘4+3’: cubic interpolation + quadrait extrapolation</p></li>
+<li><p>‘pchip’: MATLAB’s pchip (only for single-dimensional endogenous state)</p></li>
+</ul>
+</li>
+<li><p>algorithm: the algorithm used in solving the optimization problem. Default: ‘dbrent’ for single-dimensional choice with box constraints; ‘donlp2’ otherwise. Allowed values:</p>
+<ul>
+<li><p>‘dbrent’</p></li>
+<li><p>‘golden’</p></li>
+<li><p>‘brent’</p></li>
+<li><p>‘nr3_dbrent’</p></li>
+<li><p>‘donlp2’</p></li>
+</ul>
+</li>
+<li><p>vfi_tol_v: tolerance for convergence in value functions. Default: 1e-6</p></li>
+<li><p>vfi_tol_policy: tolerance for convergence in policy functions. Default: 1e-12</p></li>
+<li><p>print_freq: frequencies of printing information. Default: 100</p></li>
+<li><p>solver_tol_x: tolerance for optimality for the optimization problem. Default: 1e-8</p></li>
+<li><p>solver_tol_con: tolerance for feasibility for the optimization problem. Default: 1e-8</p></li>
+<li><p>num_threads: number of threads used in solving the optimization problem across state values. Default: value returned by feature(‘numcores’)</p></li>
+</ul>
+</p></li>
+<li><p><strong>options</strong> – parameter values contained in the structure will be used to overwrite existing ones.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a structure that contains the solved policy functions</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solve_ss">
+<span class="sig-name descname"><span class="pre">solve_ss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#solve_ss" title="Permalink to this definition"></a></dt>
+<dd><p>Solve the steady state of the equilbrium system defined in the <strong>model</strong> block.</p>
+<dl class="myst field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>options</strong> – <p>a structure that can contain fields below</p>
+<ul>
+<li><p>ss_solver: the equation solver used for solving the steady state system. Default: ‘Broyden’. Allowed values:</p>
+<ul>
+<li><p>‘Broyden’</p></li>
+<li><p>‘Newton’</p></li>
+<li><p>‘lsqnonlin’</p></li>
+<li><p>‘CoDoSol’</p></li>
+<li><p>‘fsolve’</p></li>
+</ul>
+</li>
+<li><p>ss_ftol: tolerance for residuals of equations passed to the equation solver. Default: 1e-4</p></li>
+<li><p>ss_xtol: tolerance for step sizes passed to the equation solver. Default: 1e-6</p></li>
+<li><p>ss_findiffstep: finite difference step for calculating numerical derivatives. Default: 1e-4</p></li>
+<li><p>HANS_x: initial values of unknowns</p></li>
+</ul>
+</p></li>
+<li><p><strong>options</strong> – can also contain options passed to solving the value function iteration</p></li>
+<li><p><strong>options</strong> – can also contain parameter values to be overwritten</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a structure that contains the solved steady state</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solve_trans_linear">
+<span class="sig-name descname"><span class="pre">solve_trans_linear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ss</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#solve_trans_linear" title="Permalink to this definition"></a></dt>
+<dd><p>Solve the linearized transition path following the Sequence Space Jacobian method. The Jacobian matrix of individual aggregates with respect to parameters is calculated using the fake news algorithm.</p>
+<dl class="myst field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ss</strong> – a structure that conatins the solved steady state (returned by solve_ss) around which the linearization is carried out</p></li>
+<li><p><strong>options</strong> – <p>a structure that can contain fields below</p>
+<ul>
+<li><p>T: number of periods of the transition path. Default: 200</p></li>
+</ul>
+</p></li>
+<li><p><strong>options</strong> – for a <em>var_agg_shock</em> named “var”, supply the updated time sequence in field “var_t” of the structure</p></li>
+<li><p><strong>options</strong> – can also contain options passed to solving the value function iteration</p></li>
+<li><p><strong>options</strong> – can also contain parameter values to be overwritten</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a structure that contains the solved transition path and the Jacobian matrix of individual aggregates with respect to parameters</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solve_trans_nonlinear">
+<span class="sig-name descname"><span class="pre">solve_trans_nonlinear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_ss</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">final_ss</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#solve_trans_nonlinear" title="Permalink to this definition"></a></dt>
+<dd><p>Solve the non-linear transition path.</p>
+<dl class="myst field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>init_ss</strong> – a structure that conatins the initial steady state that the transition path starts from</p></li>
+<li><p><strong>final_ss</strong> – a structure that conatins the final steady state that the transition path converges to</p></li>
+<li><p><strong>options</strong> – <p>a structure that can contain fields below</p>
+<ul>
+<li><p>T: number of periods of the transition path. Default: 200</p></li>
+<li><p>trans_linear_rslt: the solved linearized transition path, which contains the Jacobian matrix of individual aggregates with respect to parameters, that is used to form the initial Jacobian of the nonlinear equation system. Default: empty; will call solve_trans_linear to calculate</p></li>
+<li><p>trans_solver: the equation solver. Default: “Broyden”. Allowed values:</p>
+<ul>
+<li><p>“Broyden”</p></li>
+<li><p>“FixedJacobian”</p></li>
+<li><p>“BroydenMod”</p></li>
+<li><p>“Newton”</p></li>
+<li><p>“fsolve”</p></li>
+</ul>
+</li>
+<li><p>trans_ftol: tolerance for residuals of equations passed to the equation solver. Default: 1e-4</p></li>
+<li><p>trans_xtol: tolerance for step sizes passed to the equation solver. Default: 1e-6</p></li>
+<li><p>HANS_x: initial values of unknowns</p></li>
+</ul>
+</p></li>
+<li><p><strong>options</strong> – can also contain options passed to solving the value function iteration</p></li>
+<li><p><strong>options</strong> – can also contain parameter values to be overwritten</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a structure that contains the solved nonlinear transition path</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">solve_*modname*(options)</span></span></dt>
+<dd><p>Solve the steady state of the alternative equilbrium system defined in the model_<em>modname</em> block.</p>
+<p>Functions share the same input and output structures as solve_ss.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="simulate_stochastic">
+<span class="sig-name descname"><span class="pre">simulate_stochastic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eq_rslt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simulate_stochastic" title="Permalink to this definition"></a></dt>
+<dd><p>Simulate individual random samples with the solved equilibrium.</p>
+<dl class="myst field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>eq_rslt</strong> – a structure that contains a steady state equilibrium (returned by solve_ss) or a transition path (returned by solve_nonlinear_trans)</p></li>
+<li><p><strong>options</strong> – <p>a structure that can contain fields below</p>
+<ul>
+<li><p>num_samples: number of individual samples. Default: 1e4</p></li>
+<li><p>num_periods: number of periods. Default: 1e3</p></li>
+<li><p>simulate_initials: a structure that contains the initial state values. Default: empty; will sample state values from the stationary distribution</p></li>
+<li><p>interp_order: the order of interpolation and extrapolation in policy function approximations. Default: ‘2’</p>
+<ul>
+<li><p>‘4’: cubic</p></li>
+<li><p>‘2’: linear</p></li>
+<li><p>‘4+2’: cubic interpolation + linear extraplation</p></li>
+<li><p>‘4+3’: cubic interpolation + quadrait extrapolation</p></li>
+</ul>
+</li>
+<li><p>simu_print_freq: frequency of printing the summary statsitics along the simulation. Default: 1000</p></li>
+<li><p>num_threads: number of threads used in interpolating policy functions. Default: value returned by feature(‘numcores’)</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="methodology.html" class="btn btn-neutral float-left" title="The Algorithm" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../miscs/howto_contribute_examples.html" class="btn btn-neutral float-right" title="How to Contribute Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Jinhui Bai, Wenlan Luo and Pengfei Wang.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
