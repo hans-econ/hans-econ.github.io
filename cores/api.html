@@ -135,28 +135,28 @@
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">var_pre_vfi</span> <span class="pre">var1</span> <span class="pre">var2</span> <span class="pre">...;</span></span></dt>
 <dd><p>Declare variables that are simple functions of  <em>var_shock</em> and/or <em>var_state</em>, which can be evaluated before the vfi block.</p>
-<p>A <em>var_pre_vfi</em> can be used in defining the initial values of <em>var_policy</em> or direclty used in the vfi block. This avoids unnecessary repetitive evaluations of these varaibles in solving individuals’ decision problems.</p>
+<p>A <em>var_pre_vfi</em> can be used in defining the initial values of <em>var_policy</em> or direclty used in the vfi block. This avoids unnecessary repetitive evaluations of these varaibles in solving the optimization problem.</p>
 <p>Example:</p>
-<div class="highlight-HANS notranslate"><div class="highlight"><pre><span></span><span class="k">parameters</span> beta r w;
-...
-
-<span class="k">var_shock</span> e;
-...
-
-<span class="k">var_state</span> a;
-...
-
-<span class="k">var_pre_vfi</span> budget;
-budget = (1+r)*a + w*e;
-
-<span class="k">var_policy</span> ap;
-...
-
-<span class="k">vfi;</span>
-    c = budget - ap;
-    Tv = u(c) + beta*EXPECT(v(ap));
-    ap &gt;= 0.0;
-<span class="k">end;</span>
+<div class="highlight-HANS notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">parameters</span> beta r w;
+<span class="linenos"> 2</span>...
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="k">var_shock</span> e;
+<span class="linenos"> 5</span>...
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="k">var_state</span> a;
+<span class="linenos"> 8</span>...
+<span class="linenos"> 9</span>
+<span class="hll"><span class="linenos">10</span><span class="k">var_pre_vfi</span> budget;
+</span><span class="hll"><span class="linenos">11</span>budget = (1+r)*a + w*e;
+</span><span class="linenos">12</span>
+<span class="linenos">13</span><span class="k">var_policy</span> ap;
+<span class="linenos">14</span>...
+<span class="linenos">15</span>
+<span class="linenos">16</span><span class="k">vfi;</span>
+<span class="hll"><span class="linenos">17</span>    c = budget - ap;
+</span><span class="linenos">18</span>    Tv = u(c) + beta*EXPECT(v(ap));
+<span class="linenos">19</span>    ap &gt;= 0.0;
+<span class="linenos">20</span><span class="k">end;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -167,27 +167,27 @@ budget = (1+r)*a + w*e;
 <dd><p>Declare individual policy variables, i.e., variables to be optimized with.
 Their initial values need to be specified, which can be dependent on state values or <em>var_pre_vfi</em>.</p>
 <p>Example:</p>
-<div class="highlight-HANS notranslate"><div class="highlight"><pre><span></span><span class="k">parameters</span> beta r w;
-...
-
-<span class="k">var_shock</span> e;
-...
-
-<span class="k">var_state</span> a;
-...
-
-<span class="k">var_pre_vfi</span> budget;
-budget = (1+r)*a + w*e;
-
-<span class="k">var_policy</span> c ap;
-<span class="k">initial</span> ap 0.0;
-<span class="k">initial</span> c budget;
-
-<span class="k">vfi;</span>
-    Tv = u(c) + beta*EXPECT(v(ap));
-    ap &gt;= 0.0;
-    c + ap == budget;
-<span class="k">end;</span>
+<div class="highlight-HANS notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">parameters</span> beta r w;
+<span class="linenos"> 2</span>...
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="k">var_shock</span> e;
+<span class="linenos"> 5</span>...
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="k">var_state</span> a;
+<span class="linenos"> 8</span>...
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="k">var_pre_vfi</span> budget;
+<span class="linenos">11</span>budget = (1+r)*a + w*e;
+<span class="linenos">12</span>
+<span class="hll"><span class="linenos">13</span><span class="k">var_policy</span> c ap;
+</span><span class="hll"><span class="linenos">14</span><span class="k">initial</span> ap 0.0;
+</span><span class="hll"><span class="linenos">15</span><span class="k">initial</span> c budget;
+</span><span class="linenos">16</span>
+<span class="linenos">17</span><span class="k">vfi;</span>
+<span class="linenos">18</span>    Tv = u(c) + beta*EXPECT(v(ap));
+<span class="linenos">19</span>    ap &gt;= 0.0;
+<span class="linenos">20</span>    c + ap == budget;
+<span class="linenos">21</span><span class="k">end;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -214,14 +214,14 @@ budget = (1+r)*a + w*e;
 <span class="linenos">14</span><span class="k">initial</span> ap 0.0;
 <span class="linenos">15</span><span class="k">initial</span> c budget;
 <span class="linenos">16</span>
-<span class="linenos">17</span><span class="k">var_aux</span> inc;
-<span class="linenos">18</span>
+<span class="hll"><span class="linenos">17</span><span class="k">var_aux</span> inc;
+</span><span class="linenos">18</span>
 <span class="linenos">19</span><span class="k">vfi;</span>
 <span class="linenos">20</span>    Tv = u(c) + beta*EXPECT(v(ap));
 <span class="linenos">21</span>    ap &gt;= 0.0;
 <span class="linenos">22</span>    c + ap == budget;
-<span class="linenos">23</span>    inc = a*r + w*e;
-<span class="linenos">24</span><span class="k">end;</span>
+<span class="hll"><span class="linenos">23</span>    inc = a*r + w*e;
+</span><span class="linenos">24</span><span class="k">end;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -234,8 +234,8 @@ budget = (1+r)*a + w*e;
 <li><p>The updated value after each iteration needs to be assigned to “Tv”</p></li>
 <li><p>The objective of the optimization needs to be assigned to “objective”. If variable “objective” is not found, “Tv” will be used as the objective.</p></li>
 <li><p>Future value function (i.e., value function from the last iteration) can be evaluated by calling v(var_state_1_future, var_state_2_future,…). If calling is warpped by EXPECT(), then the expected value will be calculated using the transition matrix conditional on current value of exogenous states.</p></li>
-<li><p>Equality or inequality constraints can be specified with “==”, and “&lt;=” or “&gt;=”.</p></li>
-<li><p>All <em>var_aux</em>s need to be defined.</p></li>
+<li><p>Equality or inequality constraints can be specified with “==”, “&lt;=” or “&gt;=”.</p></li>
+<li><p>All <em>var_aux</em> need to be defined.</p></li>
 <li><p>The state transition is inferred from the arguments when evaluating future value functions. One can also specify the state transition explicity by the line: <em>var_state</em>(+1) = {state_value_1, state_value_2, …} {prob_1, prob_2, }, where state_value_1, state_value_2, … are values of states, and prob_1, prob_2 are the associated probabilities (for stochastic transitions).</p></li>
 </ul>
 <p>Example:</p>
@@ -293,7 +293,7 @@ budget = (1+r)*a + w*e;
 <span class="sig-name descname"><span class="pre">var_agg_shock</span> <span class="pre">var1</span> <span class="pre">var2</span> <span class="pre">...;</span></span></dt>
 <dd><p>Declare exogenous time-varying aggregate variables.</p>
 <p>Their steady state values need to be specified.</p>
-<p>For <em>var_agg_shock</em> named “var1”, its time sequence value can be overwritten by supplying a field named “var1_t” in the options passed to the model solving script.</p>
+<p>For <em>var_agg_shock</em> named “var”, its time sequence value can be overwritten by supplying a field named “var_t” in the options passed to the model solving script.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -303,7 +303,7 @@ budget = (1+r)*a + w*e;
 <ul class="simple">
 <li><p>Each equation is defined with a line that contains “==”.</p></li>
 <li><p>Statements are evaluated from top to bottom, which assign values to intermediate variables.</p></li>
-<li><p>All individual parameters that change with <em>var_agg</em> (i.e., wage and interest rates that depend on capital stock) need to be updated before defining the system of equations.</p></li>
+<li><p>All individual parameters that change with <em>var_agg</em> (e.g., wage and interest rates that depend on capital stock) need to be updated before defining the system of equations.</p></li>
 <li><p><em>var_policy</em> can be used in defining the equation, which represents the aggregates of individual policy functions integrated over the distribution of states.</p></li>
 <li><p>Lags and leads of variables are represented by varname(-l) or varname(+l), where l is the number of lag or lead periods. Only variables declared as <em>var_agg</em> can have lags and leads (i.e., intermediate values assigned cannot be indexed with lags or leads).</p></li>
 <li><p>Pre-determined variables should enter the system as lagged variables.</p></li>

@@ -55,11 +55,13 @@ The grid for each endogenous state variable needs to be specified. Value and pol
 
 Declare variables that are simple functions of  *var_shock* and/or *var_state*, which can be evaluated before the vfi block.
 
-A *var_pre_vfi* can be used in defining the initial values of *var_policy* or direclty used in the vfi block. This avoids unnecessary repetitive evaluations of these varaibles in solving individuals' decision problems.
+A *var_pre_vfi* can be used in defining the initial values of *var_policy* or direclty used in the vfi block. This avoids unnecessary repetitive evaluations of these varaibles in solving the optimization problem.
 
 Example:
 
-```{code} HANS
+```{sourcecode} HANS
+:linenos:
+:emphasize-lines: 10,11,17
 
 parameters beta r w;
 ...
@@ -93,7 +95,9 @@ Their initial values need to be specified, which can be dependent on state value
 
 Example:
 
-```{code} HANS
+```{sourcecode} HANS
+:linenos:
+:emphasize-lines: 13,14,15
 
 parameters beta r w;
 ...
@@ -130,7 +134,9 @@ They need to be defined in the **vfi** block and will be returned.
 
 Example:
 
-```HANS
+```{sourcecode} HANS
+:linenos:
+:emphasize-lines: 17,23
 
 parameters beta r w;
 ...
@@ -168,8 +174,8 @@ Define the **vfi** block. The block is executed line by line from top to bottom.
 - The updated value after each iteration needs to be assigned to "Tv"
 - The objective of the optimization needs to be assigned to "objective". If variable "objective" is not found, "Tv" will be used as the objective.
 - Future value function (i.e., value function from the last iteration) can be evaluated by calling v(var_state_1_future, var_state_2_future,...). If calling is warpped by EXPECT(), then the expected value will be calculated using the transition matrix conditional on current value of exogenous states.
-- Equality or inequality constraints can be specified with "==", and "<=" or ">=".
-- All *var_aux*s need to be defined.
+- Equality or inequality constraints can be specified with "==", "<=" or ">=".
+- All *var_aux* need to be defined.
 - The state transition is inferred from the arguments when evaluating future value functions. One can also specify the state transition explicity by the line: *var_state*(+1) = {state_value_1, state_value_2, ...} {prob_1, prob_2, }, where state_value_1, state_value_2, ... are values of states, and prob_1, prob_2 are the associated probabilities (for stochastic transitions).
 
 Example:
@@ -233,7 +239,7 @@ Declare exogenous time-varying aggregate variables.
 
 Their steady state values need to be specified.
 
-For *var_agg_shock* named "var1", its time sequence value can be overwritten by supplying a field named "var1_t" in the options passed to the model solving script.
+For *var_agg_shock* named "var", its time sequence value can be overwritten by supplying a field named "var_t" in the options passed to the model solving script.
 
 ```
 
@@ -244,7 +250,7 @@ Define the system of equations that represents the aggregate equilibrium system.
 
 - Each equation is defined with a line that contains "==".
 - Statements are evaluated from top to bottom, which assign values to intermediate variables.
-- All individual parameters that change with *var_agg* (i.e., wage and interest rates that depend on capital stock) need to be updated before defining the system of equations.
+- All individual parameters that change with *var_agg* (e.g., wage and interest rates that depend on capital stock) need to be updated before defining the system of equations.
 - *var_policy* can be used in defining the equation, which represents the aggregates of individual policy functions integrated over the distribution of states.
 - Lags and leads of variables are represented by varname(-l) or varname(+l), where l is the number of lag or lead periods. Only variables declared as *var_agg* can have lags and leads (i.e., intermediate values assigned cannot be indexed with lags or leads). 
 - Pre-determined variables should enter the system as lagged variables.
