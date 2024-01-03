@@ -32,13 +32,13 @@ $$
 :label: competitive_prices
 ```
 
-Given an initial distribution over households' states, $\Phi_0$, a sequential competitive equilibrium is a sequence of (1) distribution over households' states $\{\Phi_t\}$, (2) households' value and policy functions $\{v_t,g_{c,t},g_{a',t}\}$, and (3) aggregate quantities and prices $\{K_t, L_t, r_t, w_t\}$ such that
+Given an initial distribution over households' states, $\Phi_0$, a sequential competitive equilibrium is a sequence of (1) distribution over households' states $\{\Phi_t\}_{t=0}^{\infty}$, (2) households' value and policy functions $\{v_t,g_{c,t},g_{a',t}\}_{t=0}^{\infty}$, and (3) aggregate quantities and prices $\{K_t, L_t, r_t, w_t\}_{t=0}^{\infty}$ such that
 
 - $\{v_t,g_{c,t},g_{a',t}\}$ solve households' decision problems defined by {eq}`bellman`
-- Market clearing: $K_t=\int a d\Phi_t(e,a)$, $L_t=\int \bar{l} e d\Phi_t(e,a)$. Goods market clearing implied by Walras's law.
+- Market clearing: $K_t=\int a \ \mathrm{d}\Phi_t(e,a)$, $L_t=\int \bar{l} e \ \mathrm{d}\Phi_t(e,a)$. Goods market clearing implied by Walras's law.
 - $r_t$ and $w_t$  are determined by {eq}`competitive_prices`.
-- Unemployment benefit is financed by labor income tax: $w_t\int \bar{l} \tau e d\Phi_t(e,a)=w_t\int (1-e)\mu d\Phi_t(e,a)$.
-- $\Phi_t$ are consistent with policy functions $g_{a',t}$ and exogenous transitions of $e$.
+- Unemployment benefit is financed by labor income tax: $w_t\int \bar{l} \tau e \ \mathrm{d}\Phi_t(e,a)=w_t\int (1-e)\mu \ \mathrm{d}\Phi_t(e,a)$.
+- $\{\Phi_t\}$ are consistent with policy functions $g_{a',t}$ and exogenous transitions of $e$.
 
 ## The Toolbox Script (hmod) File
 
@@ -139,7 +139,7 @@ Unknowns of the equilibrium system needs to be declared as *var_agg* (here, $K$)
 :linenos:
 :lineno-match:
 :start-at: var_agg_shock
-:end-before: var_agg_shock
+:end-before: model;
 ```
 
 Aggregate shocks are declared as *var_agg_shock*. Aggregate shocks are essentially model parameters  that are allowing to be time variant. Here is the aggregate TFP, $Z$.

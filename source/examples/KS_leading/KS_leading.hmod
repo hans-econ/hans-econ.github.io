@@ -29,9 +29,9 @@ initial ap 0.0;
 vfi;
     budget = (1+r)*a + w*((1.0-tau)*e*labor + mu_ratio*(1- e));
     u = log(c);
-    % Decision problem stated with the Belman equation
+    % decision problem stated following the Bellman equation
     Tv = u + beta*EXPECT(v(ap));
-    % Allow arbitrary equality/inequality constraints
+    % allow arbitrary equality/inequality constraints
     c + ap == budget;
     ap >= 0.0;
 end;
@@ -45,10 +45,10 @@ delta = 0.025;  % depreciation
 var_agg_shock Z;
 
 model;
-    % Aggregate conditions stated like Dynare
+    % aggregate conditions stated like Dynare
     r = Z*alpha*(K(-1)^(alpha-1))*(L^(1-alpha)) - delta;
     w = Z*(1-alpha)*(K(-1)^alpha)*(L^(-alpha));
     K == ap; % asset demand = asset supply
-    % Allow box constraints for aggregate variables
+    % allow box constraints for aggregate variables
     K >= 38.0;
 end;

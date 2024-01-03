@@ -1,3 +1,4 @@
+(toolbox_api)=
 # Toolbox API Reference
 
 ## Toolbox Script (hmod) File
@@ -76,9 +77,9 @@ var_policy ap;
 ...
 
 vfi;
-	c = budget - ap;
-	Tv = u(c) + beta*EXPECT(v(ap));
-	ap >= 0.0;
+    c = budget - ap;
+    Tv = u(c) + beta*EXPECT(v(ap));
+    ap >= 0.0;
 end;
 
 ```
@@ -111,9 +112,9 @@ initial ap 0.0;
 initial c budget;
 
 vfi;
-	Tv = u(c) + beta*EXPECT(v(ap));
-	ap >= 0.0;
-	c + ap == budget;
+    Tv = u(c) + beta*EXPECT(v(ap));
+    ap >= 0.0;
+    c + ap == budget;
 end;
 
 ```
@@ -150,10 +151,10 @@ initial c budget;
 var_aux inc;
 
 vfi;
-	Tv = u(c) + beta*EXPECT(v(ap));
-	ap >= 0.0;
-	c + ap == budget;
-	inc = a*r + w*e;
+    Tv = u(c) + beta*EXPECT(v(ap));
+    ap >= 0.0;
+    c + ap == budget;
+    inc = a*r + w*e;
 end;
 
 ```
@@ -194,20 +195,20 @@ initial c budget;
 var_aux inc;
 
 vfi;
-	% assign updated value to Tv
-	% Tv will also be the objective
-	% state transition is inferred to be "ap"
-	Tv = u(c) + beta*EXPECT(v(ap));
-	
-	% can also specify the state transition explicitly
-	a(+1) = {ap} {1};
-	
-	% equality and inequality constraints
-	ap >= 0.0;
-	c + ap == budget;
-	
-	% var_aux needs to be assigned
-	inc = a*r + w*e;
+    % assign updated value to Tv
+    % Tv will also be the objective
+    % state transition is inferred to be "ap"
+    Tv = u(c) + beta*EXPECT(v(ap));
+
+    % can also specify the state transition explicitly
+    a(+1) = {ap} {1};
+
+    % equality and inequality constraints
+    ap >= 0.0;
+    c + ap == budget;
+
+    % var_aux needs to be assigned
+    inc = a*r + w*e;
 end;
 
 ```
@@ -274,15 +275,15 @@ var_agg_shock Z;
 Z = 1.0;	% steady state value
 
 model;
-	% update parameters that enter vfi
-	% capital is pre-determined, use the lagged value K(-1)
+    % update parameters that enter vfi
+    % capital is pre-determined, use the lagged value K(-1)
     r = alpha * Z * K(-1)^(alpha-1) * L^(1-alpha) - delta;
     w = (1-alpha) * Z * K(-1)^alpha * L^(-alpha);
-    
+
     % use "==" to define equations
     % ap used below is the aggregate of policy ap
     K == ap; % asset demand = asset supply
-    
+
     % post evaluation; all assignments will be returned
     Y = Z*(K(-1)^alpha)*(L^(1-alpha));
     I = K - (1 - delta)*K(-1);
@@ -309,14 +310,14 @@ Example:
 var_agg K;
 
 model;
-	% this block is used for solving the equilibrium
+    % this block is used for solving the equilibrium
     r = alpha * Z * K(-1)^(alpha-1) * L^(1-alpha) - delta;
     w = (1-alpha) * Z * K(-1)^alpha * L^(-alpha);
     K == ap; % asset demand = asset supply
 end;
 
 model_cali(K,beta);
-	% this block is used for calibration 
+    % this block is used for calibration 
     r = alpha * Z * K(-1)^(alpha-1) * L^(1-alpha) - delta;
     w = (1-alpha) * Z * K(-1)^alpha * L^(-alpha);
     Y = Z*(K(-1)^alpha)*(L^(1-alpha));

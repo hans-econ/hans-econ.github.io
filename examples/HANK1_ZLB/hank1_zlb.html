@@ -93,14 +93,14 @@
              
   <section class="tex2jax_ignore mathjax_ignore" id="solving-for-non-linear-transitions-forward-guidance-under-zlb-mckay-nakamura-steinsson-2016">
 <h1>Solving for Non-linear Transitions: Forward Guidance under ZLB (McKay, Nakamura, Steinsson, 2016)<a class="headerlink" href="#solving-for-non-linear-transitions-forward-guidance-under-zlb-mckay-nakamura-steinsson-2016" title="Permalink to this heading"></a></h1>
-<p>In this example, we solve the one-asset HANK model used by McKay, Nakamura and Steinsson (2016) to study the forward guidance of monetary policy at the liquidity trap (nominal interest rate zero lower bound). The liquidity trap is driven by a shock to households’ discount factor. The forward guidance is modeled as the central bank’s commitment to set the nominal interest rate zero for additional periods, after the liquidity shock dies out.</p>
-<p>The example is used to demonstrate the capability of the toolbox to solve highly non-linear models. In particular, the equilibrium system at the liquidity trap is very different from the one out of the liquidity trap, posing challenges to traditional solution methods.</p>
-<p>We follow the parameterization and the notation of their paper.</p>
+<p>In this example, we solve the one-asset HANK model used by McKay, Nakamura, and Steinsson (2016) to study the forward guidance of monetary policy at the liquidity trap (nominal interest rate zero lower bound). The liquidity trap is driven by a positive shock to the common discount factor of households. The forward guidance is modeled as the central bank’s commitment to setting the nominal interest rate at zero for additional periods, after the economy would have exited the zero lower bound.</p>
+<p>The example is used to demonstrate the capability of the toolbox in solving highly non-linear models. In particular, the equilibrium system at the liquidity trap is very different from that out of the liquidity trap, posing challenges to traditional solution methods.</p>
+<p>We follow the parameterization and notation of their original paper.</p>
 <section id="the-model">
 <h2>The Model<a class="headerlink" href="#the-model" title="Permalink to this heading"></a></h2>
 <section id="households-decision-problems">
 <h3>Households decision problems<a class="headerlink" href="#households-decision-problems" title="Permalink to this heading"></a></h3>
-<p>Households are heterogeneous in their labor  efficiency <span class="math notranslate nohighlight">\(e\)</span>, which follows a stationary Markov chain and real bonds holding, <span class="math notranslate nohighlight">\(b\)</span>. They solve the Bellman equation:</p>
+<p>Households are heterogeneous in their labor  efficiency <span class="math notranslate nohighlight">\(e\)</span>, which follows a stationary Markov chain, and real bonds holding <span class="math notranslate nohighlight">\(b\)</span>. They solve the Bellman equation:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 V_t(e,b) = \max_{c,n,b'} \frac{c^{1-\gamma}}{1-\gamma} - \chi \frac{n^{1+1/\nu}}{1+1/\nu}+ \beta_t \mathbb{E}[V_{t+1}(e',b')|e]
@@ -109,12 +109,12 @@ s.t. \quad c+\frac{b'}{1+r_t}=b + w_ten - \tau_t \bar{\tau}(e) +D_t
 \\
 b' \geq 0,n\geq 0,
 \end{split}\]</div>
-<p>where <span class="math notranslate nohighlight">\(e\)</span> is the labor  efficiency, <span class="math notranslate nohighlight">\(b\)</span> is the holding of real bonds. <span class="math notranslate nohighlight">\(r_t\)</span> is the real interest rate, <span class="math notranslate nohighlight">\(w_t\)</span> the wage rate, <span class="math notranslate nohighlight">\(\tau_t\)</span> the tax, and <span class="math notranslate nohighlight">\(D_t\)</span> the profits of firms. <span class="math notranslate nohighlight">\(\bar{\tau}(e)\)</span> takes value 0 or 1, which specifies whether a household with labor efficiency type <span class="math notranslate nohighlight">\(e\)</span> is taxed. Households  choose consumption <span class="math notranslate nohighlight">\(c\)</span>, labor supply <span class="math notranslate nohighlight">\(n\)</span> and future bond holding <span class="math notranslate nohighlight">\(b'\)</span>, subject to a no borrowing constraint <span class="math notranslate nohighlight">\(b' \geq 0\)</span>.</p>
-<p>Denote the distribution over households states by <span class="math notranslate nohighlight">\(\Gamma_t\)</span>, and policy functions by <span class="math notranslate nohighlight">\(g_{c,t},g_{n,t},g_{b',t}\)</span>.</p>
+<p>where <span class="math notranslate nohighlight">\(r_t\)</span> is the real interest rate, <span class="math notranslate nohighlight">\(w_t\)</span> the wage rate, <span class="math notranslate nohighlight">\(\tau_t\)</span> the tax level, and <span class="math notranslate nohighlight">\(D_t\)</span> the profits of firms. <span class="math notranslate nohighlight">\(\bar{\tau}(e)\)</span> takes value 0 or 1, which specifies whether a household with labor efficiency type <span class="math notranslate nohighlight">\(e\)</span> is taxed. Households  choose consumption <span class="math notranslate nohighlight">\(c\)</span>, labor supply <span class="math notranslate nohighlight">\(n\)</span> and future bond holding <span class="math notranslate nohighlight">\(b'\)</span>, subject to a no borrowing constraint <span class="math notranslate nohighlight">\(b' \geq 0\)</span>.</p>
+<p>Denote the measure that represents the distribution over households states by <span class="math notranslate nohighlight">\(\Gamma_t\)</span>, and policy functions by <span class="math notranslate nohighlight">\(g_{c,t},g_{n,t},g_{b',t}\)</span>.</p>
 </section>
 <section id="the-new-keynesian-block">
 <h3>The New-Keynesian block<a class="headerlink" href="#the-new-keynesian-block" title="Permalink to this heading"></a></h3>
-<p>Intermediate goods firms use labor to produce differentiated goods, which are aggregated by final goods firms using a CES aggregator.  Intermediate goods firms engage in monopolistic competition and face price adjustment frictions a la Calvo. The New Keynesian Phillips curve is characterized by the following system (see their paper or any monetary policy textbook for derivations):</p>
+<p>Intermediate goods firms use labor to produce differentiated goods, which are aggregated by final goods firms using a CES aggregator.  Intermediate goods firms engage in monopolistic competition and face price adjustment frictions a la Calvo. The New Keynesian Phillips curve is characterized by the following system (see their paper or any monetary textbook for derivations):</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 Y_tS_t = z_t  N_t
@@ -143,32 +143,32 @@ i_t = \max\{i_{0} + \phi \pi_t,0\}
 <p>Government set taxes <span class="math notranslate nohighlight">\(\tau_t\)</span> to finance exogenous spending and interest payment on bonds:</p>
 <div class="math notranslate nohighlight">
 \[
-\tau_t =\frac{B_t + G_t - \frac{B_{t+1}}{1+r_{t}}}{\int \bar{\tau}(e) d\Gamma_t},
+\tau_t =\frac{B_t + G_t - \frac{B_{t+1}}{1+r_{t}}}{\int \bar{\tau}(e) \ \mathrm{d}\Gamma_t},
 \]</div>
 <p>where <span class="math notranslate nohighlight">\(B_t\)</span> is the government bond outstanding at the beginning of period <span class="math notranslate nohighlight">\(t\)</span> and <span class="math notranslate nohighlight">\(G_t\)</span> is the government spending.</p>
-<p>In their benchmark specification, the fiscal rule supplies a fixed a mount of government bond <span class="math notranslate nohighlight">\(B_{t+1}=\overline{B}\)</span>.</p>
+<p>In their benchmark specification, the fiscal rule supplies a fixed amount of government bond <span class="math notranslate nohighlight">\(B_{t+1}=\overline{B}\)</span>.</p>
 </section>
 <section id="market-clearing-conditions">
 <h3>Market clearing conditions<a class="headerlink" href="#market-clearing-conditions" title="Permalink to this heading"></a></h3>
 <p>Bonds market clearing:</p>
 <div class="math notranslate nohighlight">
 \[
-B_{t+1}=\int g_{b',t}(e,b) d\Gamma_t
+B_{t+1}=\int g_{b',t}(e,b) \ \mathrm{d}\Gamma_t
 \]</div>
 <p>Labor market clearing:</p>
 <div class="math notranslate nohighlight">
 \[
-N_t = \int eg_{n,t}(e,b) d\Gamma_t
+N_t = \int eg_{n,t}(e,b) \ \mathrm{d}\Gamma_t
 \]</div>
 <p>and goods market clearing:</p>
 <div class="math notranslate nohighlight">
 \[
-\int g_{c,t}(e,b) d \Gamma_t + G_t = Y_t.
+\int g_{c,t}(e,b) \ \mathrm{d} \Gamma_t + G_t = Y_t.
 \]</div>
 </section>
 <section id="definition-of-equilibrium">
 <h3>Definition of equilibrium<a class="headerlink" href="#definition-of-equilibrium" title="Permalink to this heading"></a></h3>
-<p>Given an initial distribution over households states, <span class="math notranslate nohighlight">\(\Gamma_0\)</span>, a sequential competitive equilibrium is a sequence of (1) distributions over households states <span class="math notranslate nohighlight">\(\{\Gamma_t\}_{t=0}^{\infty}\)</span>, (2) households’ value and policy functions <span class="math notranslate nohighlight">\(\{V_t,g_{c,t},g_{n,t},g_{b',t}\}_{t=0}^{\infty}\)</span>, and (3) aggregate quantities and prices <span class="math notranslate nohighlight">\(\{w_t,Y_t,S_t,N_t,D_t,\pi_t,\frac{p_t^*}{P_t},P_t^A,P_t^B,r_t,i_t,\tau_t\}\)</span> such that</p>
+<p>Given an initial distribution over households states, <span class="math notranslate nohighlight">\(\Gamma_0\)</span>, a sequential competitive equilibrium is a sequence of (1) distributions over households states <span class="math notranslate nohighlight">\(\{\Gamma_t\}_{t=0}^{\infty}\)</span>, (2) households’ value and policy functions <span class="math notranslate nohighlight">\(\{V_t,g_{c,t},g_{n,t},g_{b',t}\}_{t=0}^{\infty}\)</span>, and (3) aggregate quantities and prices <span class="math notranslate nohighlight">\(\{w_t,Y_t,S_t,N_t,D_t,\pi_t,\frac{p_t^*}{P_t},P_t^A,P_t^B,r_t,i_t,\tau_t\}_{t=0}^{\infty}\)</span> such that</p>
 <div class="math notranslate nohighlight">
 \[ \begin{align}\begin{aligned}\begin{split}
 Y_t S_t= z_t N_t

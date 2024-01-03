@@ -85,7 +85,7 @@
 <li><p><a class="reference external" href="https://github.com/gregkaplan/phact">PHACT</a></p></li>
 <li><p><a class="reference external" href="https://github.com/shade-econ/sequence-jacobian">Sequence Space Jacobian</a></p></li>
 </ul>
-<p>What differentiates <strong>HANS</strong> from other toolboxes is that it parses intuitive model script files like Dynare, compiles C++ binaries for high-performance computations, and provides convenient MATLAB interfaces. For example, the model of Krusell and Smith (1998) can be represented with the following toolbox script, and solved on a regular laptop within 5 seconds.</p>
+<p>What differentiates <strong>HANS</strong> from other toolboxes is that it takes intuitive model script files as input similar to Dynare, compiles C++ binaries for high-performance computations, and offers user-friendly MATLAB interfaces. For example, the model of Krusell and Smith (1998) can be represented with the following toolbox script, and solved on a regular laptop within 5 seconds.</p>
 <div class="highlight-HANS notranslate"><div class="highlight"><pre><span></span><span class="c">% The parameters are from from den Haan, Judd, Juillard, 2010, &quot;Computational Suite of models with heterogeneous agents: </span>
 <span class="c">% Incomplete markets and aggregate uncertainty&quot; Journal of Economic Dynamics and Control, 34, pp 1 - 3.</span>
 <span class="k">parameters</span> beta sigma r w tau mu_ratio labor;
@@ -117,9 +117,9 @@ a = exp(linspace(log(0.25), log(200 + 0.25), 500)) - 0.25;
 <span class="k">vfi;</span>
     budget = (1+r)*a + w*((1.0-tau)*e*labor + mu_ratio*(1- e));
     u = log(c);
-    <span class="c">% Decision problem stated with the Belman equation</span>
+    <span class="c">% decision problem stated following the Bellman equation</span>
     Tv = u + beta*EXPECT(v(ap));
-    <span class="c">% Allow arbitrary equality/inequality constraints</span>
+    <span class="c">% allow arbitrary equality/inequality constraints</span>
     c + ap == budget;
     ap &gt;= 0.0;
 <span class="k">end;</span>
@@ -133,16 +133,16 @@ delta = 0.025;  <span class="c">% depreciation</span>
 <span class="k">var_agg_shock</span> Z;
 
 <span class="k">model;</span>
-    <span class="c">% Aggregate conditions stated like Dynare</span>
+    <span class="c">% aggregate conditions stated like Dynare</span>
     r = Z*alpha*(K(-1)^(alpha-1))*(L^(1-alpha)) - delta;
     w = Z*(1-alpha)*(K(-1)^alpha)*(L^(-alpha));
     K == ap; <span class="c">% asset demand = asset supply</span>
-    <span class="c">% Allow box constraints for aggregate variables</span>
+    <span class="c">% allow box constraints for aggregate variables</span>
     K &gt;= 38.0;
 <span class="k">end;</span>
 </pre></div>
 </div>
-<p><strong>HANS</strong> solves HA models with an arbitrary number of endogenous states, handles multi-dimension continuous choice variables including portfolio choices, handles discrete choices, and solves for nonlinear transition paths. For more examples demonstrating the capability and usage of the toolbox, see the list below.</p>
+<p><strong>HANS</strong> solves HA models with an arbitrary number of  endogenous states, handles multi-dimensional continuous choice variables including portfolio choices, handles discrete choices, and solves for  nonlinear transition paths. For more examples demonstrating the  capability and usage of the toolbox, see the list below.</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">

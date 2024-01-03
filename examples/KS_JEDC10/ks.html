@@ -111,13 +111,13 @@ w_t = (1-\alpha)Z_tK_t^{\alpha}L_t^{-\alpha}
 \end{split}\]</div>
 <div class="math notranslate nohighlight" id="equation-competitive-prices">
 <span class="eqno">(2)<a class="headerlink" href="#equation-competitive-prices" title="Permalink to this equation"></a></span>\[\]</div>
-<p>Given an initial distribution over households’ states, <span class="math notranslate nohighlight">\(\Phi_0\)</span>, a sequential competitive equilibrium is a sequence of (1) distribution over households’ states <span class="math notranslate nohighlight">\(\{\Phi_t\}\)</span>, (2) households’ value and policy functions <span class="math notranslate nohighlight">\(\{v_t,g_{c,t},g_{a',t}\}\)</span>, and (3) aggregate quantities and prices <span class="math notranslate nohighlight">\(\{K_t, L_t, r_t, w_t\}\)</span> such that</p>
+<p>Given an initial distribution over households’ states, <span class="math notranslate nohighlight">\(\Phi_0\)</span>, a sequential competitive equilibrium is a sequence of (1) distribution over households’ states <span class="math notranslate nohighlight">\(\{\Phi_t\}_{t=0}^{\infty}\)</span>, (2) households’ value and policy functions <span class="math notranslate nohighlight">\(\{v_t,g_{c,t},g_{a',t}\}_{t=0}^{\infty}\)</span>, and (3) aggregate quantities and prices <span class="math notranslate nohighlight">\(\{K_t, L_t, r_t, w_t\}_{t=0}^{\infty}\)</span> such that</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\{v_t,g_{c,t},g_{a',t}\}\)</span> solve households’ decision problems defined by <a class="reference internal" href="#equation-bellman">(1)</a></p></li>
-<li><p>Market clearing: <span class="math notranslate nohighlight">\(K_t=\int a d\Phi_t(e,a)\)</span>, <span class="math notranslate nohighlight">\(L_t=\int \bar{l} e d\Phi_t(e,a)\)</span>. Goods market clearing implied by Walras’s law.</p></li>
+<li><p>Market clearing: <span class="math notranslate nohighlight">\(K_t=\int a \ \mathrm{d}\Phi_t(e,a)\)</span>, <span class="math notranslate nohighlight">\(L_t=\int \bar{l} e \ \mathrm{d}\Phi_t(e,a)\)</span>. Goods market clearing implied by Walras’s law.</p></li>
 <li><p><span class="math notranslate nohighlight">\(r_t\)</span> and <span class="math notranslate nohighlight">\(w_t\)</span>  are determined by <a class="reference internal" href="#equation-competitive-prices">(2)</a>.</p></li>
-<li><p>Unemployment benefit is financed by labor income tax: <span class="math notranslate nohighlight">\(w_t\int \bar{l} \tau e d\Phi_t(e,a)=w_t\int (1-e)\mu d\Phi_t(e,a)\)</span>.</p></li>
-<li><p><span class="math notranslate nohighlight">\(\Phi_t\)</span> are consistent with policy functions <span class="math notranslate nohighlight">\(g_{a',t}\)</span> and exogenous transitions of <span class="math notranslate nohighlight">\(e\)</span>.</p></li>
+<li><p>Unemployment benefit is financed by labor income tax: <span class="math notranslate nohighlight">\(w_t\int \bar{l} \tau e \ \mathrm{d}\Phi_t(e,a)=w_t\int (1-e)\mu \ \mathrm{d}\Phi_t(e,a)\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\{\Phi_t\}\)</span> are consistent with policy functions <span class="math notranslate nohighlight">\(g_{a',t}\)</span> and exogenous transitions of <span class="math notranslate nohighlight">\(e\)</span>.</p></li>
 </ul>
 </section>
 <section id="the-toolbox-script-hmod-file">
@@ -247,6 +247,10 @@ w_t = (1-\alpha)Z_tK_t^{\alpha}L_t^{-\alpha}
 </pre></div>
 </div>
 <p>Unknowns of the equilibrium system needs to be declared as <em>var_agg</em> (here, <span class="math notranslate nohighlight">\(K\)</span>), with their initial values specified. Values of any parameters(here, <span class="math notranslate nohighlight">\(alpha,\delta\)</span>) that are used in defining the aggregate system need to be specified.</p>
+<div class="highlight-HANS notranslate"><div class="highlight"><pre><span></span><span class="linenos">45</span><span class="k">var_agg_shock</span> Z;
+<span class="linenos">46</span>Z = 1.0; <span class="c">% steady state value</span>
+</pre></div>
+</div>
 <p>Aggregate shocks are declared as <em>var_agg_shock</em>. Aggregate shocks are essentially model parameters  that are allowing to be time variant. Here is the aggregate TFP, <span class="math notranslate nohighlight">\(Z\)</span>.</p>
 <p>With all information ready, the aggregate equilibrium system is defined in</p>
 <div class="highlight-HANS notranslate"><div class="highlight"><pre><span></span><span class="linenos">48</span><span class="k">model;</span>

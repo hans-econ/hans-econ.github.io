@@ -90,7 +90,7 @@
            <div itemprop="articleBody">
              
   <section class="tex2jax_ignore mathjax_ignore" id="toolbox-api-reference">
-<h1>Toolbox API Reference<a class="headerlink" href="#toolbox-api-reference" title="Permalink to this heading"></a></h1>
+<span id="toolbox-api"></span><h1>Toolbox API Reference<a class="headerlink" href="#toolbox-api-reference" title="Permalink to this heading"></a></h1>
 <section id="toolbox-script-hmod-file">
 <h2>Toolbox Script (hmod) File<a class="headerlink" href="#toolbox-script-hmod-file" title="Permalink to this heading"></a></h2>
 <div class="admonition important">
@@ -153,9 +153,9 @@ budget = (1+r)*a + w*e;
 ...
 
 <span class="k">vfi;</span>
-	c = budget - ap;
-	Tv = u(c) + beta*EXPECT(v(ap));
-	ap &gt;= 0.0;
+    c = budget - ap;
+    Tv = u(c) + beta*EXPECT(v(ap));
+    ap &gt;= 0.0;
 <span class="k">end;</span>
 </pre></div>
 </div>
@@ -184,9 +184,9 @@ budget = (1+r)*a + w*e;
 <span class="k">initial</span> c budget;
 
 <span class="k">vfi;</span>
-	Tv = u(c) + beta*EXPECT(v(ap));
-	ap &gt;= 0.0;
-	c + ap == budget;
+    Tv = u(c) + beta*EXPECT(v(ap));
+    ap &gt;= 0.0;
+    c + ap == budget;
 <span class="k">end;</span>
 </pre></div>
 </div>
@@ -217,10 +217,10 @@ budget = (1+r)*a + w*e;
 <span class="linenos">17</span><span class="k">var_aux</span> inc;
 <span class="linenos">18</span>
 <span class="linenos">19</span><span class="k">vfi;</span>
-<span class="linenos">20</span>	Tv = u(c) + beta*EXPECT(v(ap));
-<span class="linenos">21</span>	ap &gt;= 0.0;
-<span class="linenos">22</span>	c + ap == budget;
-<span class="linenos">23</span>	inc = a*r + w*e;
+<span class="linenos">20</span>    Tv = u(c) + beta*EXPECT(v(ap));
+<span class="linenos">21</span>    ap &gt;= 0.0;
+<span class="linenos">22</span>    c + ap == budget;
+<span class="linenos">23</span>    inc = a*r + w*e;
 <span class="linenos">24</span><span class="k">end;</span>
 </pre></div>
 </div>
@@ -258,20 +258,20 @@ budget = (1+r)*a + w*e;
 <span class="linenos">17</span><span class="k">var_aux</span> inc;
 <span class="linenos">18</span>
 <span class="linenos">19</span><span class="k">vfi;</span>
-<span class="linenos">20</span>	<span class="c">% assign updated value to Tv</span>
-<span class="linenos">21</span>	<span class="c">% Tv will also be the objective</span>
-<span class="linenos">22</span>	<span class="c">% state transition is inferred to be &quot;ap&quot;</span>
-<span class="linenos">23</span>	Tv = u(c) + beta*EXPECT(v(ap));
-<span class="linenos">24</span>	
-<span class="linenos">25</span>	<span class="c">% can also specify the state transition explicitly</span>
-<span class="linenos">26</span>	a(+1) = {ap} {1};
-<span class="linenos">27</span>	
-<span class="linenos">28</span>	<span class="c">% equality and inequality constraints</span>
-<span class="linenos">29</span>	ap &gt;= 0.0;
-<span class="linenos">30</span>	c + ap == budget;
-<span class="linenos">31</span>	
-<span class="linenos">32</span>	<span class="c">% var_aux needs to be assigned</span>
-<span class="linenos">33</span>	inc = a*r + w*e;
+<span class="linenos">20</span>    <span class="c">% assign updated value to Tv</span>
+<span class="linenos">21</span>    <span class="c">% Tv will also be the objective</span>
+<span class="linenos">22</span>    <span class="c">% state transition is inferred to be &quot;ap&quot;</span>
+<span class="linenos">23</span>    Tv = u(c) + beta*EXPECT(v(ap));
+<span class="linenos">24</span>
+<span class="linenos">25</span>    <span class="c">% can also specify the state transition explicitly</span>
+<span class="linenos">26</span>    a(+1) = {ap} {1};
+<span class="linenos">27</span>
+<span class="linenos">28</span>    <span class="c">% equality and inequality constraints</span>
+<span class="linenos">29</span>    ap &gt;= 0.0;
+<span class="linenos">30</span>    c + ap == budget;
+<span class="linenos">31</span>
+<span class="linenos">32</span>    <span class="c">% var_aux needs to be assigned</span>
+<span class="linenos">33</span>    inc = a*r + w*e;
 <span class="linenos">34</span><span class="k">end;</span>
 </pre></div>
 </div>
@@ -330,15 +330,15 @@ budget = (1+r)*a + w*e;
 <span class="linenos">18</span>Z = 1.0;	<span class="c">% steady state value</span>
 <span class="linenos">19</span>
 <span class="linenos">20</span><span class="k">model;</span>
-<span class="linenos">21</span>	<span class="c">% update parameters that enter vfi</span>
-<span class="linenos">22</span>	<span class="c">% capital is pre-determined, use the lagged value K(-1)</span>
+<span class="linenos">21</span>    <span class="c">% update parameters that enter vfi</span>
+<span class="linenos">22</span>    <span class="c">% capital is pre-determined, use the lagged value K(-1)</span>
 <span class="linenos">23</span>    r = alpha * Z * K(-1)^(alpha-1) * L^(1-alpha) - delta;
 <span class="linenos">24</span>    w = (1-alpha) * Z * K(-1)^alpha * L^(-alpha);
-<span class="linenos">25</span>    
+<span class="linenos">25</span>
 <span class="linenos">26</span>    <span class="c">% use &quot;==&quot; to define equations</span>
 <span class="linenos">27</span>    <span class="c">% ap used below is the aggregate of policy ap</span>
 <span class="linenos">28</span>    K == ap; <span class="c">% asset demand = asset supply</span>
-<span class="linenos">29</span>    
+<span class="linenos">29</span>
 <span class="linenos">30</span>    <span class="c">% post evaluation; all assignments will be returned</span>
 <span class="linenos">31</span>    Y = Z*(K(-1)^alpha)*(L^(1-alpha));
 <span class="linenos">32</span>    I = K - (1 - delta)*K(-1);
@@ -360,14 +360,14 @@ budget = (1+r)*a + w*e;
 <span class="linenos"> 3</span><span class="k">var_agg</span> K;
 <span class="linenos"> 4</span>
 <span class="linenos"> 5</span><span class="k">model;</span>
-<span class="linenos"> 6</span>	<span class="c">% this block is used for solving the equilibrium</span>
+<span class="linenos"> 6</span>    <span class="c">% this block is used for solving the equilibrium</span>
 <span class="linenos"> 7</span>    r = alpha * Z * K(-1)^(alpha-1) * L^(1-alpha) - delta;
 <span class="linenos"> 8</span>    w = (1-alpha) * Z * K(-1)^alpha * L^(-alpha);
 <span class="linenos"> 9</span>    K == ap; <span class="c">% asset demand = asset supply</span>
 <span class="linenos">10</span><span class="k">end;</span>
 <span class="linenos">11</span>
 <span class="linenos">12</span>model_cali(K,beta);
-<span class="linenos">13</span>	<span class="c">% this block is used for calibration </span>
+<span class="linenos">13</span>    <span class="c">% this block is used for calibration </span>
 <span class="linenos">14</span>    r = alpha * Z * K(-1)^(alpha-1) * L^(1-alpha) - delta;
 <span class="linenos">15</span>    w = (1-alpha) * Z * K(-1)^alpha * L^(-alpha);
 <span class="linenos">16</span>    Y = Z*(K(-1)^alpha)*(L^(1-alpha));
