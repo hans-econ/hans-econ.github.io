@@ -21,7 +21,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Handling Non-trivial Market Clearing: One-asset HANK" href="../HANK1_SSJ/hank1_ssj.html" />
+    <link rel="next" title="Solving for Non-linear Transitions: Forward Guidance under ZLB (McKay, Nakamura, Steinsson, 2016)" href="../HANK1_ZLB/hank1_zlb.html" />
     <link rel="prev" title="HANS: A Heterogeneous-Agent model Nonlinear Solver" href="../../index.html" /> 
 </head>
 
@@ -54,10 +54,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#whats-next">What’s Next?</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../HANK1_SSJ/hank1_ssj.html">Handling Non-trivial Market Clearing: One-asset HANK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../HANK1_ZLB/hank1_zlb.html">Solving for Non-linear Transitions: Forward Guidance under ZLB (McKay, Nakamura, Steinsson, 2016)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../HANK2_SSJ/hank2_ssj.html">Handling Portfolio Choices: Two-asset HANK</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../KT2008/kt2008.html">Handling Non-convex Adjustment Costs: Khan and Thomas (2008)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../HANK1_ZLB/hank1_zlb.html">Solving for Non-linear Transitions: Forward Guidance under ZLB (McKay, Nakamura, Steinsson, 2016)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../cores/methodology.html">The Algorithm</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../cores/api.html">Toolbox API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../miscs/howto_contribute_examples.html">How to Contribute Examples</a></li>
@@ -246,7 +245,7 @@ w_t = (1-\alpha)Z_tK_t^{\alpha}L_t^{-\alpha}
 <span class="linenos">43</span>delta = 0.025;  <span class="c">% depreciation</span>
 </pre></div>
 </div>
-<p>Unknowns of the equilibrium system needs to be declared as <em>var_agg</em> (here, <span class="math notranslate nohighlight">\(K\)</span>), with their initial values specified. Values of any parameters(here, <span class="math notranslate nohighlight">\(alpha,\delta\)</span>) that are used in defining the aggregate system need to be specified.</p>
+<p>Unknowns of the equilibrium system needs to be declared as <em>var_agg</em> (here, <span class="math notranslate nohighlight">\(K\)</span>), with their initial values specified. Values of any parameters(here, <span class="math notranslate nohighlight">\(\alpha,\delta\)</span>) that are used in defining the aggregate system need to be specified.</p>
 <div class="highlight-HANS notranslate"><div class="highlight"><pre><span></span><span class="linenos">45</span><span class="k">var_agg_shock</span> Z;
 <span class="linenos">46</span>Z = 1.0; <span class="c">% steady state value</span>
 </pre></div>
@@ -837,7 +836,7 @@ xlabel('t');
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../../index.html" class="btn btn-neutral float-left" title="HANS: A Heterogeneous-Agent model Nonlinear Solver" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../HANK1_SSJ/hank1_ssj.html" class="btn btn-neutral float-right" title="Handling Non-trivial Market Clearing: One-asset HANK" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../HANK1_ZLB/hank1_zlb.html" class="btn btn-neutral float-right" title="Solving for Non-linear Transitions: Forward Guidance under ZLB (McKay, Nakamura, Steinsson, 2016)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

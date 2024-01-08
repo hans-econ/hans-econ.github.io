@@ -1,3 +1,61 @@
 # Handling Non-convex Adjustment Costs: Khan and Thomas (2008)
 
-TBD
+This is a real business cycle model with heterogeneous firms. Firms face fixed costs when adjusting capital, which generates an $(S,s)$ investment rule. The toolbox solves the steady state and the linear/non-linear transition path after an unexpected aggregate shock. Following [Boppart, Krusell and Mitman (2018)](https://www.sciencedirect.com/science/article/abs/pii/S0165188918300022) and [Auclert et al. (2021)](https://onlinelibrary.wiley.com/doi/full/10.3982/ECTA17434), the deterministic transition path characterizes the first order effect of the aggregate shock, which is equivalent to that calculated using the perturbation method by [Winberry (2018)](https://onlinelibrary.wiley.com/doi/full/10.3982/QE740).
+
+We use the parameterization in [Winberry (2018)](https://onlinelibrary.wiley.com/doi/full/10.3982/QE740) which adjusts the parameter values in  [Khan and Thomas (2008)](https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1468-0262.2008.00837.x) for no trend growth.
+
+## Model
+
+**Heterogeneous firms** differ in their idiosyncratic productivity, $\varepsilon$, which follows an exogenous Markov chain, and capital holding $k$. When making investment decisions, the firm can incur a fixed cost of $\xi$ in units of labor, so that its choice of investment becomes unconstrained; otherwise, its choice of investment needs to be constrained in an interval $[-ak,ak]$, leaving next period capital choice constrained in the interval $[(1-\delta+a)k,(1-\delta+b)k]$, with $\delta>0$ the depreciation rate.  $\xi$ is drawn i.i.d. from the uniform distribution over $[0,\bar{\xi}]$, with the distribution denoted by $G$.
+
+At time $t$, a firm with realized $(\varepsilon,k,\xi)$ solves the following problem:
+
+$$
+v_t^1(\varepsilon,k,\xi)=\max_{n,k^*,k^C} \Big[z_t \varepsilon k^{\alpha}n^{\nu}-w_t n+(1-\delta)k+\max\{-\xi \omega_t+r_t(\varepsilon,k^*),r_t(\varepsilon,k^C)\}\Big]
+\\
+s.t. \quad n\geq 0,  k^* \geq 0
+\\
+k^C\in [(1-\delta-a)k,(1-\delta+a)k].
+$$
+
+$z_t$ is the aggregate productivity; $w_t$ is the wage rate; $r_t(\varepsilon,k')$ is the continuation value associated with a future capital level $k'$, defined below. Firms choose labor demand $n$, unconstrained capital level $k^*$, and constrained capital level $k^C$. The $\max$ operator in the objective compares the continuation value under unconstrained or constrained adjustment, accounting for the fixed cost $\xi \omega_t$ that needs to be incurred to unlock unconstrained adjustment. The continuation value is given by
+
+$$
+r_t(\varepsilon,k') = -k' + d_t\cdot\mathbb{E}[v^0_{t+1}(\varepsilon',k')|\varepsilon],
+$$
+
+where $d_t$ is the discount factor inherited from the households, and $v_{t+1}^0$ is the expected  value integrating over future adjustment cost $\xi'$:
+
+$$
+v_{t+1}^0(\varepsilon',k')=\int_0^{\bar{\xi}} v_{t+1}^1(\varepsilon',k',\xi') G (d\xi').
+$$
+
+Firms decision for incurring the adjustment cost can be characterized by a threshold rule: a firm will incur the adjustment cost if and only if the benefit of unconstrained adjusting outweighs the fixed cost, i.e., with a draw of $\xi$ that satisfies
+
+$$
+\xi \leq \xi^*\equiv \frac{r_t(\varepsilon,k^*)-r_t(\varepsilon,k^C)}{\omega_t}.
+$$
+
+We can thus calculate the probability of incurring the adjustment cost, denoted $g_{a,t}(\varepsilon,k)$
+
+Denote $\Gamma_t$  the measure that represents the distribution over firms endogenous states $(\varepsilon,k)$.
+
+**Representative households** value consumption and leisure, and maximize the lifetime utility
+
+$$
+\sum_{t=0}^{\infty} \beta^t \Big[\frac{C_t^{1-\sigma}}{1-\sigma}-\chi N_t\Big].
+$$
+
+Households' optimality gives the conditions that the discount factor and wage rate should satisfy:
+
+$$
+d_t = \beta \Big[\frac{C_{t+1}}{C_t}\Big]^{-\sigma}
+\\
+w_t C_t^{-\sigma}=\chi
+$$
+
+**Market clearing conditions** for labor:
+
+$$
+N_t = \int 
+$$

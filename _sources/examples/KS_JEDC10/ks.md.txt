@@ -132,7 +132,7 @@ For solving the equilibrium, a system of equations for aggregate variables needs
 :end-before: var_agg_shock
 ```
 
-Unknowns of the equilibrium system needs to be declared as *var_agg* (here, $K$), with their initial values specified. Values of any parameters(here, $alpha,\delta$) that are used in defining the aggregate system need to be specified.
+Unknowns of the equilibrium system needs to be declared as *var_agg* (here, $K$), with their initial values specified. Values of any parameters(here, $\alpha,\delta$) that are used in defining the aggregate system need to be specified.
 
 ```{literalinclude} KS_JEDC10.hmod
 :language: HANS

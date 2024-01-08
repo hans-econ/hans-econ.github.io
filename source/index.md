@@ -22,10 +22,9 @@ What differentiates **HANS** from other toolboxes is that it takes intuitive mod
    
 Home <self>
 examples/KS_JEDC10/ks.md
-examples/HANK1_SSJ/hank1_ssj.md
+examples/HANK1_ZLB/hank1_zlb.md
 examples/HANK2_SSJ/hank2_ssj.md
 examples/KT2008/kt2008.md
-examples/HANK1_ZLB/hank1_zlb.md
 cores/methodology.md
 cores/api.md
 miscs/howto_contribute_examples.md
