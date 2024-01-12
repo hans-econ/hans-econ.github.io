@@ -12,6 +12,7 @@ What differentiates **HANS** from other toolboxes is that it takes intuitive mod
 
 ```{literalinclude} examples/KS_leading/KS_leading.hmod
 :language: HANS
+:linenos:
 ```
 
 **HANS** solves HA models with an arbitrary number of  endogenous states, handles multi-dimensional continuous choice variables including portfolio choices, handles discrete choices, and solves for  nonlinear transition paths. For more examples demonstrating the  capability and usage of the toolbox, see the list below.

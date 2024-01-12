@@ -1,10 +1,11 @@
+(toolbox_algorithm)=
 # The Algorithm
 
 ## General Framework
 
-We write out a general framework that represents the sequential equilibrium of any heterogeneous-agent model by a system of equations for aggregate endogenous variables. Denote $\mathbb{Z} \subseteq \mathbb{R}^{N_Z}$, $\mathbb{Y} \subseteq \mathbb{R}^{N_Y}$, $\mathbb{E}\subset  \mathbb{R}^{N_e}$, $\mathbb{A}\subset  \mathbb{R}^{N_a}$, $\mathbb{X} \subset \mathbb{R}^{N_x}$ the space of exogenous aggregate variables, endogenous aggregate variables, individual exogenous states, individual endogenous states, and individual policy variables, respectively. 
+We write out a general framework that represents the sequential equilibrium of any heterogeneous-agent model by a system of equations for aggregate endogenous variables. Denote $\mathbb{Z} \subseteq \mathbb{R}^{N_Z}$, $\mathbb{Y} \subseteq \mathbb{R}^{N_Y}$, $\mathbb{E}\subseteq  \mathbb{R}^{N_e}$, $\mathbb{A}\subseteq  \mathbb{R}^{N_a}$, $\mathbb{X} \subseteq \mathbb{R}^{N_x}$ the space of exogenous aggregate variables, endogenous aggregate variables, individual exogenous states, individual endogenous states, and individual policy variables, respectively. 
 
-Fixing a large integer period $T$. Given $\Phi_0$ a measure over $\mathbb{E}\times \mathbb{A}$ that represents the initial distribution of individual states,  and a sequence of exogenous aggregate variables $\mathcal{Z}\equiv \{Z_t\}_{t=0}^{T} \in \mathbb{Z}^{T+1}$, an equilibrium is characterized by a system of equations for endogenous aggregate variables $\mathcal{Y}\equiv\{Y_t\}_{t=0}^{T} \in \mathbb{Y}^{T+1}$:
+Fixing a large integer period $T$. Given $\Phi_0$ a measure over the Boreal set of $\mathbb{E}\times \mathbb{A}$ that represents the initial distribution of individual states,  and a sequence of exogenous aggregate variables $\mathcal{Z}\equiv \{Z_t\}_{t=0}^{T} \in \mathbb{Z}^{T+1}$, an equilibrium is characterized by a system of equations for endogenous aggregate variables $\mathcal{Y}\equiv\{Y_t\}_{t=0}^{T} \in \mathbb{Y}^{T+1}$:
 
 $$
 \mathcal{F}_t\left(\{Z_s\}_{s=0}^{t},\{Y_s\}_{s=0}^{t},\bar{x}_t(\mathcal{Z},\mathcal{Y})\right)=0, \forall t=0,1,...,T
@@ -74,7 +75,7 @@ $$
 
 ## Calculating the Jacobian with Partial Broyden Updates
 
-The system of equations {eq}`F_general`, albeit large, can be solved efficiently using a gradient-based equation solver, once the Jacobian of the system with respect to endogenous aggregate variables ${Y_t}_{t=0}^{T}$ is efficiently calculated. Calculating the Jacobian can be challenging, as evaluating the system involves solving the Bellman equation for policy functions, and then solving the distributions over individual states. Finite difference methods are inefficient, as policy functions and induced state transitions need to be re-solved when aggregate variables are perturbed along each dimension. Automatic differentiation (AD) is not possible, as aggregate variables enter as parameters in individual optimization problems.
+The system of equations {eq}`F_general`, albeit large, can be solved efficiently using a gradient-based equation solver, once the Jacobian of the system with respect to endogenous aggregate variables $\{Y_t\}_{t=0}^{T}$ is efficiently calculated. Calculating the Jacobian can be challenging, as evaluating the system involves solving the Bellman equation for policy functions, and then solving the distributions over individual states. Finite difference methods are inefficient, as policy functions and induced state transitions need to be re-solved when aggregate variables are perturbed along each dimension. Automatic differentiation (AD) is not possible, as aggregate variables enter as parameters in individual optimization problems.
 
 The Sequence Space Jacobian ([Auclert et al., 2021](https://onlinelibrary.wiley.com/doi/full/10.3982/ECTA17434)) approach develops an efficient method to evaluate the Jacobian at the model's steady state, and proposes to fix the Jacobian matrix when solving the transition path. The approach works adequately for model dynamics that are close to the steady state, but does not work for models featuring high nonlinearity, such as the New Keynesian model with an interest rate zero lower bound, as in McKay, Nakamura, and Steinsson (2016).
 
