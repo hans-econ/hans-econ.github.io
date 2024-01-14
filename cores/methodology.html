@@ -1,21 +1,23 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Algorithm &mdash; HANS Homepage</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -88,9 +90,9 @@
            <div itemprop="articleBody">
              
   <section class="tex2jax_ignore mathjax_ignore" id="the-algorithm">
-<h1>The Algorithm<a class="headerlink" href="#the-algorithm" title="Permalink to this heading"></a></h1>
+<h1>The Algorithm<a class="headerlink" href="#the-algorithm" title="Link to this heading"></a></h1>
 <section id="general-framework">
-<h2>General Framework<a class="headerlink" href="#general-framework" title="Permalink to this heading"></a></h2>
+<h2>General Framework<a class="headerlink" href="#general-framework" title="Link to this heading"></a></h2>
 <p>We write out a general framework that represents the sequential equilibrium of any heterogeneous-agent model by a system of equations for aggregate endogenous variables. Denote <span class="math notranslate nohighlight">\(\mathbb{Z} \subseteq \mathbb{R}^{N_Z}\)</span>, <span class="math notranslate nohighlight">\(\mathbb{Y} \subseteq \mathbb{R}^{N_Y}\)</span>, <span class="math notranslate nohighlight">\(\mathbb{E}\subset  \mathbb{R}^{N_e}\)</span>, <span class="math notranslate nohighlight">\(\mathbb{A}\subset  \mathbb{R}^{N_a}\)</span>, <span class="math notranslate nohighlight">\(\mathbb{X} \subset \mathbb{R}^{N_x}\)</span> the space of exogenous aggregate variables, endogenous aggregate variables, individual exogenous states, individual endogenous states, and individual policy variables, respectively.</p>
 <p>Fixing a large integer period <span class="math notranslate nohighlight">\(T\)</span>. Given <span class="math notranslate nohighlight">\(\Phi_0\)</span> a measure over <span class="math notranslate nohighlight">\(\mathbb{E}\times \mathbb{A}\)</span> that represents the initial distribution of individual states,  and a sequence of exogenous aggregate variables <span class="math notranslate nohighlight">\(\mathcal{Z}\equiv \{Z_t\}_{t=0}^{T} \in \mathbb{Z}^{T+1}\)</span>, an equilibrium is characterized by a system of equations for endogenous aggregate variables <span class="math notranslate nohighlight">\(\mathcal{Y}\equiv\{Y_t\}_{t=0}^{T} \in \mathbb{Y}^{T+1}\)</span>:</p>
 <div class="math notranslate nohighlight">
@@ -98,7 +100,7 @@
 \mathcal{F}_t\left(\{Z_s\}_{s=0}^{t},\{Y_s\}_{s=0}^{t},\bar{x}_t(\mathcal{Z},\mathcal{Y})\right)=0, \forall t=0,1,...,T
 \]</div>
 <div class="math notranslate nohighlight" id="equation-f-general">
-<span class="eqno">(3)<a class="headerlink" href="#equation-f-general" title="Permalink to this equation"></a></span>\[\]</div>
+<span class="eqno">(3)<a class="headerlink" href="#equation-f-general" title="Link to this equation"></a></span>\[\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathcal{F}_t: \mathbb{Z}^{T+1} \times \mathbb{Y}^{T+1} \times \mathbb{X} \rightarrow \mathbb{R}^{N_Y}\)</span> is a mapping from exogenous aggregate variables, endogenous aggregate variables, and individual policy aggregates, to equilibrium condition residuals.</p>
 <p><span class="math notranslate nohighlight">\(\bar{x}_t(\mathcal{Z},\mathcal{Y})\)</span> are the aggregates of individual policy variables integrated over the distribution of individual state at time <span class="math notranslate nohighlight">\(t\)</span>. Specifically,</p>
 <div class="math notranslate nohighlight">
@@ -123,7 +125,7 @@ v_{T+1} \text{ given by steady state value function}
 \Phi_{t+1}(\mathcal{E}',\mathcal{A}';\mathcal{Z},\mathcal{Y})= \int \mathcal{I}((e',a')\in \mathcal{E}'\times \mathcal{A}') P^e(de'|e)\mathcal{T}\Big(da';e,a,g_{x,t}\Big(e,a;\mathcal{Z},\mathcal{Y}\Big);\mathcal{Z},\mathcal{Y}\Big) \Phi_t (d e,d a;\mathcal{Z},\mathcal{Y})
 \]</div>
 <section id="example-krusell-and-smith-1998">
-<h3>Example: Krusell and Smith (1998)<a class="headerlink" href="#example-krusell-and-smith-1998" title="Permalink to this heading"></a></h3>
+<h3>Example: Krusell and Smith (1998)<a class="headerlink" href="#example-krusell-and-smith-1998" title="Link to this heading"></a></h3>
 <p>The model of Krusell and Smith (1998) mapped to the general framework, with left variable being the notation of the framework  and the right side variable being the variable in the model, reads <span class="math notranslate nohighlight">\(Z_t=Z_t\)</span>, <span class="math notranslate nohighlight">\(Y_t=K_{t+1}\)</span>, <span class="math notranslate nohighlight">\(e=e\)</span>, <span class="math notranslate nohighlight">\(a=a\)</span>, <span class="math notranslate nohighlight">\(x=a'\)</span>.</p>
 <div class="math notranslate nohighlight">
 \[
@@ -150,7 +152,7 @@ u(e,a,a';Z_t,K_t)=\ln\Big([1+r(Z_t,K_t)]a + w(Z_t,K_t)[(1.0-\tau)e\bar{l} + \mu 
 </section>
 </section>
 <section id="calculating-the-jacobian-with-partial-broyden-updates">
-<h2>Calculating the Jacobian with Partial Broyden Updates<a class="headerlink" href="#calculating-the-jacobian-with-partial-broyden-updates" title="Permalink to this heading"></a></h2>
+<h2>Calculating the Jacobian with Partial Broyden Updates<a class="headerlink" href="#calculating-the-jacobian-with-partial-broyden-updates" title="Link to this heading"></a></h2>
 <p>The system of equations <a class="reference internal" href="#equation-f-general">(3)</a>, albeit large, can be solved efficiently using a gradient-based equation solver, once the Jacobian of the system with respect to endogenous aggregate variables <span class="math notranslate nohighlight">\({Y_t}_{t=0}^{T}\)</span> is efficiently calculated. Calculating the Jacobian can be challenging, as evaluating the system involves solving the Bellman equation for policy functions, and then solving the distributions over individual states. Finite difference methods are inefficient, as policy functions and induced state transitions need to be re-solved when aggregate variables are perturbed along each dimension. Automatic differentiation (AD) is not possible, as aggregate variables enter as parameters in individual optimization problems.</p>
 <p>The Sequence Space Jacobian (<a class="reference external" href="https://onlinelibrary.wiley.com/doi/full/10.3982/ECTA17434">Auclert et al., 2021</a>) approach develops an efficient method to evaluate the Jacobian at the model’s steady state, and proposes to fix the Jacobian matrix when solving the transition path. The approach works adequately for model dynamics that are close to the steady state, but does not work for models featuring high nonlinearity, such as the New Keynesian model with an interest rate zero lower bound, as in McKay, Nakamura, and Steinsson (2016).</p>
 <p>The central contribution of our method, which enhances the robustness  and efficiency of the algorithm, is to provide a sparse update of the  Jacobian. Denote <span class="math notranslate nohighlight">\(\mathcal{G}_t(\mathcal{Z},\mathcal{Y})=\mathcal{F}_t\left(\{Z_s\}_{s=0}^{t},\{Y_s\}_{s=0}^{t},\bar{x}_t(\mathcal{Z},\mathcal{Y})\right)\)</span>, then the Jacobian entry with respect to  <span class="math notranslate nohighlight">\(\{Y_s\}\)</span> is</p>
@@ -162,7 +164,7 @@ u(e,a,a';Z_t,K_t)=\ln\Big([1+r(Z_t,K_t)]a + w(Z_t,K_t)[(1.0-\tau)e\bar{l} + \mu 
 <p>The initial Jacobian <span class="math notranslate nohighlight">\(\nabla_{Y_s} \bar{x}_t\)</span> at the steady state is constructed using the fake news algorithm developed by <a class="reference external" href="https://onlinelibrary.wiley.com/doi/full/10.3982/ECTA17434">Auclert et al. (2021)</a></p>
 </section>
 <section id="other-implementation-details">
-<h2>Other Implementation Details<a class="headerlink" href="#other-implementation-details" title="Permalink to this heading"></a></h2>
+<h2>Other Implementation Details<a class="headerlink" href="#other-implementation-details" title="Link to this heading"></a></h2>
 <p>To ensure maximum performance, the procedure for solving individual optimization problems is compiled into C++ libraries (MATLAB mex binaries). Functions are approximated with linear interpolations or tensor products of cubic splines, with the option to specify different orders for extrapolation. The optimization problems are solved with well-respected numerical routines. Analytical gradients are used whenever possible, with automatic differentiation as a backup.</p>
 <p>Distributions of individual states and their deterministic transitions are approximated over histograms, following Young (2010). The stationary distribution is solved as an eigenvector of the stationary transition matrix of individual states. Sparsity of the transition matrix is taken into account at construction to assure performance.</p>
 <p>The aggregate equilibrium system is defined in MATLAB. Multiple equation solving algorithms are provided for both steady states and transition paths, with the Jacobian constructed following the aforementioned procedure.</p>

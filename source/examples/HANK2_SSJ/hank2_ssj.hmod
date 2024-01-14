@@ -1,0 +1,169 @@
+parameters beta sigma vphi nu chi0 chi1 omega ra r w tau N;
+% The numbers are from SSJ Code. The reported number from the paper is in the comments.
+% beta = 0.9762739008880044; % beta = 0.976;
+beta = 0.977597152678536; % DPOPT's Calibration
+sigma = 2.0;
+% vphi = 1.7134759440504832; % vphi = 2.073;
+vphi = 1.717357235764533; % DPOPT's Calibration
+nu = 1.0;
+
+chi0 = 0.25;
+% chi1 = 6.416419594214078; % chi1 = 6.416;
+chi1 = 6.309189809325852; % DPOPT's Calibration
+omega = 0.005;
+
+var_shock e;
+shock_trans = [
+   0.966289   0.033422   0.000289
+   0.016711   0.966578   0.016711
+   0.000289   0.033422   0.966289
+   ];  % need this to be the full transition matrix
+
+e = [0.18315644, 0.67277917, 2.47128522];
+
+var_state b a;
+b = 10.^(linspace(log10(0.25), log10(50+0.25), 50)) - 0.25;
+a = 10.^(linspace(log10(0.25), log10(4000+0.25), 70)) - 0.25;
+
+var_pre_vfi coh;
+coh = (1+ra)*a + (1+r-omega)*b + (1-tau)*w*e*N;
+
+var_policy bp ap c;
+initial bp 0.0;
+initial ap (1+ra)*a;
+initial c (1+r-omega)*b + (1-tau)*w*e*N;
+
+var_aux chi uce;
+
+vfi;
+    chi = (chi1/2)*(ap-(1+ra)*a)^2/((1+ra)*a+chi0);    
+    %c + ap + bp == (1+ra)*a + (1+r-omega)*b + (1-tau)*w*e*N - chi;
+    c + ap + bp == coh - chi;
+    u = c.^(1.0 - sigma)/(1.0 - sigma) - vphi*N^(1.0+nu)/(1.0+nu);
+    Tv = u + beta*EXPECT(v(bp,ap));
+    uce = e*(c^(-sigma));
+    bp >= 0.0;
+    ap >= 0.0;
+    c  >= 1e-8;
+end;
+
+var_agg r pii Y K N w p d;
+% var_agg r pii Y K N w p d Bh;
+r = 0.0125; %r = 0.013577682283245;
+pii = 0.0000;
+% Y = 0.988035319890663;
+Y = 1.0;
+K = 10.0;
+N = 1.00;
+w = 0.66;
+p = 11.2;
+d = 0.14; % 11.2*0.0125
+Bh = 1.04; 
+
+ra = r;
+
+Z = 0.4677898145312322; % Z = 0.468;
+alpha = 0.3299492385786802; % alpha = 0.33;
+delta = 0.02; % depreciation
+epsI = 4.0; % capital adjustment cost parameter
+mup = 1.015228426395939; % mup = 1.015;
+kappap = 0.1; % price adjustment cost parameter
+
+muw = 1.1; % wage market power parameter
+kappaw = 0.1; % wage adjustment cost parameter
+
+Bg = 2.8;
+G = 0.2;
+
+phi = 1.5;
+phi_y = 0.0;
+pi_star = 0.0;
+rstar = 0.0125;
+
+var_agg_shock m_shock;
+m_shock = 0.0;
+
+T = 300;
+
+model_cali(beta, chi1);
+    mc = 1 - r * (p - K) / Y;
+    mup = 1 / mc;
+    alpha = (r + delta) * K / Y / mc;
+    Z = Y/(K^alpha*N^(1-alpha));
+
+    w = mc * (1 - alpha) * Y / N;
+    ra = r;
+    tau = (r*Bg + G)/(w*N);
+
+    % equilibrium conditions
+    ap + bp == p + Bg; % asset demand = asset supply
+    Bh == bp; % liquid asset holding
+
+    beta <= 1 - 1e-10;
+    beta >= 1e-10;
+    chi1 >= 1e-10;
+    
+    % post evaluation
+    vphi =((1-tau)*w*uce/muw)/(N.^nu); % labor demand = labor supply
+end;
+
+model_ss(r, Y);
+    ra = r;
+    %w = (1/mup)*(1-alpha)*Z*(K/N)^alpha;
+    KN_ratio = (mup*(r+delta)/(alpha*Z))^(1/(alpha-1));
+    w = (1/mup)*(1-alpha)*Z*KN_ratio^alpha;
+    % Y = Z*(K^alpha)*(N^(1-alpha)) = Z*(K/N)^alpha*N
+    N = Y/Z/(KN_ratio^alpha);
+    K = KN_ratio*N;
+    d = Y - w*N - delta*K; 
+    p = d/r;
+
+    tau = (r*Bg + G)/(w*N);
+
+    % equilibrium conditions
+    ap + bp == p + Bg; % asset demand = asset supply
+    N == ((1-tau)*w*uce/(vphi*muw)).^(1/nu); % labor demand = labor supply
+
+    r <= (1/beta - 1  - 1e-10);
+    Y >= 0.5;
+
+    % post evaluation
+    rstar = r; % update rstar in Taylor Rule
+    Y_star = Y; % update Y_star in Taylor Rule
+    pii = pi_star; % exogenously fixed steady state inflation
+    Bh = bp;    % liquid asset 
+end;
+
+model;
+    ii = rstar + phi*pii(-1) + m_shock(-1); % Taylor Rule: recall ii is determined last period
+
+    pshare = p(-1)/(p(-1)+Bg-Bh);
+    % pshare = p(-1)/(p(-1)+Bg-Bh(-1));
+    ra = pshare*(d+p)/p(-1) + (1- pshare)*(1+r) - 1;
+
+    I = K - (1-delta)*K(-1) + ((K/K(-1) - 1).^2)*K(-1)/(2*delta*epsI);
+    psip = ((log(1+pii))^2)*Y*mup/((mup - 1)*2*kappap);
+    Q = 1 + (K/K(-1) - 1)/(delta*epsI);
+    
+    tau = (r*Bg + G)/(w*N);
+
+    % equilibrium conditions: 8 equations with 8 unknowns
+    r == (1.0 + ii)/(1.0 + pii) - 1.0; % Fisher Equation      
+    ap + bp == p + Bg; % asset demand = asset supply
+    log(1 + pii) + log(w/w(-1)) ==  kappaw*(vphi*N^(1+nu) - (1-tau)*w*N*uce/muw) + beta*(log(1+pii(+1)) + log(w(+1)/w)); % Wage Phillips Curve
+    log(1 + pii) ==  kappap*(w*N/((1-alpha)*Y) - 1/mup) + log(1+pii(+1))*Y(+1)/Y/(1+r(+1)); % Price Phillips Curve
+    % valuation equation
+    (1 + r(+1))*(1 + (K/K(-1) - 1)/(delta*epsI)) == alpha*w(+1)*N(+1)/((1-alpha)*K) - (K(+1)/K - (1-delta) + (K(+1)/K - 1).^2/(2*delta*epsI)) + (1 + (K(+1)/K - 1)/(delta*epsI))*K(+1)/K;
+    Y == Z*(K(-1)^alpha)*(N^(1-alpha)); % production function
+    d == Y - w*N - I - psip; % devidend
+    0 == (d(+1) + p(+1)) - p*(1.0 + r(+1)); % no-arbitrage equation
+    % bp == Bh; % liquid asset supply = demand
+    
+    r <= (1/beta - 1  - 1e-10);
+    pii >= beta - 1.0 + 1e-10;   % 1+r <= 1/beta implies 1+pii >=beta*(1+ii)>= beta
+    N >= 0.5; % tau <=1 implies N > = (r*Bg + G)/w = 0.3556 when r = 0.0125
+
+    % post evaluation
+    goods_mkt = c + I + G + psip + chi + omega*bp - Y; % residual = aggregate demand - aggregate supply;
+end;
+
