@@ -5,10 +5,10 @@
 
 We write out a general framework that represents the sequential equilibrium of any heterogeneous-agent model by a system of equations for aggregate endogenous variables. Denote $\mathbb{Z} \subseteq \mathbb{R}^{N_Z}$, $\mathbb{Y} \subseteq \mathbb{R}^{N_Y}$, $\mathbb{E}\subseteq  \mathbb{R}^{N_e}$, $\mathbb{A}\subseteq  \mathbb{R}^{N_a}$, $\mathbb{X} \subseteq \mathbb{R}^{N_x}$ the space of exogenous aggregate variables, endogenous aggregate variables, individual exogenous states, individual endogenous states, and individual policy variables, respectively. 
 
-Fixing a large integer period $T$. Given $\Phi_0$ a measure over the Boreal set of $\mathbb{E}\times \mathbb{A}$ that represents the initial distribution of individual states,  and a sequence of exogenous aggregate variables $\mathcal{Z}\equiv \{Z_t\}_{t=0}^{T} \in \mathbb{Z}^{T+1}$, an equilibrium is characterized by a system of equations for endogenous aggregate variables $\mathcal{Y}\equiv\{Y_t\}_{t=0}^{T} \in \mathbb{Y}^{T+1}$:
+Fixing a large integer period $T$. Given $\Phi_0$ a measure that represents the initial distribution of individual states,  and a sequence of exogenous aggregate variables $\mathcal{Z}\equiv \{Z_t\}_{t=0}^{T} \in \mathbb{Z}^{T+1}$, an equilibrium is characterized by a system of equations for endogenous aggregate variables $\mathcal{Y}\equiv\{Y_t\}_{t=0}^{T} \in \mathbb{Y}^{T+1}$:
 
 $$
-\mathcal{F}_t\left(\{Z_s\}_{s=0}^{t},\{Y_s\}_{s=0}^{t},\bar{x}_t(\mathcal{Z},\mathcal{Y})\right)=0, \forall t=0,1,...,T
+\mathcal{F}_t\left(\{Z_s\}_{s=0}^{t},\{Y_s\}_{s=0}^{t},\bar{x}_t(\mathcal{Z},\mathcal{Y})\right)=0, \text{ for } t=0,1,...,T
 $$
 
 ```{math}
@@ -20,7 +20,7 @@ where $\mathcal{F}_t: \mathbb{Z}^{T+1} \times \mathbb{Y}^{T+1} \times \mathbb{X}
 $\bar{x}_t(\mathcal{Z},\mathcal{Y})$ are the aggregates of individual policy variables integrated over the distribution of individual state at time $t$. Specifically,
 
 $$
-\bar{x}_t(\mathcal{Z},\mathcal{Y})) = \int g_{x,t}(e,a;\mathcal{Z},\mathcal{Y}) \ \mathrm{d}\Phi_t(e,a;\mathcal{Z},\mathcal{Y}),
+\bar{x}_t(\mathcal{Z},\mathcal{Y})) = \int g_{x,t}(e,a;\mathcal{Z},\mathcal{Y}) \ \Phi_t(de,da;\mathcal{Z},\mathcal{Y}),
 $$
 
 where $g_{x,t}(e,a;\mathcal{Z},\mathcal{Y})$ are policy functions that solve the Bellman equation
@@ -37,10 +37,10 @@ $$
 
 in which $u(e,a,x;Z_t,Y_t)$ is the period utility function. $\mathcal{C}(e,a,x; Z_t,Y_t)\leq 0$ is a set of inequality constraints that the optimization problem is subject to. $\mathcal{T}$ is a distribution over $x'$ that represents the (potentially stochastic) transition of individual endogenous state variables.
 
-$\Phi_t(e,a;\mathcal{Z},\mathcal{Y})$ is the measure that represents the distributions of individual states at time $t$, which evolves according to policy functions and the exogenous transition of the Markov process $e$, denoted by $P^e$:
+$\Phi_t(e,a;\mathcal{Z},\mathcal{Y})$ is the measure that represents the distributions of individual states at time $t$, which evolves according to policy functions and the transition measure of the Markov process $e$, denoted by $P^e$:
 
 $$
-\Phi_{t+1}(\mathcal{E}',\mathcal{A}';\mathcal{Z},\mathcal{Y})= \int \mathcal{I}((e',a')\in \mathcal{E}'\times \mathcal{A}') P^e(de'|e)\mathcal{T}\Big(da';e,a,g_{x,t}\Big(e,a;\mathcal{Z},\mathcal{Y}\Big);\mathcal{Z},\mathcal{Y}\Big) \Phi_t (d e,d a;\mathcal{Z},\mathcal{Y})
+\Phi_{t+1}(\mathcal{E}',\mathcal{A}';\mathcal{Z},\mathcal{Y})= \int \mathcal{I}(a'\in \mathcal{A}') P^e(\mathcal{E}'|e)\mathcal{T}\Big(da';e,a,g_{x,t}\Big(e,a;\mathcal{Z},\mathcal{Y}\Big);\mathcal{Z},\mathcal{Y}\Big) \Phi_t (d e,d a;\mathcal{Z},\mathcal{Y})
 $$
 
 ### Example: Krusell and Smith (1998)
