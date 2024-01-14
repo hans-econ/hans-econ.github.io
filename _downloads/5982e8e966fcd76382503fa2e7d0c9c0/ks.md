@@ -1,3 +1,4 @@
+(ks_1998)=
 # Getting Started: Krusell and Smith (1998)
 
 The model describes a production economy with idiosyncratic uninsurable labor income risks faced by households. The aggregate shock is a shock to total factor productivity. The toolbox solves the steady state, and the deterministic linear/non-linear transition path after an unexpected aggregate shock. Following [Boppart, Krusell and Mitman (2018)](https://www.sciencedirect.com/science/article/abs/pii/S0165188918300022) and [Auclert et al. (2021)](https://onlinelibrary.wiley.com/doi/full/10.3982/ECTA17434), the deterministic transition path characterizes the first order effect of the aggregate shock.
@@ -118,7 +119,7 @@ The **vfi** block starts from given values of *var_state* (here, $(e,a)$) and *v
 
 Box constraints for *var_policy* (here $0 \leq a'\leq budget$) and arbitrary equality or inequality constraints can be defined after the line that defines the objective. 
 
-All *var_aux*s (here, $c$) needs to be defined.
+All *var_aux*s (here, $c$) needs to be defined, and their values be accessed from the returned solution.
 
 The script file can stop after defning the **vfi** block so the toolbox only generates code for solving the decision problem that is self-contained. 
 
@@ -165,7 +166,7 @@ Other other aggregate equilibrium variables can be defined after the definition 
 
 ## Use the Toolbox
 
-After parsing the script file, the toolbox generates MATLAB files: *solve_vfi.m*, *solve_ss.m*, *solve_trans_linear.m*, *solve_trans_nonlinear.m* and other functions that ca be called to solve the steady state, stationary distribution, and transition paths of the model. The usages of these functions are illustrated below.
+After parsing the script file, the toolbox generates MATLAB files: *solve_vfi.m*, *solve_ss.m*, *solve_trans_linear.m*, *solve_trans_nonlinear.m* and other functions that can be called to solve the steady state, stationary distribution, and transition paths of the model. The usages of these functions are illustrated below.
 
 ```{raw} html
 :file: ks_notebook.html
@@ -173,8 +174,11 @@ After parsing the script file, the toolbox generates MATLAB files: *solve_vfi.m*
 
 ## What's Next?
 
-Behind the scene: understand the details of the solution methods.
+Behind the scene: understand the details of [the Algorithm](toolbox_algorithm).
 
-Toolbox API reference.
+Check the [Toolbox API reference](toolbox_api).
 
-More examples.
+More examples:
+- [McKay, Nakamura and Steinsson (2016)](hank_zlb) for a Heterogeneous-Agent New-Keynesian model for defining complex equilibrium conditions and handling nonlinearity
+- A discrete-time two-asset HANK model for handling portfolio choices
+- [Khan and Thomas (2008)](kt2008) for handling non-convex adjustment costs and stochastic state transitions

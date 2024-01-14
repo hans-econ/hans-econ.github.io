@@ -1,3 +1,4 @@
+(hank_zlb)=
 # Solving for Non-linear Transitions: Forward Guidance under ZLB (McKay, Nakamura, Steinsson, 2016)
 
 In this example, we solve the one-asset HANK model used by McKay, Nakamura, and Steinsson (2016) to study the forward guidance of monetary policy at the liquidity trap (nominal interest rate zero lower bound). The liquidity trap is driven by a positive shock to the common discount factor of households. The forward guidance is modeled as the central bank's commitment to setting the nominal interest rate at zero for additional periods, after the economy would have exited the zero lower bound.
@@ -122,13 +123,41 @@ and goods market clearing  implied by Walras's law. The system can be further si
 
 ## The hmod File
 
-The model can be represented using a hmod file listed below
+The model can be represented using a hmod file, {download}`hank1.hmod`, listed below
 
 ```{literalinclude} hank1.hmod
 :language: HANS
+:linenos:
 ```
 
+The equilibrium system now involves non-trivial market clearing conditions but nevertheless can be represented by a system of equations. Define the time sequence of all unknowns in **var_agg** and the same number of equations in the **model** block with "==" (see codes highlighted below):
+
+```{literalinclude} hank1.hmod
+:language: HANS
+:linenos:
+:lineno-match:
+:start-at: var_agg Y
+:end-at: end;
+:emphasize-lines: 1, 28-33
+```
+
+One can define an alternative model block that is different from the main **model** block. For example, the following block in the script file defines a block for calibration, which takes different unknowns and a different system of equations. Here, the calibration is at the steady state, so we can reduce the calibration system into an equation for aggregate labor and bond holding, with all other variables being simple functions with the two unknowns, or implied by the steady state condition. 
+
+
+```{literalinclude} hank1.hmod
+:language: HANS
+:linenos:
+:lineno-match:
+:start-at: model_cali(
+:end-at: end;
+:emphasize-lines: 1, 8-9
+```
+
+All **var_agg** need to be initialized right after declaration, unless their values are returned from an alternative model block (e.g., here, by the **model_cali** block). See below for how to pass the calibration solution to solving the main model block.
+
 ## Use the Toolbox
+
+After parsing the script file, the toolbox generates MATLAB files: *solve_vfi.m*, *solve_ss.m*, *solve_trans_linear.m*, *solve_trans_nonlinear.m*, *solve_cali.m* and other functions that can be called to solve the steady state, stationary distribution, transition paths, and alternative system (here, calibration) of the model. The usages of the generated files are illustrated below.
 
 ```{raw} html
 :file: hank1_zlb_notebook.html
