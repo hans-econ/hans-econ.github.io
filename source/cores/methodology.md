@@ -30,17 +30,17 @@ v_t(e,a;\mathcal{Z},\mathcal{Y}) = \max_{x} u(e,a,x;Z_t,Y_t) + \beta \mathbb{E}[
 \\
 s.t. \quad \mathcal{C}(e,a,x; Z_t,Y_t) \leq 0
 \\
-a' \sim \mathcal{T}(a';e,a,x; Z_t,Y_t)
+a' \sim \mathcal{T}(\cdot;e,a,x; Z_t,Y_t)
 \\
 v_{T+1} \text{ given by steady state value function}
 $$
 
-in which $u(e,a,x;Z_t,Y_t)$ is the period utility function. $\mathcal{C}(e,a,x; Z_t,Y_t)\leq 0$ is a set of inequality constraints that the optimization problem is subject to. $\mathcal{T}$ is a distribution over $x'$ that represents the (potentially stochastic) transition of individual endogenous state variables.
+in which $u(e,a,x;Z_t,Y_t)$ is the period utility function. $\mathcal{C}(e,a,x; Z_t,Y_t)\leq 0$ is a set of inequality constraints that the optimization problem is subject to. $\mathcal{T}$ is the transition measure of $a'$ that represents the (potentially stochastic) transition of individual endogenous state variables.
 
 $\Phi_t(e,a;\mathcal{Z},\mathcal{Y})$ is the measure that represents the distributions of individual states at time $t$, which evolves according to policy functions and the transition measure of the Markov process $e$, denoted by $P^e$:
 
 $$
-\Phi_{t+1}(\mathcal{E}',\mathcal{A}';\mathcal{Z},\mathcal{Y})= \int \mathcal{I}(a'\in \mathcal{A}') P^e(\mathcal{E}'|e)\mathcal{T}\Big(da';e,a,g_{x,t}\Big(e,a;\mathcal{Z},\mathcal{Y}\Big);\mathcal{Z},\mathcal{Y}\Big) \Phi_t (d e,d a;\mathcal{Z},\mathcal{Y})
+\Phi_{t+1}(\mathcal{E}',\mathcal{A}';\mathcal{Z},\mathcal{Y})= \int  P^e(\mathcal{E}'|e)\mathcal{T}\Big(\mathcal{A}';e,a,g_{x,t}\Big(e,a;\mathcal{Z},\mathcal{Y}\Big);Z_t,Y_t\Big) \Phi_t (d e,d a;\mathcal{Z},\mathcal{Y})
 $$
 
 ### Example: Krusell and Smith (1998)
@@ -48,7 +48,7 @@ $$
 The model of Krusell and Smith (1998) mapped to the general framework, with left variable being the notation of the framework  and the right side variable being the variable in the model, reads $Z_t=Z_t$, $Y_t=K_{t+1}$, $e=e$, $a=a$, $x=a'$.
 
 $$
-\mathcal{F}_t\left(\{Z_s\}_{s=0}^{T},\{K_s\}_{s=0}^{T},\bar{x}_t(\mathcal{Z},\mathcal{Y})\right)=K_{t+1}-\bar a'_{t}
+\mathcal{F}_t\left(\{Z_s\}_{s=0}^{T},\{K_s\}_{s=0}^{T},\bar{x}_t\right)=K_{t+1}-\bar a'_{t}.
 $$
 
 Note that $K_0=\int a d \Phi_0(de,da)$ is given and hence not part of the unknowns.
@@ -70,7 +70,7 @@ $$
 The state transition:
 
 $$
-\mathcal{T}(a';e,a,a'; Z_t,K_t)=a' \text{ with probability 1}.
+\mathcal{T}(\cdot;e,a,a'; Z_t,K_t)=a' \text{ with probability 1}.
 $$
 
 ## Calculating the Jacobian with Partial Broyden Updates
