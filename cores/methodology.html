@@ -51,7 +51,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/KS_JEDC10/ks.html">Getting Started: Krusell and Smith (1998)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/HANK1_ZLB/hank1_zlb.html">Solving for Non-linear Transitions: Forward Guidance under ZLB (McKay, Nakamura, Steinsson, 2016)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../examples/HANK2_SSJ/hank2_ssj.html">Handling Portfolio Choices: Two-asset HANK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/HANK2_SSJ/hank2_ssj.html">Handling Portfolio Choices: Two-asset HANK (Auclert et al, 2021)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/KT2008/kt2008.html">Handling Non-convex Adjustment Costs: Khan and Thomas (2008)</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">The Algorithm</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#general-framework">General Framework</a><ul>
@@ -94,10 +94,10 @@
 <section id="general-framework">
 <h2>General Framework<a class="headerlink" href="#general-framework" title="Link to this heading"></a></h2>
 <p>We write out a general framework that represents the sequential equilibrium of any heterogeneous-agent model by a system of equations for aggregate endogenous variables. Denote <span class="math notranslate nohighlight">\(\mathbb{Z} \subseteq \mathbb{R}^{N_Z}\)</span>, <span class="math notranslate nohighlight">\(\mathbb{Y} \subseteq \mathbb{R}^{N_Y}\)</span>, <span class="math notranslate nohighlight">\(\mathbb{E}\subseteq  \mathbb{R}^{N_e}\)</span>, <span class="math notranslate nohighlight">\(\mathbb{A}\subseteq  \mathbb{R}^{N_a}\)</span>, <span class="math notranslate nohighlight">\(\mathbb{X} \subseteq \mathbb{R}^{N_x}\)</span> the space of exogenous aggregate variables, endogenous aggregate variables, individual exogenous states, individual endogenous states, and individual policy variables, respectively.</p>
-<p>Fixing a large integer period <span class="math notranslate nohighlight">\(T\)</span>. Given <span class="math notranslate nohighlight">\(\Phi_0\)</span> a measure over the Boreal set of <span class="math notranslate nohighlight">\(\mathbb{E}\times \mathbb{A}\)</span> that represents the initial distribution of individual states,  and a sequence of exogenous aggregate variables <span class="math notranslate nohighlight">\(\mathcal{Z}\equiv \{Z_t\}_{t=0}^{T} \in \mathbb{Z}^{T+1}\)</span>, an equilibrium is characterized by a system of equations for endogenous aggregate variables <span class="math notranslate nohighlight">\(\mathcal{Y}\equiv\{Y_t\}_{t=0}^{T} \in \mathbb{Y}^{T+1}\)</span>:</p>
+<p>Fixing a large integer period <span class="math notranslate nohighlight">\(T\)</span>. Given <span class="math notranslate nohighlight">\(\Phi_0\)</span> a measure that represents the initial distribution of individual states,  and a sequence of exogenous aggregate variables <span class="math notranslate nohighlight">\(\mathcal{Z}\equiv \{Z_t\}_{t=0}^{T} \in \mathbb{Z}^{T+1}\)</span>, an equilibrium is characterized by a system of equations for endogenous aggregate variables <span class="math notranslate nohighlight">\(\mathcal{Y}\equiv\{Y_t\}_{t=0}^{T} \in \mathbb{Y}^{T+1}\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[
-\mathcal{F}_t\left(\{Z_s\}_{s=0}^{t},\{Y_s\}_{s=0}^{t},\bar{x}_t(\mathcal{Z},\mathcal{Y})\right)=0, \forall t=0,1,...,T
+\mathcal{F}_t\left(\{Z_s\}_{s=0}^{t},\{Y_s\}_{s=0}^{t},\bar{x}_t(\mathcal{Z},\mathcal{Y})\right)=0, \text{ for } t=0,1,...,T
 \]</div>
 <div class="math notranslate nohighlight" id="equation-f-general">
 <span class="eqno">(3)<a class="headerlink" href="#equation-f-general" title="Link to this equation"></a></span>\[\]</div>
@@ -105,7 +105,7 @@
 <p><span class="math notranslate nohighlight">\(\bar{x}_t(\mathcal{Z},\mathcal{Y})\)</span> are the aggregates of individual policy variables integrated over the distribution of individual state at time <span class="math notranslate nohighlight">\(t\)</span>. Specifically,</p>
 <div class="math notranslate nohighlight">
 \[
-\bar{x}_t(\mathcal{Z},\mathcal{Y})) = \int g_{x,t}(e,a;\mathcal{Z},\mathcal{Y}) \ \mathrm{d}\Phi_t(e,a;\mathcal{Z},\mathcal{Y}),
+\bar{x}_t(\mathcal{Z},\mathcal{Y})) = \int g_{x,t}(e,a;\mathcal{Z},\mathcal{Y}) \ \Phi_t(de,da;\mathcal{Z},\mathcal{Y}),
 \]</div>
 <p>where <span class="math notranslate nohighlight">\(g_{x,t}(e,a;\mathcal{Z},\mathcal{Y})\)</span> are policy functions that solve the Bellman equation</p>
 <div class="math notranslate nohighlight">
@@ -114,22 +114,22 @@ v_t(e,a;\mathcal{Z},\mathcal{Y}) = \max_{x} u(e,a,x;Z_t,Y_t) + \beta \mathbb{E}[
 \\
 s.t. \quad \mathcal{C}(e,a,x; Z_t,Y_t) \leq 0
 \\
-a' \sim \mathcal{T}(a';e,a,x; Z_t,Y_t)
+a' \sim \mathcal{T}(\cdot;e,a,x; Z_t,Y_t)
 \\
 v_{T+1} \text{ given by steady state value function}
 \end{split}\]</div>
-<p>in which <span class="math notranslate nohighlight">\(u(e,a,x;Z_t,Y_t)\)</span> is the period utility function. <span class="math notranslate nohighlight">\(\mathcal{C}(e,a,x; Z_t,Y_t)\leq 0\)</span> is a set of inequality constraints that the optimization problem is subject to. <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> is a distribution over <span class="math notranslate nohighlight">\(x'\)</span> that represents the (potentially stochastic) transition of individual endogenous state variables.</p>
-<p><span class="math notranslate nohighlight">\(\Phi_t(e,a;\mathcal{Z},\mathcal{Y})\)</span> is the measure that represents the distributions of individual states at time <span class="math notranslate nohighlight">\(t\)</span>, which evolves according to policy functions and the exogenous transition of the Markov process <span class="math notranslate nohighlight">\(e\)</span>, denoted by <span class="math notranslate nohighlight">\(P^e\)</span>:</p>
+<p>in which <span class="math notranslate nohighlight">\(u(e,a,x;Z_t,Y_t)\)</span> is the period utility function. <span class="math notranslate nohighlight">\(\mathcal{C}(e,a,x; Z_t,Y_t)\leq 0\)</span> is a set of inequality constraints that the optimization problem is subject to. <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> is the transition measure of <span class="math notranslate nohighlight">\(a'\)</span> that represents the (potentially stochastic) transition of individual endogenous state variables.</p>
+<p><span class="math notranslate nohighlight">\(\Phi_t(e,a;\mathcal{Z},\mathcal{Y})\)</span> is the measure that represents the distributions of individual states at time <span class="math notranslate nohighlight">\(t\)</span>, which evolves according to policy functions and the transition measure of the Markov process <span class="math notranslate nohighlight">\(e\)</span>, denoted by <span class="math notranslate nohighlight">\(P^e\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[
-\Phi_{t+1}(\mathcal{E}',\mathcal{A}';\mathcal{Z},\mathcal{Y})= \int \mathcal{I}((e',a')\in \mathcal{E}'\times \mathcal{A}') P^e(de'|e)\mathcal{T}\Big(da';e,a,g_{x,t}\Big(e,a;\mathcal{Z},\mathcal{Y}\Big);\mathcal{Z},\mathcal{Y}\Big) \Phi_t (d e,d a;\mathcal{Z},\mathcal{Y})
+\Phi_{t+1}(\mathcal{E}',\mathcal{A}';\mathcal{Z},\mathcal{Y})= \int  P^e(\mathcal{E}'|e)\mathcal{T}\Big(\mathcal{A}';e,a,g_{x,t}\Big(e,a;\mathcal{Z},\mathcal{Y}\Big);Z_t,Y_t\Big) \Phi_t (d e,d a;\mathcal{Z},\mathcal{Y})
 \]</div>
 <section id="example-krusell-and-smith-1998">
 <h3>Example: Krusell and Smith (1998)<a class="headerlink" href="#example-krusell-and-smith-1998" title="Link to this heading"></a></h3>
 <p>The model of Krusell and Smith (1998) mapped to the general framework, with left variable being the notation of the framework  and the right side variable being the variable in the model, reads <span class="math notranslate nohighlight">\(Z_t=Z_t\)</span>, <span class="math notranslate nohighlight">\(Y_t=K_{t+1}\)</span>, <span class="math notranslate nohighlight">\(e=e\)</span>, <span class="math notranslate nohighlight">\(a=a\)</span>, <span class="math notranslate nohighlight">\(x=a'\)</span>.</p>
 <div class="math notranslate nohighlight">
 \[
-\mathcal{F}_t\left(\{Z_s\}_{s=0}^{T},\{K_s\}_{s=0}^{T},\bar{x}_t(\mathcal{Z},\mathcal{Y})\right)=K_{t+1}-\bar a'_{t}
+\mathcal{F}_t\left(\{Z_s\}_{s=0}^{T},\{K_s\}_{s=0}^{T},\bar{x}_t\right)=K_{t+1}-\bar a'_{t}.
 \]</div>
 <p>Note that <span class="math notranslate nohighlight">\(K_0=\int a d \Phi_0(de,da)\)</span> is given and hence not part of the unknowns.</p>
 <p>Period utility:</p>
@@ -147,7 +147,7 @@ u(e,a,a';Z_t,K_t)=\ln\Big([1+r(Z_t,K_t)]a + w(Z_t,K_t)[(1.0-\tau)e\bar{l} + \mu 
 <p>The state transition:</p>
 <div class="math notranslate nohighlight">
 \[
-\mathcal{T}(a';e,a,a'; Z_t,K_t)=a' \text{ with probability 1}.
+\mathcal{T}(\cdot;e,a,a'; Z_t,K_t)=a' \text{ with probability 1}.
 \]</div>
 </section>
 </section>

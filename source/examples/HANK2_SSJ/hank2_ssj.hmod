@@ -1,16 +1,17 @@
-parameters beta sigma vphi nu chi0 chi1 omega ra r w tau N;
-% The numbers are from SSJ Code. The reported number from the paper is in the comments.
-% beta = 0.9762739008880044; % beta = 0.976;
-beta = 0.977597152678536; % DPOPT's Calibration
-sigma = 2.0;
-% vphi = 1.7134759440504832; % vphi = 2.073;
-vphi = 1.717357235764533; % DPOPT's Calibration
-nu = 1.0;
+% The fixed (non-calibrated) parameter values are from Auclert, Bardóczy, Rognlie, and Straub (2021, Appendix B.3)
 
-chi0 = 0.25;
-% chi1 = 6.416419594214078; % chi1 = 6.416;
-chi1 = 6.309189809325852; % DPOPT's Calibration
-omega = 0.005;
+parameters beta sigma varphi nu chi0 chi1 omega ra r w tau N;
+
+beta = 0.976; % Calibrated Parameter: HANS final calibrated value is 0.977599682193789 
+sigma = 2.0;  % Fixed Parameter
+% Note: a typo of varphi in Table B.III: varphi = 2.073 in the table, 
+% but the actual varphi value in the SSJ code is around 1.713  
+varphi = 1.713; % Calibrated Parameter: HANS final calibrated value is 1.681157908161363
+nu = 1.0;   % Fixed Parameter
+
+chi0 = 0.25; % Fixed Parameter
+chi1 = 6.416; % Calibrated Parameter: HANS final calibrated value is 6.518415164643450
+omega = 0.005; % Fixed Parameter
 
 var_shock e;
 shock_trans = [
@@ -21,109 +22,149 @@ shock_trans = [
 
 e = [0.18315644, 0.67277917, 2.47128522];
 
+% State Variable grid
 var_state b a;
-b = 10.^(linspace(log10(0.25), log10(50+0.25), 50)) - 0.25;
-a = 10.^(linspace(log10(0.25), log10(4000+0.25), 70)) - 0.25;
+% For replication, the following grids were used in SSJ
+% b = 10.^(linspace(log10(0.25), log10(50+0.25), 50)) - 0.25;
+% a = 10.^(linspace(log10(0.25), log10(4000+0.25), 70)) - 0.25;
+b = 10.^(linspace(log10(0.25), log10(40+0.25), 50)) - 0.25;
+a = 10.^(linspace(log10(0.25), log10(120+0.25), 70)) - 0.25;
 
+% Precompute cash on hand, as it does not change over vfi
 var_pre_vfi coh;
 coh = (1+ra)*a + (1+r-omega)*b + (1-tau)*w*e*N;
 
+% Declare three choice variables in vfi and provide initial guess
 var_policy bp ap c;
 initial bp 0.0;
 initial ap (1+ra)*a;
 initial c (1+r-omega)*b + (1-tau)*w*e*N;
 
+% Compute additional variables from vfi for later use: 
+% (a) chi is used later in Goods Market Clearing Condition
+% (b) uce is used later in the Wage Phillips Curve
 var_aux chi uce;
 
 vfi;
+    % Define constraint equations
     chi = (chi1/2)*(ap-(1+ra)*a)^2/((1+ra)*a+chi0);    
     %c + ap + bp == (1+ra)*a + (1+r-omega)*b + (1-tau)*w*e*N - chi;
     c + ap + bp == coh - chi;
-    u = c.^(1.0 - sigma)/(1.0 - sigma) - vphi*N^(1.0+nu)/(1.0+nu);
+
+    % Define the Bellman Equation: note two endogenous state variables (bp,ap)
+    u = c^(1.0 - sigma)/(1.0 - sigma) - varphi*N^(1.0+nu)/(1.0+nu);
     Tv = u + beta*EXPECT(v(bp,ap));
-    uce = e*(c^(-sigma));
+    
+    % Define Bound Constraints
     bp >= 0.0;
     ap >= 0.0;
     c  >= 1e-8;
+
+    % post evaluation after value function iteration
+    uce = e*(c^(-sigma)); % efficiency unit weighted marginal utility used in Wage Phillips Curve
 end;
 
-var_agg r pii Y K N w p d;
-% var_agg r pii Y K N w p d Bh;
-r = 0.0125; %r = 0.013577682283245;
-pii = 0.0000;
-% Y = 0.988035319890663;
-Y = 1.0;
-K = 10.0;
-N = 1.00;
-w = 0.66;
-p = 11.2;
-d = 0.14; % 11.2*0.0125
-Bh = 1.04; 
+% Endogenous Aggregate Variables
+var_agg r pii Y K N w p d Bh;
 
-ra = r;
-
-Z = 0.4677898145312322; % Z = 0.468;
-alpha = 0.3299492385786802; % alpha = 0.33;
+% Fixed Parameters
 delta = 0.02; % depreciation
 epsI = 4.0; % capital adjustment cost parameter
-mup = 1.015228426395939; % mup = 1.015;
 kappap = 0.1; % price adjustment cost parameter
-
 muw = 1.1; % wage market power parameter
 kappaw = 0.1; % wage adjustment cost parameter
 
-Bg = 2.8;
-G = 0.2;
+% Calibration Targets: Six Variables
+r = 0.0125; % calibration target
+Y = 1.0;   % calibration target
+K = 10.0;  % calibration target
+N = 1.00;  % calibration target
+p = 11.2;  % calibration target
+Bh = 1.04; % calibration target
 
-phi = 1.5;
-phi_y = 0.0;
-pi_star = 0.0;
-rstar = 0.0125;
+% Parameters implied by Calibration Targets
+d = 0.14;  % d = p*r = 11.2*0.0125 = 0.14
+ra = r; % steady state no-arbitrage condition
+Bg = 2.8; % Debt/GDP ratio
+G = 0.2; % G/GDP ratio
+
+% Calibrated Parameters: 3 preference parameters above and 3 production parameters below
+Z = 0.468; % HANKS Final Calibrated Parameters: Z = 0.467789814531232 
+alpha = 0.33; % HANKS Final Calibrated Parameters: alpha = 0.329949238578680 
+mup = 1.015; % HANKS Final Calibrated Parameters: mup = 1.015228426395939;
+
+% Parameters implied by Calibration Targets and Calibrated Parameters
+mc = 0.9850; % mu = 1/mup
+w = 0.66; % w = (1-alpha)*Y/N * mc
+
+% Taylor Rule Parameters
+pii = 0.0000;  % inflation
+phi = 1.5;  % Taylor rule
+phi_y = 0.0; % Taylor rule
+pi_star = 0.0; % Taylor rule
+rstar = 0.0125; % Taylor rule
+Y_star = 1.0; % Taylor rule
 
 var_agg_shock m_shock;
-m_shock = 0.0;
+m_shock = 0.0; % placeholder for monetary shocks
 
-T = 300;
+% Calibration Block: Six Calibration Targets (r,Y,K,N,p,Bh) with Six Parameters (beta,varphi,chi1,Z,alpha,mup),
+% among which four parameters (varphi,Z,alpha,mup)  can be solved analytically.
+% Hence, calibration involves an equation solver with two variables and two equilibrium conditions
 
 model_cali(beta, chi1);
+    % The calibration of mc follows from the following analytical conditions:
+    % d = rp and d = Y- w N - delta K implies
+    % rp = Y- w N - delta K so that r (p - K) = Y- w N - ( r + delta) K
+    % Now use ( r + delta) = mc*alpha*Y/K and w = mc * (1 - alpha) * Y / N to get
+    % r (p - K) = Y - mc Y so that mc = 1 - r (p - K) / Y;
     mc = 1 - r * (p - K) / Y;
-    mup = 1 / mc;
-    alpha = (r + delta) * K / Y / mc;
-    Z = Y/(K^alpha*N^(1-alpha));
+    
+    mup = 1 / mc; % steady state Price Phillips Curve
+    alpha = (r + delta) * K / Y / mc; % stead state Valuation Equation: r + delta = mc*alpha*Y/K
+    Z = Y/(K^alpha*N^(1-alpha)); % production function: Y = Z K^alpha N^(1-alpha)
 
-    w = mc * (1 - alpha) * Y / N;
-    ra = r;
-    tau = (r*Bg + G)/(w*N);
+    w = mc * (1 - alpha) * Y / N; % marginal cost function: mc = w/((1-alpha)*Y/N)
+    ra = r; % no-arbitrage condition
+    tau = (r*Bg + G)/(w*N); % government budget
 
     % equilibrium conditions
     ap + bp == p + Bg; % asset demand = asset supply
-    Bh == bp; % liquid asset holding
+    Bh == bp; % liquid asset supply = liquid asset demand
 
+    % Bound Constraints for Calibrated Parameters
     beta <= 1 - 1e-10;
     beta >= 1e-10;
     chi1 >= 1e-10;
     
     % post evaluation
-    vphi =((1-tau)*w*uce/muw)/(N.^nu); % labor demand = labor supply
+    varphi =((1-tau)*w*uce/muw)/(N.^nu); % Wage Phillips Curve in Steady State
+    Y_star = Y; % update Y_star in Taylor Rule
 end;
 
-model_ss(r, Y);
-    ra = r;
-    %w = (1/mup)*(1-alpha)*Z*(K/N)^alpha;
-    KN_ratio = (mup*(r+delta)/(alpha*Z))^(1/(alpha-1));
-    w = (1/mup)*(1-alpha)*Z*KN_ratio^alpha;
-    % Y = Z*(K^alpha)*(N^(1-alpha)) = Z*(K/N)^alpha*N
-    N = Y/Z/(KN_ratio^alpha);
-    K = KN_ratio*N;
-    d = Y - w*N - delta*K; 
-    p = d/r;
+% Stationary Equilibrium: An equation solver with two variables and two equilibrium conditions
 
+model_ss(r, Y);
+    ra = r; % no-arbitrage condition
+    mc = 1/mup; % steady state Price Phillips Curve
+    % Infer K from the stead state Valuation Equation: r + delta = mc*alpha*Y/K;
+    K = mc*alpha*Y/(r + delta);
+    % Infer N from the production function: Y = z K^alpha N^(1-alpha)
+    N = (Y/Z/(K^alpha))^(1/(1-alpha));
+    % Infer w from the marginal cost function: mc = w/((1-alpha)*Y/N)
+    w = mc*(1-alpha)*Y/N;
+    % Infer d from I = delta*K and zero steady state price adjustment cost
+    d = Y - w*N - delta*K;
+    % Infer p from asset pricing equation 
+    p = d/r;
+    % Infer tau from government budget
     tau = (r*Bg + G)/(w*N);
 
     % equilibrium conditions
     ap + bp == p + Bg; % asset demand = asset supply
-    N == ((1-tau)*w*uce/(vphi*muw)).^(1/nu); % labor demand = labor supply
+    N == ((1-tau)*w*uce/(varphi*muw)).^(1/nu); % Wage Phillips Curve
 
+    % Bound Constraints for Equilibrium Variables
     r <= (1/beta - 1  - 1e-10);
     Y >= 0.5;
 
@@ -134,31 +175,35 @@ model_ss(r, Y);
     Bh = bp;    % liquid asset 
 end;
 
+% Transition Path Equilibrium Block: Nine Equations with Nine Unknowns
+% The Equation System can be further simplified by utilizing the analytical structure. 
+% We keep it in the current form for ease of presentation.
+
 model;
-    ii = rstar + phi*pii(-1) + m_shock(-1); % Taylor Rule: recall ii is determined last period
+    ii = rstar + phi*pii(-1) + phi_y*(Y(-1) - Y_star) + m_shock(-1); % Taylor Rule: recall ii was determined from last period
 
-    pshare = p(-1)/(p(-1)+Bg-Bh);
-    % pshare = p(-1)/(p(-1)+Bg-Bh(-1));
-    ra = pshare*(d+p)/p(-1) + (1- pshare)*(1+r) - 1;
+    pshare = p(-1)/(p(-1)+Bg-Bh(-1)); % equity share of mutual fund portfolio
+    ra = pshare*(d+p)/p(-1) + (1- pshare)*(1+r) - 1; % the return of illiquid asset
 
-    I = K - (1-delta)*K(-1) + ((K/K(-1) - 1).^2)*K(-1)/(2*delta*epsI);
-    psip = ((log(1+pii))^2)*Y*mup/((mup - 1)*2*kappap);
-    Q = 1 + (K/K(-1) - 1)/(delta*epsI);
+    I = K - (1-delta)*K(-1) + ((K/K(-1) - 1).^2)*K(-1)/(2*delta*epsI); % capital accumulation equation
+    psip = ((log(1+pii))^2)*Y*mup/((mup - 1)*2*kappap); % price adjustment cost
+    Q = 1 + (K/K(-1) - 1)/(delta*epsI); % Tobin's Q from the investment equation
     
-    tau = (r*Bg + G)/(w*N);
+    tau = (r*Bg + G)/(w*N); % government budget constraint
 
-    % equilibrium conditions: 8 equations with 8 unknowns
+    % equilibrium conditions: 9 equations with 9 unknowns
     r == (1.0 + ii)/(1.0 + pii) - 1.0; % Fisher Equation      
     ap + bp == p + Bg; % asset demand = asset supply
-    log(1 + pii) + log(w/w(-1)) ==  kappaw*(vphi*N^(1+nu) - (1-tau)*w*N*uce/muw) + beta*(log(1+pii(+1)) + log(w(+1)/w)); % Wage Phillips Curve
+    log(1 + pii) + log(w/w(-1)) ==  kappaw*(varphi*N^(1+nu) - (1-tau)*w*N*uce/muw) + beta*(log(1+pii(+1)) + log(w(+1)/w)); % Wage Phillips Curve
     log(1 + pii) ==  kappap*(w*N/((1-alpha)*Y) - 1/mup) + log(1+pii(+1))*Y(+1)/Y/(1+r(+1)); % Price Phillips Curve
     % valuation equation
     (1 + r(+1))*(1 + (K/K(-1) - 1)/(delta*epsI)) == alpha*w(+1)*N(+1)/((1-alpha)*K) - (K(+1)/K - (1-delta) + (K(+1)/K - 1).^2/(2*delta*epsI)) + (1 + (K(+1)/K - 1)/(delta*epsI))*K(+1)/K;
     Y == Z*(K(-1)^alpha)*(N^(1-alpha)); % production function
-    d == Y - w*N - I - psip; % devidend
+    d == Y - w*N - I - psip; % dividend equation
     0 == (d(+1) + p(+1)) - p*(1.0 + r(+1)); % no-arbitrage equation
-    % bp == Bh; % liquid asset supply = demand
+    bp == Bh; % liquid asset supply = demand
     
+    % Bound Constraints for Unknowns
     r <= (1/beta - 1  - 1e-10);
     pii >= beta - 1.0 + 1e-10;   % 1+r <= 1/beta implies 1+pii >=beta*(1+ii)>= beta
     N >= 0.5; % tau <=1 implies N > = (r*Bg + G)/w = 0.3556 when r = 0.0125

@@ -1,8 +1,8 @@
-# Handling Portfolio Choices: Two-asset HANK
+# Handling Portfolio Choices: Two-asset HANK (Auclert et al, 2021)
 
 In this example, we solve the two-asset HANK model as presented in Auclert, Bardóczy, Rognlie, and Straub (2021, Appendix B.3 and Appendix E.1). In this model, each heterogeneous household selects an optimal portfolio consisting of liquid and illiquid assets, taking into account a convex portfolio adjustment cost. Additionally, New Keynesian sticky-price firms determine intermediate goods prices, considering Rotemberg-type price adjustment costs, and make dynamic investment decisions with quadratic capital adjustment costs. Labor unions control wages to maximize the average welfare of their members.
 
-This example is employed to showcase the toolbox's capability in solving complex portfolio problems with multi-dimensional endogenous state and control variables, as well as a large equilibrium system of equations.
+This example is employed to showcase the toolbox's capability in solving complex decision problems with multi-dimensional endogenous state and control variables, as well as a large equilibrium system of equations.
 
 We adhere to the notation, parametrization, and calibration procedure outlined in their original paper. For the detailed derivation of the equilibrium system of equations, we direct readers to the original paper.
 
@@ -27,7 +27,7 @@ $$
 $$
 with $\chi_0 > 0$, $\chi_1 > 0$, and $\chi_2 > 1$.
 
-Households  choose consumption ($c_{it}$) and a portfolio $\left(b_{it}, a_{it}\right)$, subject to a borrowing constraint $a_{it} \geq 0$ and $b_{it} \geq \underline{b}$ , and supply a uniform labor ($N_{t}$) determined by the Labor Unions to accommodate labor demand from the firm.
+Households choose consumption ($c_{it}$) and a portfolio $\left(b_{it}, a_{it}\right)$, subject to a borrowing constraint $a_{it} \geq 0$ and $b_{it} \geq \underline{b}$ , and supply a uniform labor ($N_{t}$) determined by the Labor Unions to accommodate labor demand from the firm. Without loss of generality, the mean of the labor efficiency is normalized to equal to $1$. Hence $N$ represents both average labor hours and the total efficiency unit of the labor supply.
 
 Denote the measure that represents the distribution over households states by $\Gamma_t$, and policy functions by $g_{c,t},g_{b,t},g_{a,t}$.
 
@@ -60,7 +60,7 @@ The demand, technology and adjustment costs for an intermediate goods firm $j$ a
  - Production Function:
  
  $$
- y_{jt} = z_t k_{jt-1}^\alpha n_{jt}^{1-\alpha}
+ y_{jt} = Z_t k_{jt-1}^\alpha n_{jt}^{1-\alpha}
  $$
 
   - Capital Adjustment Cost Function:
@@ -84,10 +84,10 @@ The demand, technology and adjustment costs for an intermediate goods firm $j$ a
   - Dividend Equation:
  
  $$
- d_{jt} = y_{jt} - w_{t} n_{jt} - i_{jt} - \psi^p_t \left(p_{jt},p_{jt-1}\right)
+ d_{jt} = y_{jt} - w_{t} n_{jt} - i_{jt} - \psi^p_t
  $$
 
-In a symmetric equilibrium, firms' optimal solution can be characterized by the following equations:
+The firm $j$ maximizes the discounted value of the dividend flow. In a symmetric equilibrium, firms' optimal solution can be characterized by the following equations:
 
  - The Price Phillips Curve: 
 
@@ -172,7 +172,7 @@ Notice that we have implicitly imposed labor market clearing conditions by using
 Given an initial distribution over households states, $\Gamma_0$, a perfect foresight competitive equilibrium is a sequence of (1) distributions over households states $\{\Gamma_t\}_{t=0}^{\infty}$, (2) households' value and policy functions $\{V_t,g_{c,t},g_{b,t},g_{a,t}\}_{t=0}^{\infty}$, and (3) aggregate quantities and prices $\{Y_t,K_t,N_t,I_t,\psi^{p}_{t},D_t,B_t^h,w_t,mc_t,p_t,Q_t,\pi_t,\pi_{t}^{w},i_t,r_t,r_t^a,r_t^b,\tau_t\}_{t=0}^{\infty}$ such that
 
 $$
-Y_t = z_t K_{t-1}^\alpha N_{t}^{1-\alpha}
+Y_t = Z_t K_{t-1}^\alpha N_{t}^{1-\alpha}
 \\
 I_t = K_{t}  - \left(1 - \delta\right) K_{t-1} + \zeta \left(K_{t},K_{t-1}\right) K_{t-1}
 \\
@@ -215,7 +215,7 @@ and goods market clearing  implied by Walras's law. The system can be further si
 
 ### The Equilibrium System of Equations: Stationary Equilibrium
 
-In a stationary equilibrium with a constant $\left(z_t, \pi_t, G_t\right) = \left(z_{\ast}, 0, G_{\ast}\right) $, the equilibrium system of equations reduce to
+In a stationary equilibrium with a constant $\left(Z_t, \pi_t, G_t\right) = \left(z_{\ast}, 0, G_{\ast}\right) $, the equilibrium system of equations, in the order as presented above, reduce to
 
 $$
 Y_{\ast} = z_{\ast} K_{\ast}^\alpha N_{\ast}^{1-\alpha}
@@ -257,9 +257,11 @@ B^{h}_{\ast} = \int{g_{b,{\ast}} d \Gamma_{\ast}}
 p_{\ast} + B^{g}=\int{\left(g_{a,{\ast}} + g_{b,{\ast}}\right)d \Gamma_{\ast}}
 $$
 
+We will use these equatios for both calibration and the computation of stationary equilibria.
+
 ## The hmod File
 
-The model can be represented using a hmod file listed below
+The model can be represented using an hmod file listed below. To maintain consistency, the hmod file predominantly employs the same variable notations and equation representations as those in the model presentation. The file should be self-explanatory, aided by comments within the code.
 
 ```{literalinclude} hank2_ssj.hmod
 :language: HANS
