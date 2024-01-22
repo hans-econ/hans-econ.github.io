@@ -1,12 +1,13 @@
 # How to Contribute Examples
+- Ensure Python and Git are installed and configured on your computer. Open a command window running a standard command shell (e.g., Bash on Linux or PowerShell on Windows).
 
-- Install Sphinx and extensions for Python in shell
+- Install Sphinx and extensions for Python with the following shell command:
 
   ```shell
   pip install sphinx rst2pdf sphinx_rtd_theme myst-parser
   ```
 
-- Clone the git repository in shell
+- Clone the git repository with the following shell command:
 
   ```shell
   git clone https://github.com/hans-econ/hans-econ.github.io
