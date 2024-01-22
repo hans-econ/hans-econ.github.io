@@ -1,23 +1,21 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="../../">
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Handling Portfolio Choices: Two-asset HANK (Auclert et al, 2021) &mdash; HANS Homepage</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=92fd9be5" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
-
-  
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
-        <script src="../../_static/doctools.js?v=888ff710"></script>
-        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
         <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -97,14 +95,14 @@
            <div itemprop="articleBody">
              
   <section class="tex2jax_ignore mathjax_ignore" id="handling-portfolio-choices-two-asset-hank-auclert-et-al-2021">
-<h1>Handling Portfolio Choices: Two-asset HANK (Auclert et al, 2021)<a class="headerlink" href="#handling-portfolio-choices-two-asset-hank-auclert-et-al-2021" title="Link to this heading"></a></h1>
+<h1>Handling Portfolio Choices: Two-asset HANK (Auclert et al, 2021)<a class="headerlink" href="#handling-portfolio-choices-two-asset-hank-auclert-et-al-2021" title="Permalink to this heading"></a></h1>
 <p>In this example, we solve the two-asset HANK model as presented in Auclert, Bardóczy, Rognlie, and Straub (2021, Appendix B.3 and Appendix E.1). In this model, each heterogeneous household selects an optimal portfolio consisting of liquid and illiquid assets, taking into account a convex portfolio adjustment cost. Additionally, New Keynesian sticky-price firms determine intermediate goods prices, considering Rotemberg-type price adjustment costs, and make dynamic investment decisions with quadratic capital adjustment costs. Labor unions control wages to maximize the average welfare of their members.</p>
 <p>This example is employed to showcase the toolbox’s capability in solving complex decision problems with multi-dimensional endogenous state and control variables, as well as a large equilibrium system of equations.</p>
 <p>We adhere to the notation, parametrization, and calibration procedure outlined in their original paper. For the detailed derivation of the equilibrium system of equations, we direct readers to the original paper.</p>
 <section id="the-model">
-<h2>The Model<a class="headerlink" href="#the-model" title="Link to this heading"></a></h2>
+<h2>The Model<a class="headerlink" href="#the-model" title="Permalink to this heading"></a></h2>
 <section id="households">
-<h3>Households<a class="headerlink" href="#households" title="Link to this heading"></a></h3>
+<h3>Households<a class="headerlink" href="#households" title="Permalink to this heading"></a></h3>
 <p>Households are heterogeneous in their Markov labor efficiency (<span class="math notranslate nohighlight">\(e\)</span>), and the initial holding liquid assets (<span class="math notranslate nohighlight">\(b\)</span>) and illiquid assets (<span class="math notranslate nohighlight">\(a\)</span>). They solve the Bellman equation:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -125,7 +123,7 @@ with \)</span>\chi_0 &gt; 0<span class="math notranslate nohighlight">\(, \)</sp
 <p>Denote the measure that represents the distribution over households states by <span class="math notranslate nohighlight">\(\Gamma_t\)</span>, and policy functions by <span class="math notranslate nohighlight">\(g_{c,t},g_{b,t},g_{a,t}\)</span>.</p>
 </section>
 <section id="the-financial-intermediary">
-<h3>The Financial Intermediary<a class="headerlink" href="#the-financial-intermediary" title="Link to this heading"></a></h3>
+<h3>The Financial Intermediary<a class="headerlink" href="#the-financial-intermediary" title="Permalink to this heading"></a></h3>
 <p>Households deposit both liquid and illiquid asset holdings into a representative financial intermediary. The financial intermediary invests the liquid deposit (<span class="math notranslate nohighlight">\(\int{b_{it}di}\)</span>) to illiquid government bonds at a per unit liquidity transformation cost <span class="math notranslate nohighlight">\(\omega\)</span>, so that <span class="math notranslate nohighlight">\(r_t^b = r_t - \omega\)</span> with <span class="math notranslate nohighlight">\(r_t\)</span> denoting realized real interest rate of government bonds at <span class="math notranslate nohighlight">\(t\)</span>. The financial intermediary also invests illiquid deposit (<span class="math notranslate nohighlight">\(\int{a_{it}di}\)</span>) into a mutual fund consisting of government bonds and firm equity which implies</p>
 <div class="math notranslate nohighlight">
 \[
@@ -139,7 +137,7 @@ with \)</span>\chi_0 &gt; 0<span class="math notranslate nohighlight">\(, \)</sp
 <p>However, the returns of assets at <span class="math notranslate nohighlight">\(t = 0\)</span> may differ due to surprise shocks at <span class="math notranslate nohighlight">\(t = 0\)</span>.</p>
 </section>
 <section id="firms">
-<h3>Firms<a class="headerlink" href="#firms" title="Link to this heading"></a></h3>
+<h3>Firms<a class="headerlink" href="#firms" title="Permalink to this heading"></a></h3>
 <p>Intermediate goods firms operate a Cobb-Douglas production technology with capital and labor to produce differentiated goods, which are aggregated by competitive final goods firms using a CES aggregator with an elasticity of substitution <span class="math notranslate nohighlight">\(\mu_{p}/\left(\mu_p - 1\right)\)</span>. Intermediate goods firms engage in monopolistic competition on the intermediate goods market, make dynamic investment decision subject to a quadratic adjustment cost, and face price adjustment cost of a quadratic form in logs.</p>
 <p>The demand, technology and adjustment costs for an intermediate goods firm <span class="math notranslate nohighlight">\(j\)</span> are defined by the following equations:</p>
 <ul class="simple">
@@ -216,7 +214,7 @@ Q_t = 1 + \frac{1}{\delta \epsilon_I}\left(\frac{K_t-K_{t-1}}{K_{t-1}}\right)
  \]</div>
 </section>
 <section id="labor-unions">
-<h3>Labor Unions<a class="headerlink" href="#labor-unions" title="Link to this heading"></a></h3>
+<h3>Labor Unions<a class="headerlink" href="#labor-unions" title="Permalink to this heading"></a></h3>
 <p>A competitive labor recruiter aggregates differentiated labor provided by a continuum of monopolistically competitive labor unions. Each labor union <span class="math notranslate nohighlight">\(k\)</span> faces a labor demand function with an elasticity of substitution <span class="math notranslate nohighlight">\(\mu_{w}/\left(\mu_{w} - 1\right)\)</span>, and sets nominal wage rates (<span class="math notranslate nohighlight">\(W_{kt}\)</span>) to maximize the average utility of its members, subjective to a quadratic adjustment cost in utils</p>
 <div class="math notranslate nohighlight">
 \[
@@ -230,7 +228,7 @@ Q_t = 1 + \frac{1}{\delta \epsilon_I}\left(\frac{K_t-K_{t-1}}{K_{t-1}}\right)
 <p>where <span class="math notranslate nohighlight">\(1 + \pi_t^w = W_t /W_{t-1} = (1 + \pi_t) w_t/w_{t-1}\)</span> is the wage inflation rate at <span class="math notranslate nohighlight">\(t\)</span>.</p>
 </section>
 <section id="monetary-and-fiscal-policies">
-<h3>Monetary and Fiscal Policies<a class="headerlink" href="#monetary-and-fiscal-policies" title="Link to this heading"></a></h3>
+<h3>Monetary and Fiscal Policies<a class="headerlink" href="#monetary-and-fiscal-policies" title="Permalink to this heading"></a></h3>
 <p>The monetary authority implements a Taylor rule with a zero steady state target inflation rate:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -249,7 +247,7 @@ i_t = r_{\ast} + \phi \pi_t + \phi_y \left(Y_t - Y_{\ast}\right) + m_t,
 \]</div>
 </section>
 <section id="market-clearing-conditions">
-<h3>Market clearing conditions<a class="headerlink" href="#market-clearing-conditions" title="Link to this heading"></a></h3>
+<h3>Market clearing conditions<a class="headerlink" href="#market-clearing-conditions" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Asset market clearing:</p></li>
 </ul>
@@ -267,7 +265,7 @@ Y_t = \int{c_{it}di} + \int{\Phi_{t}\left(a_{it}, a_{it-1}\right)di} + \omega \i
 <p>Notice that we have implicitly imposed labor market clearing conditions by using <span class="math notranslate nohighlight">\(N_t\)</span> to denote both labor demand in the firms’ problem and labor supply in the Wage Phillips Curve.</p>
 </section>
 <section id="the-equilibrium-system-of-equations-transition-path">
-<h3>The Equilibrium System of Equations: Transition Path<a class="headerlink" href="#the-equilibrium-system-of-equations-transition-path" title="Link to this heading"></a></h3>
+<h3>The Equilibrium System of Equations: Transition Path<a class="headerlink" href="#the-equilibrium-system-of-equations-transition-path" title="Permalink to this heading"></a></h3>
 <p>Given an initial distribution over households states, <span class="math notranslate nohighlight">\(\Gamma_0\)</span>, a perfect foresight competitive equilibrium is a sequence of (1) distributions over households states <span class="math notranslate nohighlight">\(\{\Gamma_t\}_{t=0}^{\infty}\)</span>, (2) households’ value and policy functions <span class="math notranslate nohighlight">\(\{V_t,g_{c,t},g_{b,t},g_{a,t}\}_{t=0}^{\infty}\)</span>, and (3) aggregate quantities and prices <span class="math notranslate nohighlight">\(\{Y_t,K_t,N_t,I_t,\psi^{p}_{t},D_t,B_t^h,w_t,mc_t,p_t,Q_t,\pi_t,\pi_{t}^{w},i_t,r_t,r_t^a,r_t^b,\tau_t\}_{t=0}^{\infty}\)</span> such that</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -312,7 +310,7 @@ p_{t} + B^{g}=\int{\left(g_{a,t} + g_{b,t}\right)d \Gamma_t}
 <p>and goods market clearing  implied by Walras’s law. The system can be further simplified. See the hmod file below that defines the simplified system of equations.</p>
 </section>
 <section id="the-equilibrium-system-of-equations-stationary-equilibrium">
-<h3>The Equilibrium System of Equations: Stationary Equilibrium<a class="headerlink" href="#the-equilibrium-system-of-equations-stationary-equilibrium" title="Link to this heading"></a></h3>
+<h3>The Equilibrium System of Equations: Stationary Equilibrium<a class="headerlink" href="#the-equilibrium-system-of-equations-stationary-equilibrium" title="Permalink to this heading"></a></h3>
 <p>In a stationary equilibrium with a constant <span class="math notranslate nohighlight">\(\left(Z_t, \pi_t, G_t\right) = \left(z_{\ast}, 0, G_{\ast}\right) \)</span>, the equilibrium system of equations, in the order as presented above, reduce to</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -358,7 +356,7 @@ p_{\ast} + B^{g}=\int{\left(g_{a,{\ast}} + g_{b,{\ast}}\right)d \Gamma_{\ast}}
 </section>
 </section>
 <section id="the-hmod-file">
-<h2>The hmod File<a class="headerlink" href="#the-hmod-file" title="Link to this heading"></a></h2>
+<h2>The hmod File<a class="headerlink" href="#the-hmod-file" title="Permalink to this heading"></a></h2>
 <p>The model can be represented using an hmod file listed below. To maintain consistency, the hmod file predominantly employs the same variable notations and equation representations as those in the model presentation. The file should be self-explanatory, aided by comments within the code.</p>
 <div class="highlight-HANS notranslate"><div class="highlight"><pre><span></span><span class="c">% The fixed (non-calibrated) parameter values are from Auclert, Bardóczy, Rognlie, and Straub (2021, Appendix B.3)</span>
 
@@ -577,7 +575,7 @@ model_ss(r, Y);
 </div>
 </section>
 <section id="use-the-toolbox">
-<h2>Use the Toolbox<a class="headerlink" href="#use-the-toolbox" title="Link to this heading"></a></h2>
+<h2>Use the Toolbox<a class="headerlink" href="#use-the-toolbox" title="Permalink to this heading"></a></h2>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,IE=9,chrome=1"><meta name="generator" content="MATLAB 2023b"><title>Parse .hmod Files</title><style type="text/css">.rtcContent { padding: 30px; } .S0 { margin: 3px 10px 5px 4px; padding: 0px; line-height: 28.8px; min-height: 0px; white-space: pre-wrap; color: rgb(192, 76, 11); font-family: Helvetica, Arial, sans-serif; font-style: normal; font-size: 24px; font-weight: 400; text-align: left;  }
 .S1 { margin: 2px 10px 9px 4px; padding: 0px; line-height: 21px; min-height: 0px; white-space: pre-wrap; color: rgb(33, 33, 33); font-family: Helvetica, Arial, sans-serif; font-style: normal; font-size: 14px; font-weight: 400; text-align: left;  }

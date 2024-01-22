@@ -8,14 +8,18 @@
 
 - [Sequence Space Jacobian](https://github.com/shade-econ/sequence-jacobian)
 
-What differentiates **HANS** from other toolboxes is that it takes intuitive model script files as input similar to Dynare, compiles C++ binaries for high-performance computations, and offers user-friendly MATLAB interfaces. For example, the model of Krusell and Smith (1998) can be represented with the following toolbox script, and solved on a regular laptop within 5 seconds.
+- [BASEforHANK](https://github.com/BASEforHANK)
+
+**HANS** solves HA models with an arbitrary number of  endogenous state variables, handles multi-dimensional continuous choice variables including portfolio choices, handles discrete choices, and solves for  nonlinear transition paths. For examples demonstrating the capability and usage of the toolbox, see the list below.
+
+**HANS** takes intuitive model script files as input similar to Dynare, compiles C++ binaries for high-performance computations, and offers user-friendly MATLAB interfaces. For example, the model of Krusell and Smith (1998) can be represented with the following toolbox script:
 
 ```{literalinclude} examples/KS_leading/KS_leading.hmod
 :language: HANS
 :linenos:
 ```
 
-**HANS** solves HA models with an arbitrary number of  endogenous states, handles multi-dimensional continuous choice variables including portfolio choices, handles discrete choices, and solves for  nonlinear transition paths. For more examples demonstrating the  capability and usage of the toolbox, see the list below.
+To learn how to use **HANS**, please work through the following examples.
 
 ```{toctree}
 :maxdepth: 2

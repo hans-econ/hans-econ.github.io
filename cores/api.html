@@ -1,23 +1,21 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="../">
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Toolbox API Reference &mdash; HANS Homepage</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=92fd9be5" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
-
-  
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
-        <script src="../_static/doctools.js?v=888ff710"></script>
-        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -49,7 +47,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/KS_JEDC10/ks.html">Getting Started: Krusell and Smith (1998)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/HANK1_ZLB/hank1_zlb.html">Solving for Non-linear Transitions: Forward Guidance under ZLB (McKay, Nakamura, Steinsson, 2016)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../examples/HANK2_SSJ/hank2_ssj.html">Handling Portfolio Choices: Two-asset HANK (Auclert et al, 2021)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/HANK2_SSJ/hank2_ssj.html">Handling Portfolio Choices: Two-asset HANK</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/KT2008/kt2008.html">Handling Non-convex Adjustment Costs: Khan and Thomas (2008)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="methodology.html">The Algorithm</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Toolbox API Reference</a><ul>
@@ -91,9 +89,9 @@
            <div itemprop="articleBody">
              
   <section class="tex2jax_ignore mathjax_ignore" id="toolbox-api-reference">
-<span id="toolbox-api"></span><h1>Toolbox API Reference<a class="headerlink" href="#toolbox-api-reference" title="Link to this heading"></a></h1>
+<span id="toolbox-api"></span><h1>Toolbox API Reference<a class="headerlink" href="#toolbox-api-reference" title="Permalink to this heading"></a></h1>
 <section id="toolbox-script-hmod-file">
-<h2>Toolbox Script (hmod) File<a class="headerlink" href="#toolbox-script-hmod-file" title="Link to this heading"></a></h2>
+<h2>Toolbox Script (hmod) File<a class="headerlink" href="#toolbox-script-hmod-file" title="Permalink to this heading"></a></h2>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>All statements need to be closed by a semicolon.</p>
@@ -381,10 +379,10 @@ Their initial values need to be specified, which can be dependent on state value
 
 </section>
 <section id="matlab-interfaces">
-<h2>MATLAB Interfaces<a class="headerlink" href="#matlab-interfaces" title="Link to this heading"></a></h2>
+<h2>MATLAB Interfaces<a class="headerlink" href="#matlab-interfaces" title="Permalink to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="solve_vfi">
-<span class="sig-name descname"><span class="pre">solve_vfi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#solve_vfi" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">solve_vfi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#solve_vfi" title="Permalink to this definition"></a></dt>
 <dd><p>Solve the value function iteration.</p>
 <dl class="myst field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -428,7 +426,7 @@ Their initial values need to be specified, which can be dependent on state value
 
 <dl class="py function">
 <dt class="sig sig-object py" id="solve_ss">
-<span class="sig-name descname"><span class="pre">solve_ss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#solve_ss" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">solve_ss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#solve_ss" title="Permalink to this definition"></a></dt>
 <dd><p>Solve the steady state of the equilbrium system defined in the <strong>model</strong> block.</p>
 <dl class="myst field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -462,7 +460,7 @@ Their initial values need to be specified, which can be dependent on state value
 
 <dl class="py function">
 <dt class="sig sig-object py" id="solve_trans_linear">
-<span class="sig-name descname"><span class="pre">solve_trans_linear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ss</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#solve_trans_linear" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">solve_trans_linear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ss</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#solve_trans_linear" title="Permalink to this definition"></a></dt>
 <dd><p>Solve the linearized transition path following the Sequence Space Jacobian method. The Jacobian matrix of individual aggregates with respect to parameters is calculated using the fake news algorithm.</p>
 <dl class="myst field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -486,7 +484,7 @@ Their initial values need to be specified, which can be dependent on state value
 
 <dl class="py function">
 <dt class="sig sig-object py" id="solve_trans_nonlinear">
-<span class="sig-name descname"><span class="pre">solve_trans_nonlinear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_ss</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">final_ss</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#solve_trans_nonlinear" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">solve_trans_nonlinear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_ss</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">final_ss</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#solve_trans_nonlinear" title="Permalink to this definition"></a></dt>
 <dd><p>Solve the non-linear transition path.</p>
 <dl class="myst field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -530,7 +528,7 @@ Their initial values need to be specified, which can be dependent on state value
 
 <dl class="py function">
 <dt class="sig sig-object py" id="simulate_stochastic">
-<span class="sig-name descname"><span class="pre">simulate_stochastic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eq_rslt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simulate_stochastic" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">simulate_stochastic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eq_rslt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simulate_stochastic" title="Permalink to this definition"></a></dt>
 <dd><p>Simulate individual random samples with the solved equilibrium.</p>
 <dl class="myst field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
