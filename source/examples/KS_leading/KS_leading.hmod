@@ -1,54 +1,43 @@
-% The parameters are from from den Haan, Judd, Juillard, 2010, "Computational Suite of models with heterogeneous agents: 
-% Incomplete markets and aggregate uncertainty" Journal of Economic Dynamics and Control, 34, pp 1 - 3.
-parameters beta sigma r w tau mu_ratio labor;
-beta = 0.99;    % subjective discount factor
-sigma = 1.0;    % risk aversion
-labor = 1.0/0.9;     % exogenous labor supply when working
-mu_ratio = 0.15;     % unemployment insurance replacement ratio
-r = 0.009;      % asset return
-w = 0.89;       % wage rate
+parameters beta w r;
+beta = 0.99;
 
 var_shock e;
 shock_trans = [0.600000, 0.400000;
                0.044445, 0.955555];
-e = [0.00;1.00];
-shock_invariant_dist = [0.1;0.9];
-e_bar = shock_invariant_dist(:).'*e(:); 
-L = labor*e_bar;
-unemp_rate = shock_invariant_dist(1);  % unemployment rate 
-tau = mu_ratio*unemp_rate/L; % labor income tax rate
+e = [0.00, 1.00];
 
-var_state a;
-a = exp(linspace(log(0.25), log(200 + 0.25), 500)) - 0.25;
+var_state k;
+k = exp(linspace(log(0.25), log(500 + 0.25), 500)) - 0.25;
 
 % allow multiple choice variables
-var_policy c ap;
+var_policy c kp;
 initial c 1.0;
-initial ap 0.0;
+initial kp 0.0;
 
 vfi;
-    budget = (1+r)*a + w*((1.0-tau)*e*labor + mu_ratio*(1- e));
+    budget = (1+r)*k + w*e;
     u = log(c);
     % decision problem stated following the Bellman equation
-    Tv = u + beta*EXPECT(v(ap));
+    Tv = u + beta*EXPECT(v(kp));
     % allow arbitrary equality/inequality constraints
-    c + ap == budget;
-    ap >= 0.0;
+    c + kp == budget;
+    kp >= 0.0;
 end;
 
 var_agg K;
-K = 43.0; % initial guess
-Z = 1.0; % TFP
+K = 40.0;       % initial guess
+L = 1.0;        % constant labor
+z = 1.0;        % TFP
 alpha = 0.36;   % capital share
 delta = 0.025;  % depreciation
 
-var_agg_shock Z;
+var_agg_shock z;
 
 model;
     % aggregate conditions stated like Dynare
-    r = Z*alpha*(K(-1)^(alpha-1))*(L^(1-alpha)) - delta;
-    w = Z*(1-alpha)*(K(-1)^alpha)*(L^(-alpha));
-    K == ap; % asset demand = asset supply
+    r = z*alpha*(K(-1)^(alpha-1))*(L^(1-alpha)) - delta;
+    w = z*(1-alpha)*(K(-1)^alpha)*(L^(-alpha));
+    K == kp;    % asset demand = asset supply
     % allow box constraints for aggregate variables
-    K >= 38.0;
+    K >= 38.0;  % make sure VFI converges
 end;

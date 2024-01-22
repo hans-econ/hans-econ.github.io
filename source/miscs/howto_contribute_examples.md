@@ -40,7 +40,7 @@
 
 - Commit and push changes or create a pull request to merge the added example
 
-## Frequently used references:
+## Frequently used references
 
 The .md file needs to be compatible with MySt (Markedly Structured Text) and compiled with Sphinx. References can be found at
 
