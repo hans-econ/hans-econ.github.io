@@ -52,40 +52,40 @@ Intermediate goods firms operate a Cobb-Douglas production technology with capit
 The demand, technology and adjustment costs for an intermediate goods firm $j$ are defined by the following equations:
 
  - Product Demand Function:
- 
- $$
+
+$$
  y_{jt} = \left(\frac{p_{jt}}{P_{t}}\right)^{-\frac{\mu_{p}}{\mu_p - 1}} Y_{t}
- $$
+$$
 
  - Production Function:
- 
- $$
+
+$$
  y_{jt} = Z_t k_{jt-1}^\alpha n_{jt}^{1-\alpha}
- $$
+$$
 
   - Capital Adjustment Cost Function:
- 
- $$
+
+$$
  \zeta \left(k_{jt},k_{jt-1}\right) k_{jt-1} = \frac{1}{2 \delta \epsilon_I}\left(\frac{k_{jt}}{k_{jt-1}} - 1\right)^2 k_{jt-1}
- $$
- 
+$$
+
   - Price Adjustment Cost Function:
- 
- $$
+
+$$
  \psi^p_t \left(p_{jt},p_{jt-1}\right)=\frac{\mu_p}{\mu_p-1} \frac{1}{2 \kappa_p}\left[\log \left(\frac{p_{jt}}{p_{jt-1}}\right)\right]^2 Y_t
- $$
+$$
 
   - Capital Accumulation Equation:
- 
- $$
+
+$$
  i_{jt} = k_{jt} - \left(1 - \delta\right) k_{jt-1} + \zeta \left(k_{jt},k_{jt-1}\right) k_{jt-1}
- $$
+$$
 
   - Dividend Equation:
- 
- $$
+
+$$
  d_{jt} = y_{jt} - w_{t} n_{jt} - i_{jt} - \psi^p_t
- $$
+$$
 
 The firm $j$ maximizes the discounted value of the dividend flow. In a symmetric equilibrium, firms' optimal solution can be characterized by the following equations:
 
@@ -109,10 +109,10 @@ $$
 where $mc_t$ is a short-hand notation for 
 
  - Marginal Cost Function:
- 
- $$
+
+$$
  mc_t = \frac{w_t }{(1-\alpha)\frac{Y_t}{N_t}} 
- $$
+$$
 
 ### Labor Unions
 
@@ -273,4 +273,6 @@ The model can be represented using an hmod file listed below. To maintain consis
 :file: hank2_ssj_notebook.html
 ```
 
-
+```{raw} latex
+\includepdf[pages=-]{../../source/examples/HANK2_SSJ/hank2_ssj_notebook.pdf}
+```

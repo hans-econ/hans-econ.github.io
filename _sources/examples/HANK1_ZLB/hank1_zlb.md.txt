@@ -163,3 +163,6 @@ After parsing the script file, the toolbox generates MATLAB files: *solve_vfi.m*
 :file: hank1_zlb_notebook.html
 ```
 
+```{raw} latex
+\includepdf[pages=-]{../../source/examples/HANK1_ZLB/hank1_zlb_notebook.pdf}
+```

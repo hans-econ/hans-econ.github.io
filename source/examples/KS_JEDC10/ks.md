@@ -172,6 +172,10 @@ After parsing the script file, the toolbox generates MATLAB files: *solve_vfi.m*
 :file: ks_notebook.html
 ```
 
+```{raw} latex
+\includepdf[pages=-]{../../source/examples/KS_JEDC10/ks_notebook.pdf}
+```
+
 ## What's Next?
 
 Behind the scene: understand the details of [the Algorithm](toolbox_algorithm).

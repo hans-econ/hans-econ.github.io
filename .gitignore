@@ -3,3 +3,4 @@
 dpopt_*
 cache/
 build/
+*.pdf
