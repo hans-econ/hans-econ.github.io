@@ -19,7 +19,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Getting Started: Krusell and Smith (1998)" href="examples/KS_JEDC10/ks.html" /> 
+    <link rel="next" title="List of Toolboxes for Solving Heterogeneous-agent Models" href="cores/list_toolboxes.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -44,6 +44,7 @@
               <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cores/list_toolboxes.html">List of Toolboxes for Solving Heterogeneous-agent Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples/KS_JEDC10/ks.html">Getting Started: Krusell and Smith (1998)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples/HANK1_ZLB/hank1_zlb.html">Solving for Non-linear Transitions: Forward Guidance under ZLB (McKay, Nakamura, Steinsson, 2016)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples/HANK2_SSJ/hank2_ssj.html">Handling Portfolio Choices: Two-asset HANK (Auclert et al, 2021)</a></li>
@@ -78,15 +79,17 @@
              
   <section class="tex2jax_ignore mathjax_ignore" id="hans-a-heterogeneous-agent-model-nonlinear-solver">
 <h1><strong>HANS</strong>: A <em><strong>H</strong></em>eterogeneous-<em><strong>A</strong></em>gent model <em><strong>N</strong></em>onlinear <em><strong>S</strong></em>olver<a class="headerlink" href="#hans-a-heterogeneous-agent-model-nonlinear-solver" title="Permalink to this heading"></a></h1>
-<p><strong>HANS</strong> is a toolbox that solves heterogeneous-agent (HA) models for non-linear solutions, using the algorithm developed by Bai, Luo and Wang (2023). Other toolboxes solving HA models include:</p>
+<p><strong>HANS</strong> is an open-source toolbox designed to solve nonlinear solutions in discrete-time heterogeneous-agent (HA) models with a continuum of individual decision makers. It excels in scenarios where large deviations from stationary equilibrium values demand highly nonlinear solutions.
+<strong>HANS</strong> provides a useful addition to the <a class="reference internal" href="cores/list_toolboxes.html#list-toolboxes-header"><span class="std std-ref">existing suite of excellent HA modeling toolboxes</span></a>, especially for researchers addressing highly nonlinear problems.</p>
+<p><strong>HANS</strong> offers flexibility by accommodating:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://econ-ark.org/">Econ-ARK</a></p></li>
-<li><p><a class="reference external" href="https://github.com/gregkaplan/phact">PHACT</a></p></li>
-<li><p><a class="reference external" href="https://github.com/shade-econ/sequence-jacobian">Sequence Space Jacobian</a></p></li>
-<li><p><a class="reference external" href="https://github.com/BASEforHANK">BASEforHANK</a></p></li>
+<li><p>Multiple endogenous individual state and choice variables</p></li>
+<li><p>Discrete individual decision variables</p></li>
+<li><p>Linearized equilibrium solutions with perfect foresight or with aggregate shocks via the Sequence-Space Jacobian method (<a class="reference external" href="https://doi.org/10.3982/ECTA17434">Auclert, Bardczy, Rognlie and Straub, 2021</a>)</p></li>
+<li><p>Nonlinear deterministic transition path solutions through our specialized nonlinear equation solvers</p></li>
 </ul>
-<p><strong>HANS</strong> solves HA models with an arbitrary number of  endogenous state variables, handles multi-dimensional continuous choice variables including portfolio choices, handles discrete choices, and solves for  nonlinear transition paths. For examples demonstrating the capability and usage of the toolbox, see the list below.</p>
-<p><strong>HANS</strong> takes intuitive model script files as input similar to Dynare, compiles C++ binaries for high-performance computations, and offers user-friendly MATLAB interfaces. For example, the model of Krusell and Smith (1998) can be represented with the following toolbox script:</p>
+<p>To explore <strong>HANS</strong>’s capabilities in greater depth, refer to the examples listed below.</p>
+<p><strong>HANS</strong> takes intuitive model script files as input for automatic code generation (similar to <a class="reference external" href="https://www.dynare.org/">Dynare</a> and <a class="reference external" href="http://gdsge.com">GDSGE</a>), compiles C++ binaries for high-performance computations, and offers user-friendly MATLAB interfaces. For example, the model of Krusell and Smith (1998) can be represented with the following toolbox script:</p>
 <div class="highlight-HANS notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">parameters</span> beta w r;
 <span class="linenos"> 2</span>beta = 0.99;
 <span class="linenos"> 3</span>
@@ -132,11 +135,11 @@
 <span class="linenos">43</span><span class="k">end;</span>
 </pre></div>
 </div>
-<p>To learn how to use <strong>HANS</strong>, please work through the following examples.</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cores/list_toolboxes.html">List of Toolboxes for Solving Heterogeneous-agent Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples/KS_JEDC10/ks.html">Getting Started: Krusell and Smith (1998)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="examples/KS_JEDC10/ks.html#the-model">The Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples/KS_JEDC10/ks.html#the-toolbox-script-hmod-file">The Toolbox Script (hmod) File</a></li>
@@ -187,7 +190,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="examples/KS_JEDC10/ks.html" class="btn btn-neutral float-right" title="Getting Started: Krusell and Smith (1998)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="cores/list_toolboxes.html" class="btn btn-neutral float-right" title="List of Toolboxes for Solving Heterogeneous-agent Models" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
