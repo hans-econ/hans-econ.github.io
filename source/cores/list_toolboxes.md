@@ -1,5 +1,5 @@
 (list_toolboxes_header)=
-# List of Toolboxes for Solving Heterogeneous-agent Models
+# Related Heterogenous Agent Toolkits
 
 The field of quantitative heterogeneous-agent modeling is fortunate to have a diverse selection of exceptional toolboxes and code templates. These valuable resources offer a range of model specializations, programming languages, algorithms, and user interfaces. Here's an incomplete list of these tools (and please share yours if they're not included!):
 
