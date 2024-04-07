@@ -22,7 +22,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Solving for Non-linear Transitions: Forward Guidance under ZLB (McKay, Nakamura, Steinsson, 2016)" href="../HANK1_ZLB/hank1_zlb.html" />
-    <link rel="prev" title="List of Toolboxes for Solving Heterogeneous-agent Models" href="../../cores/list_toolboxes.html" /> 
+    <link rel="prev" title="Related Heterogenous Agent Toolkits" href="../../cores/list_toolboxes.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -47,7 +47,7 @@
               <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Home</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../cores/list_toolboxes.html">List of Toolboxes for Solving Heterogeneous-agent Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cores/list_toolboxes.html">Related Heterogenous Agent Toolkits</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started: Krusell and Smith (1998)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#the-model">The Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#the-toolbox-script-hmod-file">The Toolbox Script (hmod) File</a></li>
@@ -90,6 +90,8 @@
 <span id="ks-1998"></span><h1>Getting Started: Krusell and Smith (1998)<a class="headerlink" href="#getting-started-krusell-and-smith-1998" title="Permalink to this heading"></a></h1>
 <p>The model describes a production economy with idiosyncratic uninsurable labor income risks faced by households. The aggregate shock is a shock to total factor productivity. The toolbox solves the steady state, and the deterministic linear/non-linear transition path after an unexpected aggregate shock. Following <a class="reference external" href="https://www.sciencedirect.com/science/article/abs/pii/S0165188918300022">Boppart, Krusell and Mitman (2018)</a> and <a class="reference external" href="https://onlinelibrary.wiley.com/doi/full/10.3982/ECTA17434">Auclert et al. (2021)</a>, the deterministic transition path characterizes the first order effect of the aggregate shock.</p>
 <p>We use the parameterization from <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S0165188909001286">Den Haan, Judd and Juillard (2010): Computational suite of models with heterogeneous agents: Incomplete markets and aggregate uncertainty</a>. We also follow the notation in the paper.</p>
+<p>HANS implements an optimization-based value function iteration approach to the individual problem.
+The current individual problem can also be solved by solving Euler equations with complementarity slackness conditions (see the <a class="reference external" href="https://www.gdsge.com/example/KS1998/KS1998.html">GDSGE example</a>) or the endogenous grid method (see the implementation by the <a class="reference external" href="https://github.com/shade-econ/sequence-jacobian">Sequence Space Jacobian toolbox</a>).</p>
 <section id="the-model">
 <h2>The Model<a class="headerlink" href="#the-model" title="Permalink to this heading"></a></h2>
 <p>Households are heterogeneous in their employment status <span class="math notranslate nohighlight">\(e\in\{0,1\}\)</span> and capital holding <span class="math notranslate nohighlight">\(a \in R^+\)</span>. They solve the following Bellman equation:</p>
@@ -841,7 +843,7 @@ xlabel('t');
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../../cores/list_toolboxes.html" class="btn btn-neutral float-left" title="List of Toolboxes for Solving Heterogeneous-agent Models" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../cores/list_toolboxes.html" class="btn btn-neutral float-left" title="Related Heterogenous Agent Toolkits" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="../HANK1_ZLB/hank1_zlb.html" class="btn btn-neutral float-right" title="Solving for Non-linear Transitions: Forward Guidance under ZLB (McKay, Nakamura, Steinsson, 2016)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
