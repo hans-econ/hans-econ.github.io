@@ -6,7 +6,7 @@ The model describes a production economy with idiosyncratic uninsurable labor in
 We use the parameterization from [Den Haan, Judd and Juillard (2010): Computational suite of models with heterogeneous agents: Incomplete markets and aggregate uncertainty](https://www.sciencedirect.com/science/article/pii/S0165188909001286). We also follow the notation in the paper.
 
 HANS implements an optimization-based value function iteration approach to the individual problem. 
-The current individual problem can also be solved by solving Euler equations with complementarity slackness conditions (see the [GDSGE example](https://www.gdsge.com/example/KS1998/KS1998.html)) or the endogenous grid method (see the implementation by the [Sequence Space Jacobian toolbox](https://github.com/shade-econ/sequence-jacobian)).
+The current individual problem can also be solved by solving Euler equations with complementary slackness conditions (see the [GDSGE example](https://www.gdsge.com/example/KS1998/KS1998.html)) or the endogenous grid method (see the implementation by the [Sequence Space Jacobian toolbox](https://github.com/shade-econ/sequence-jacobian)).
 
 ## The Model
 
